@@ -47,12 +47,12 @@ Ordering note: exploration listed primitives last, but hero (Section/Button), he
 
 ## Phase 2: Design-system primitives (WU2 → PR 2)
 
-- [ ] 2.1 Create `components/ui/icons.tsx`: inline SVGs (WhatsApp, Instagram, TikTok, menu, close) — ds-R6
-- [ ] 2.2 Create `components/ui/button.tsx`: primary/whatsapp/ghost; `<a>`|`<button>`; WA via waMeUrl() — ds-R1, hero-R8, hdr-R3
-- [ ] 2.3 Create `components/ui/section.tsx`: mood → `--section-mood`; default padding + max-w — ds-R3, hero-R5
-- [ ] 2.4 Create `components/ui/eyebrow.tsx`: sans, uppercase, tracking-[0.35em] — ds-R4
-- [ ] 2.5 Create `components/ui/card.tsx`: lazy image + title + "Precio al WhatsApp" + mini-CTA — ds-R2
-- [ ] 2.6 Verify WU2: lint + build; manual — a/button switch, mood resolves, no icon lib in package.json
+- [x] 2.1 Create `components/ui/icons.tsx`: inline SVGs (WhatsApp, Instagram, TikTok, menu, close) — ds-R6
+- [x] 2.2 Create `components/ui/button.tsx`: primary/whatsapp/ghost; `<a>`|`<button>`; WA via waMeUrl() — ds-R1, hero-R8, hdr-R3
+- [x] 2.3 Create `components/ui/section.tsx`: mood → `--section-mood`; default padding + max-w — ds-R3, hero-R5
+- [x] 2.4 Create `components/ui/eyebrow.tsx`: sans, uppercase, tracking-[0.35em] — ds-R4
+- [x] 2.5 Create `components/ui/card.tsx`: lazy image + title + "Precio al WhatsApp" + mini-CTA — ds-R2
+- [x] 2.6 Verify WU2: lint + build; manual — a/button switch, mood resolves, no icon lib in package.json — 2026-08-08: lint exit 0; build:webpack exit 0; deps audit clean (no icon lib)
 
 ## Phase 3: Preloader + entrance + hero (WU3 → PR 3)
 
