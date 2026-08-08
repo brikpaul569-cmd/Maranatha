@@ -1,0 +1,51 @@
+schema: spec-driven
+artifact_store: hybrid # openspec files + Engram observations
+
+context: |
+  Tech stack: Next.js 16.3 (App Router) + React 19 + TypeScript (strict) + Tailwind CSS v4 (CSS-first)
+  Animation: GSAP 3.15 (core + ScrollTrigger + Flip + SplitType) and Lenis 1.3.26, client-only ("use client")
+  Architecture: SSG + ISR for catalog/product pages; SSG for institutional pages; server-rendered content for SEO
+  Project: Detalles Maranatha — Colombian flower-arrangements and gift business (Spanish UI copy, Bogotá Phase 1)
+  Source of truth: PROJECT-BRIEF.md, PROJECT-BRIEF-02-SEO-Y-REFERENCIA.md, PROJECT-BRIEF-03-LANZAMIENTO-BOGOTA-SITEMAP.md,
+    "PROJECT-BRIEF - copia.md" (brief 04 UX/GSAP), PROJECT-BRIEF-05-ART-DIRECTION-DELASSUS.md — read before proposing architecture
+  Conventions: code/comments English, UI copy Spanish (Colombia); mobile-first; prefers-reduced-motion aware;
+    animate only transform/opacity; sessionStorage-only per-session themes; @/* path alias
+  Build quirk: npm run build (Turbopack) OK on this machine (Smart App Control disabled); npm run build:webpack is fallback
+  Git: not a git repo yet (propose git init per PROJECT-BRIEF.md section 12 before versioning work)
+  strict_tdd: false
+
+testing:
+  strict_tdd: false
+  test_runner: none
+  reason: >
+    No test framework installed (no jest/vitest/playwright in package.json or config files).
+    Any test-runner task must be a deliberate change; do not claim RED-GREEN-REFACTOR until a runner exists.
+  test_command: ""
+  coverage_threshold: 0
+
+rules:
+  proposal:
+    - Read the relevant PROJECT-BRIEF first; do not re-litigate locked decisions in AGENTS.md
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+    - SEO/content requirements must be verifiable without JS (server-rendered DOM)
+  design:
+    - GSAP/Lenis animation code must live in "use client" components; content must not depend on JS to exist
+    - Animate only transform/opacity; honor prefers-reduced-motion
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns (Tailwind v4 @theme inline tokens, --color-mar-* palette)
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: "npm run build"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas

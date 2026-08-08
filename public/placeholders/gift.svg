@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-label="Detalle de regalo en verde salvia">
+  <rect width="300" height="300" rx="48" fill="#FFFDF9"/>
+  <rect x="70" y="126" width="160" height="114" rx="14" fill="#A9C4A0"/>
+  <rect x="70" y="126" width="160" height="32" rx="12" fill="#8FB087"/>
+  <rect x="138" y="126" width="24" height="114" fill="#D9A94E"/>
+  <path d="M150 104 C 110 72, 58 92, 88 132 L 150 124 L 212 132 C 242 92, 190 72, 150 104 Z" fill="#F7C9D6"/>
+</svg>

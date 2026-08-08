@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand palette — locked (art direction brief) */
+  --color-mar-pink: #f7c9d6;
+  --color-mar-pink-light: #fadce4;
+  --color-mar-cream: #fbf3e9;
+  --color-mar-gold: #d9a94e;
+  --color-mar-sage: #a9c4a0;
+  --color-mar-brown: #3a2a24;
+  --color-mar-card: #fffdf9;
+
+  /* Section moods (art direction brief 05) — override on a section
+     container to change its mood without touching the layout. */
+  --mood-hero: var(--color-mar-pink);
+  --mood-nosotros: var(--color-mar-cream);
+  --mood-catalogo-sage: var(--color-mar-sage);
+  --mood-catalogo-gold: var(--color-mar-gold);
+  --mood-galeria: var(--color-mar-card);
+  --mood-contacto: #f4e6d4;
+}
+
+@theme inline {
+  --color-mar-pink: var(--color-mar-pink);
+  --color-mar-pink-light: var(--color-mar-pink-light);
+  --color-mar-cream: var(--color-mar-cream);
+  --color-mar-gold: var(--color-mar-gold);
+  --color-mar-sage: var(--color-mar-sage);
+  --color-mar-brown: var(--color-mar-brown);
+  --color-mar-card: var(--color-mar-card);
+
+  --color-mood-hero: var(--mood-hero);
+  --color-mood-nosotros: var(--mood-nosotros);
+  --color-mood-catalogo-sage: var(--mood-catalogo-sage);
+  --color-mood-catalogo-gold: var(--mood-catalogo-gold);
+  --color-mood-galeria: var(--mood-galeria);
+  --color-mood-contacto: var(--mood-contacto);
+
+  /* Font variables are defined by next/font on <html> */
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+body {
+  background-color: var(--color-mar-cream);
+  color: var(--color-mar-brown);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

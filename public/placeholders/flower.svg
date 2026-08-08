@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-label="Arreglo floral en tonos rosados">
+  <rect width="300" height="300" rx="48" fill="#FADCE4"/>
+  <g transform="translate(150 150)">
+    <g fill="#F7C9D6" stroke="#3A2A24" stroke-opacity="0.07" stroke-width="2">
+      <circle cx="0" cy="-58" r="42"/>
+      <circle cx="0" cy="-58" r="42" transform="rotate(72)"/>
+      <circle cx="0" cy="-58" r="42" transform="rotate(144)"/>
+      <circle cx="0" cy="-58" r="42" transform="rotate(216)"/>
+      <circle cx="0" cy="-58" r="42" transform="rotate(288)"/>
+    </g>
+    <circle r="30" fill="#D9A94E"/>
+    <circle r="14" fill="#FFFDF9" fill-opacity="0.7"/>
+  </g>
+</svg>
