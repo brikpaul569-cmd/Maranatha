@@ -66,13 +66,13 @@ Ordering note: exploration listed primitives last, but hero (Section/Button), he
 
 ## Phase 4: Header + footer + floating widget (WU4 → PR 4)
 
-- [ ] 4.1 Create `lib/lenis.ts`: setLenis/clearLenis/scrollToHash(hash, offset) + native fallback — ds-R9, hdr-R5
-- [ ] 4.2 Modify `components/smooth-scroll.tsx`: register instance via lib/lenis — ds-R9
-- [ ] 4.3 Create `components/site-header.tsx`: semi-fixed (transform/opacity ≤0.8s); Inicio + WA CTA only; "próximamente" muted non-links; drawer (aria-expanded, inert, focus trap, ESC, focus return); Lenis anchors — hdr-R1–R7
-- [ ] 4.4 Create `components/site-footer.tsx`: socials (noopener), hours, conditional coverage link (D7), mini-sitemap, legal line — ft-R1–R6
-- [ ] 4.5 Create `components/floating-whatsapp.tsx`: thumb-zone mobile / bottom-right desktop; default message — ds-R5
-- [ ] 4.6 `app/layout.tsx`: add Preloader, Header, Footer, FloatingWhatsApp — integration
-- [ ] 4.7 Verify WU4: lint + build; manual — drawer a11y, Lenis + native fallback, no dead links, coverage link absent, thumb-zone widget
+- [x] 4.1 Create `lib/lenis.ts`: setLenis/clearLenis/scrollToHash(hash, offset) + native fallback — ds-R9, hdr-R5
+- [x] 4.2 Modify `components/smooth-scroll.tsx`: register instance via lib/lenis — ds-R9
+- [x] 4.3 Create `components/site-header.tsx`: semi-fixed (transform/opacity ≤0.8s); Inicio + WA CTA only; "próximamente" muted non-links; drawer (aria-expanded, inert, focus trap, ESC, focus return); Lenis anchors — hdr-R1–R7
+- [x] 4.4 Create `components/site-footer.tsx`: socials (noopener), hours, conditional coverage link (D7), mini-sitemap, legal line — ft-R1–R6
+- [x] 4.5 Create `components/floating-whatsapp.tsx`: thumb-zone mobile / bottom-right desktop; default message — ds-R5
+- [x] 4.6 `app/layout.tsx`: add Preloader, Header, Footer, FloatingWhatsApp — integration
+- [x] 4.7 Verify WU4: lint + build; manual — drawer a11y, Lenis + native fallback, no dead links, coverage link absent, thumb-zone widget — 2026-08-08: lint exit 0; build:webpack exit 0 (compile 4.1s, TS 3.8s, 4 static pages); Playwright on prod build: no dead links; coverage link absent; desktop scroll toggle animates transform/opacity (is-scrolled, ≤0.8s); Lenis anchors to top (hash empty); reduced-motion native `#inicio` jump; drawer a11y pass (aria-expanded, focus-in, main inert, Tab trap wraps, ESC + focus return); mobile thumb-zone widget 328×56 inset-x-4 bottom-4; desktop 56×56 bottom-right; no-JS: header brand, footer hours/legal/socials (rel noopener noreferrer), drawer mounted inert/hidden, coverage absent
 
 ## Phase 5: Whole-change verification
 

@@ -3,6 +3,10 @@ import { Fraunces, Inter } from "next/font/google";
 import SmoothScroll from "@/components/smooth-scroll";
 import ThemeInit from "@/components/theme-init";
 import ThemeProvider from "@/components/theme-provider";
+import Preloader from "@/components/preloader";
+import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
+import FloatingWhatsApp from "@/components/floating-whatsapp";
 import "./globals.css";
 
 const display = Fraunces({
@@ -38,7 +42,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
-          <SmoothScroll>{children}</SmoothScroll>
+          <Preloader />
+          <SiteHeader />
+          <SmoothScroll id="main-content">{children}</SmoothScroll>
+          <SiteFooter />
+          <FloatingWhatsApp />
         </ThemeProvider>
       </body>
     </html>

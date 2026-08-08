@@ -88,6 +88,26 @@ body {
   overflow: hidden;
 }
 
+/* Site-header scroll state (hdr-R1, D5): `.is-scrolled` is toggled by
+   ScrollTrigger in site-header.tsx; only transform/opacity animate, ≤0.8s,
+   so CLS stays < 0.05. Reduced-motion is handled by the global override. */
+.site-header {
+  transition: transform 500ms ease, opacity 500ms ease;
+}
+
+.site-header.is-scrolled {
+  transform: translateY(-6px);
+}
+
+.site-header__bg {
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.site-header.is-scrolled .site-header__bg {
+  opacity: 1;
+}
+
 /* Visible keyboard focus (ds-R10) */
 :focus-visible {
   outline: 2px solid var(--color-mar-gold);
