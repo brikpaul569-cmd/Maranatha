@@ -31,19 +31,19 @@ Ordering note: exploration listed primitives last, but hero (Section/Button), he
 
 ## Phase 0: Prerequisite — git init (user decision, not an implementation task)
 
-- [ ] 0.1 Ask user to approve `git init` + baseline commit (PROJECT-BRIEF §12) before apply; never create the repo silently
-- [ ] 0.2 On approval only: init repo, baseline commit, then start Phase 1
+- [x] 0.1 Ask user to approve `git init` + baseline commit (PROJECT-BRIEF §12) before apply; never create the repo silently
+- [x] 0.2 On approval only: init repo, baseline commit, then start Phase 1 — repo initialized; baseline commit `ed4a9b4` exists
 
 ## Phase 1: Foundation (WU1 → PR 1)
 
-- [ ] 1.1 `npm i split-type` — cc-R5 (open-source GSAP only)
-- [ ] 1.2 Create `lib/constants.ts`: WHATSAPP_NUMBER + TODO(launch), waMeUrl(), default message, NAV_ITEMS, SOCIALS, HOURS, ROUTES.domiciliosBogota=null — cc-R8, ft-R6, ds-R8
-- [ ] 1.3 Create `lib/theme.ts`: theme ids, storage keys, getThemeInitScript() — st-R3
-- [ ] 1.4 Create `components/theme-init.tsx` (server inline `<script>`) — st-R3
-- [ ] 1.5 Create `components/theme-provider.tsx` (client re-apply, dev StrictMode) — st-R3/R4
-- [ ] 1.6 `app/globals.css`: `[data-theme=t1..t4]` blocks, `:focus-visible`, `--section-mood` — st-R1/R2, ds-R10
-- [ ] 1.7 `app/layout.tsx`: `suppressHydrationWarning`, render ThemeInit + ThemeProvider — st-R3
-- [ ] 1.8 Verify WU1: lint + build (fallback `build:webpack`); manual — no flash, persistence, reduced-motion instant
+- [x] 1.1 `npm i split-type` — cc-R5 (open-source GSAP only)
+- [x] 1.2 Create `lib/constants.ts`: WHATSAPP_NUMBER + TODO(launch), waMeUrl(), default message, NAV_ITEMS, SOCIALS, HOURS, ROUTES.domiciliosBogota=null — cc-R8, ft-R6, ds-R8
+- [x] 1.3 Create `lib/theme.ts`: theme ids, storage keys, getThemeInitScript() — st-R3
+- [x] 1.4 Create `components/theme-init.tsx` (server inline `<script>`) — st-R3
+- [x] 1.5 Create `components/theme-provider.tsx` (client re-apply, dev StrictMode) — st-R3/R4
+- [x] 1.6 `app/globals.css`: `[data-theme=t1..t4]` blocks, `:focus-visible`, `--section-mood` — st-R1/R2, ds-R10
+- [x] 1.7 `app/layout.tsx`: `suppressHydrationWarning`, render ThemeInit + ThemeProvider — st-R3
+- [x] 1.8 Verify WU1: lint + build (fallback `build:webpack`); manual — no flash, persistence, reduced-motion instant — relaunch 2026-08-08: lint exit 0; build:webpack exit 0 (TS passed, 4 static pages); runtime attempt 2 settled passed
 
 ## Phase 2: Design-system primitives (WU2 → PR 2)
 

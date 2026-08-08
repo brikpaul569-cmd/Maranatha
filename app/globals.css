@@ -18,6 +18,14 @@
   --mood-catalogo-gold: var(--color-mar-gold);
   --mood-galeria: var(--color-mar-card);
   --mood-contacto: #f4e6d4;
+
+  /* Session themes (brief 02 §4) — defaults when no theme is applied (st-R2);
+     [data-theme="t1..t4"] blocks below override these. Decorative only. */
+  --theme-bg: var(--color-mar-cream);
+  --theme-accent: var(--color-mar-gold);
+
+  /* Section-mood fallback — the Section shell overrides it per section (ds-R3). */
+  --section-mood: var(--mood-hero);
 }
 
 @theme inline {
@@ -42,9 +50,42 @@
 }
 
 body {
-  background-color: var(--color-mar-cream);
+  background-color: var(--theme-bg);
   color: var(--color-mar-brown);
   font-family: var(--font-sans);
+}
+
+/* Session themes (st-R1) — curated palettes from brief 02 §4, applied on
+   <html data-theme="tN"> via the pre-paint inline script (D2). They override
+   only ambient variables; layout and content never change (st-R5). */
+[data-theme="t1"] {
+  /* Amanecer pastel — rosa + durazno */
+  --theme-bg: #f9c8d4;
+  --theme-accent: #f2a984;
+}
+
+[data-theme="t2"] {
+  /* Jardín — verde salvia + crema */
+  --theme-bg: #dfe9d8;
+  --theme-accent: #7fa374;
+}
+
+[data-theme="t3"] {
+  /* Atardecer romántico — rosa intenso + dorado */
+  --theme-bg: #f1a7b4;
+  --theme-accent: #d9a94e;
+}
+
+[data-theme="t4"] {
+  /* Minimal crema — beige + blanco roto */
+  --theme-bg: #f5ede3;
+  --theme-accent: #c2a27c;
+}
+
+/* Visible keyboard focus (ds-R10) */
+:focus-visible {
+  outline: 2px solid var(--color-mar-gold);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
