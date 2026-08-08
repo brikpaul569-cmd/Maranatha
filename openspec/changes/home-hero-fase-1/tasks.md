@@ -56,13 +56,13 @@ Ordering note: exploration listed primitives last, but hero (Section/Button), he
 
 ## Phase 3: Preloader + entrance + hero (WU3 → PR 3)
 
-- [ ] 3.1 Create `lib/entrance.ts`: signalEntranceReady() (fired flag), onEntranceReady() (immediate-if-fired, 1.8s fallback, unsubscribe) — hero-R9, pre-R6
-- [ ] 3.2 Create `components/preloader.tsx`: session gate, stroke-dashoffset draw ≤1.5s, visible skip, signal, post-hydration overlay, `var(--theme-bg)` — pre-R1–R8
-- [ ] 3.3 Create `components/split-reveal.tsx`: SplitType lines + blur ≤0.8s; reduced-motion → no split; ctx.revert() + split.revert() — hero-R2/R8, cc-R2
-- [ ] 3.4 Rework `components/floating-collage.tsx`: entrance scale 1.08→1 + 50–80ms stagger; `priority`→`preload` (read `next/dist/docs/02-components/image.md` first); parallax ≥768px — hero-R3/R6
-- [ ] 3.5 Create `components/hero-home.tsx`: Section(mood-hero) + SplitReveal H1 + collage + WA CTA; onEntranceReady subscriber — hero-R1–R9
-- [ ] 3.6 `app/page.tsx`: render HeroHome; remove hardcoded WHATSAPP_URL — hero-R1/R8, cc-R8
-- [ ] 3.7 Verify WU3: lint + build; manual — once/session, skip, ≤1.5s, entrance once (both paths), reduced-motion instant, no-JS headline, mobile no parallax
+- [x] 3.1 Create `lib/entrance.ts`: signalEntranceReady() (fired flag), onEntranceReady() (immediate-if-fired, 1.8s fallback, unsubscribe) — hero-R9, pre-R6
+- [x] 3.2 Create `components/preloader.tsx`: session gate, stroke-dashoffset draw ≤1.5s, visible skip, signal, post-hydration overlay, `var(--theme-bg)` — pre-R1–R8
+- [x] 3.3 Create `components/split-reveal.tsx`: SplitType lines + blur ≤0.8s; reduced-motion → no split; ctx.revert() + split.revert() — hero-R2/R8, cc-R2
+- [x] 3.4 Rework `components/floating-collage.tsx`: entrance scale 1.08→1 + 50–80ms stagger; `priority`→`preload` (read `next/dist/docs/02-components/image.md` first); parallax ≥768px — hero-R3/R6
+- [x] 3.5 Create `components/hero-home.tsx`: Section(mood-hero) + SplitReveal H1 + collage + WA CTA; onEntranceReady subscriber — hero-R1–R9
+- [x] 3.6 `app/page.tsx`: render HeroHome; remove hardcoded WHATSAPP_URL — hero-R1/R8, cc-R8
+- [x] 3.7 Verify WU3: lint + build; manual — once/session, skip, ≤1.5s, entrance once (both paths), reduced-motion instant, no-JS headline, mobile no parallax — 2026-08-08: lint exit 0; build:webpack exit 0; Playwright smoke on prod build: draw 1.1s, signal 1157ms, gate set, gone by 1.43s; skip instant; repeat-session sync skip; reduced-motion static; mobile 2 layers no parallax; desktop 3 layers; no-JS H1+CTA+3 imgs visible
 
 ## Phase 4: Header + footer + floating widget (WU4 → PR 4)
 

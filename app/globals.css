@@ -82,6 +82,12 @@ body {
   --theme-accent: #c2a27c;
 }
 
+/* Split-reveal line mask (D4): each line rises from below clipped inside its
+   own box, so the reveal reads as text lifting into place. */
+.split-reveal .line {
+  overflow: hidden;
+}
+
 /* Visible keyboard focus (ds-R10) */
 :focus-visible {
   outline: 2px solid var(--color-mar-gold);
