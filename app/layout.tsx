@@ -29,10 +29,7 @@ export const metadata: Metadata = {
   description:
     "Arreglos florales artesanales hechos a mano en Colombia. Detalles únicos para cada ocasión, con pedidos por WhatsApp.",
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "48x48" },
-      { url: "/icon.png", sizes: "512x512", type: "image/png" },
-    ],
+    icon: [{ url: "/icon.png", sizes: "512x512", type: "image/png" }],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
