@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
+import Script from "next/script";
+import { LOCALBUSINESS_SCHEMA } from "@/lib/seo";
 import SmoothScroll from "@/components/smooth-scroll";
 import ThemeInit from "@/components/theme-init";
 import ThemeProvider from "@/components/theme-provider";
@@ -26,6 +28,13 @@ export const metadata: Metadata = {
   },
   description:
     "Arreglos florales artesanales hechos a mano en Colombia. Detalles únicos para cada ocasión, con pedidos por WhatsApp.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -35,11 +44,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <head>
-        {/* Pre-paint theme script (D2): sets <html data-theme> before first
+        <head>
+          {/* Pre-paint theme script (D2): sets <html data-theme> before first
             paint so the session theme applies with no flash (st-R3). */}
-        <ThemeInit />
-      </head>
+          <ThemeInit />
+          {/* Sitewide LocalBusiness JSON-LD (Brief 03 §4) so every page is
+              associated with the Detalles Maranatha entity by crawlers. */}
+          <Script
+            id="ld-localbusiness"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(LOCALBUSINESS_SCHEMA),
+            }}
+          />
+        </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           <Preloader />

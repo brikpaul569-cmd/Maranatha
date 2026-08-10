@@ -41,7 +41,17 @@ yarn-error.log*
 next-env.d.ts
 # Local AI runtime state
 .atl/
+# AI skills / plugin state (tooling, not site source)
+.agents/
+.claude/
+skills-lock.json
 # Playwright MCP session artifacts
 .playwright-mcp/
-# Dev server logs
+# Dev server logs (note: also covers non-hyphenated server.log from tooling)
 server-*.log
+server.log
+# Stray scratch artifacts (screenshots from scratch checks)
+M.png
+catalogo-check.png
+# Original logo source copy (deployed copy lives in public/maranatha.jpeg)
+/maranatha.jpeg

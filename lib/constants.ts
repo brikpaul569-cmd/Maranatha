@@ -28,10 +28,10 @@ export type NavItem = {
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "Inicio", href: "#inicio" },
-  { label: "Nosotros", future: true },
-  { label: "Catálogo", future: true },
-  { label: "Galería", future: true },
-  { label: "Contacto", future: true },
+  { label: "Nosotros", href: "/nosotros" },
+  { label: "Catálogo", href: "/catalogo" },
+  { label: "Galería", href: "/galeria" },
+  { label: "Contacto", href: "/contacto" },
 ];
 
 // TODO(launch): confirm real social handles and business hours.
@@ -47,10 +47,10 @@ export const HOURS: { days: string; time: string } = {
 };
 
 /**
- * Routes that exist at ship time. `domiciliosBogota` stays `null` until the
- * `/domicilios/bogota` coverage hub ships (D7); consumers suppress the footer
- * link while it is null so the site never publishes a dead link (ft-R3).
+ * Routes that exist at ship time. `domiciliosBogota` points to the
+ * `/domicilios/bogota` coverage hub (D7); consumers render the footer link
+ * only while it is non-null so the site never publishes a dead link (ft-R3).
  */
 export const ROUTES: { domiciliosBogota: string | null } = {
-  domiciliosBogota: null,
+  domiciliosBogota: "/domicilios/bogota",
 };
