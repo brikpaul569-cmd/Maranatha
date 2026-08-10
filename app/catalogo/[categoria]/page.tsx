@@ -62,8 +62,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </Reveal>
 
         <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+          {products.map((product, index) => (
+            <Reveal key={product.slug} delay={(index % 4) * 0.08} y={24}>
+              <ProductCard product={product} />
+            </Reveal>
           ))}
         </div>
       </Section>
