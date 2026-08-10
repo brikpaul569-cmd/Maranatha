@@ -43,3 +43,5 @@ next-env.d.ts
 .atl/
 # Playwright MCP session artifacts
 .playwright-mcp/
+# Dev server logs
+server-*.log

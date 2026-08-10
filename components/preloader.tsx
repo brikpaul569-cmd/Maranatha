@@ -10,7 +10,10 @@ import Button from "@/components/ui/button";
  *
  * Post-hydration overlay only: `mounted` starts false, so the overlay never
  * exists in the SSR/no-JS DOM and all server-rendered content stays visible
- * beneath it (pre-R6). On mount it checks the session gate and
+ * beneath it (pre-R6). The overlay background is 96% opaque (color-mix) so
+ * the browser cannot skip painting the hero headline underneath — a fully
+ * opaque fixed overlay would defer the LCP paint until its fade (pre-R9).
+ * On mount it checks the session gate and
  * `prefers-reduced-motion`; when either applies it signals the entrance bus
  * immediately and renders nothing (pre-R1, pre-R7). Otherwise it draws the
  * logo stroke with core GSAP `stroke-dashoffset` (pre-R3 — no DrawSVGPlugin)
@@ -21,15 +24,19 @@ import Button from "@/components/ui/button";
 
 /** Session gate flag: preloader runs at most once per session (pre-R1). */
 const STORAGE_KEY = "mar-preloader-done";
-/** Stroke draw duration (pre-R3). */
-const DRAW_MS = 1100;
+/**
+ * Stroke draw duration (pre-R3). Kept at 550ms — well inside the 1.5s cap —
+ * so the intro choreography cannot push LCP past the 2.0s mobile budget
+ * (pre-R9: the preloader MUST NOT delay LCP past 2.0s).
+ */
+const DRAW_MS = 550;
 /** Overlay fade-out before unmount. */
-const EXIT_MS = 250;
+const EXIT_MS = 150;
 /**
  * Forced-exit cap: `HARD_CAP_MS + EXIT_MS` keeps the full reveal inside the
  * 1.5s budget even if the draw stalls (pre-R2).
  */
-const HARD_CAP_MS = 1250;
+const HARD_CAP_MS = 650;
 
 export default function Preloader() {
   const [mounted, setMounted] = useState(false);
@@ -94,7 +101,7 @@ export default function Preloader() {
     gsap.fromTo(
       wordmark,
       { autoAlpha: 0, y: 12 },
-      { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.55 }
+      { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out", delay: 0.3 }
     );
     const draw = gsap.to(stroke, {
       strokeDashoffset: 0,
@@ -103,11 +110,21 @@ export default function Preloader() {
       onComplete: finish,
     });
 
+    // Signal the entrance before the draw completes (pre-R9): the hero reveal
+    // starts while the logo stroke finishes and the overlay fades, so the
+    // headline paints in parallel with the last draw segment instead of
+    // waiting for it. `signalEntranceReady` is idempotent, so the later
+    // `finish` call (skip/cap) is a no-op for the bus.
+    const signalTimer = window.setTimeout(() => {
+      if (!doneRef.current) signalEntranceReady();
+    }, Math.round(DRAW_MS * 0.75));
+
     // Forced exit cap (pre-R2): reveal completes within the 1.5s budget no
     // matter what happens to the draw.
     const cap = window.setTimeout(finish, HARD_CAP_MS);
 
     return () => {
+      window.clearTimeout(signalTimer);
       window.clearTimeout(cap);
       draw.kill();
     };
@@ -119,7 +136,7 @@ export default function Preloader() {
     <div
       ref={overlayRef}
       aria-hidden="true"
-      className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-10 bg-[var(--theme-bg)]"
+      className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-10 bg-[color-mix(in_srgb,var(--theme-bg)_96%,transparent)]"
     >
       <svg
         viewBox="0 0 100 100"
