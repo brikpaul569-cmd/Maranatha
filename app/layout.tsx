@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/smooth-scroll";
 import ThemeInit from "@/components/theme-init";
 import ThemeProvider from "@/components/theme-provider";
 import Preloader from "@/components/preloader";
+import ScrollProgress from "@/components/scroll-progress";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
+          <ScrollProgress />
           <Preloader />
           <SiteHeader />
           <SmoothScroll id="main-content">{children}</SmoothScroll>
