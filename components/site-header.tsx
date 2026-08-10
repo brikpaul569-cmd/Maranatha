@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { NAV_ITEMS, waMeUrl, type NavItem } from "@/lib/constants";
+import { NAV_ITEMS, type NavItem } from "@/lib/constants";
 import { isLenisActive, scrollToHash } from "@/lib/lenis";
-import Button from "@/components/ui/button";
-import { CloseIcon, MenuIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { CloseIcon, MenuIcon } from "@/components/ui/icons";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,8 +16,9 @@ gsap.registerPlugin(ScrollTrigger);
  *   the threshold and CSS transitions transform/opacity in ≤0.8s (hdr-R1).
  * - Only real destinations link: Inicio (`#inicio`) + WhatsApp CTA; future
  *   routes render as muted "próximamente" non-links (hdr-R2).
- * - WhatsApp CTA visible at every breakpoint (hdr-R3): pill in the desktop
- *   nav, icon button in the mobile bar, both built from `waMeUrl()` (cc-R8).
+ * - WhatsApp is the single persistent CTA via the FloatingWhatsApp widget;
+ *   the header carries no WhatsApp action (hdr-R3 pills removed), so every
+ *   breakpoint surfaces only navigation + the drawer toggle.
  * - Mobile drawer: `aria-expanded`/`aria-controls`, `inert` when closed,
  *   focus moves in on open and returns to the toggle on close, ESC closes,
  *   Tab cycles inside while main content is `inert` (hdr-R4).
@@ -111,6 +111,9 @@ export default function SiteHeader() {
   ) => {
     if (!href) return;
     setOpen(false);
+    // Intercept only same-page hash anchors (hdr-R5, D5): path routes must
+    // navigate natively, otherwise scrollToHash throws on an invalid selector.
+    if (!href.startsWith("#")) return;
     if (!isLenisActive()) return;
     event.preventDefault();
     scrollToHash(href);
@@ -166,30 +169,10 @@ export default function SiteHeader() {
           className="hidden items-center gap-6 md:flex"
         >
           {NAV_ITEMS.map(renderNavItem)}
-          {/* Compact WhatsApp CTA (hdr-R3); standalone classes — no utility
-              conflicts with the Button primitive's own sizing. */}
-          <a
-            href={waMeUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-mar-gold px-4 py-2 font-sans text-xs font-semibold uppercase tracking-widest text-mar-brown transition-transform duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0"
-          >
-            <WhatsAppIcon className="size-4 shrink-0" />
-            Pedir por WhatsApp
-          </a>
         </nav>
 
-        {/* Mobile bar: WhatsApp CTA (hdr-R3) + drawer toggle */}
+        {/* Mobile bar: drawer toggle (single contact lives in the FloatingWhatsApp widget) */}
         <div className="flex items-center gap-1 md:hidden">
-          <a
-            href={waMeUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Pedir por WhatsApp"
-            className="inline-flex size-11 items-center justify-center rounded-full bg-mar-gold text-mar-brown"
-          >
-            <WhatsAppIcon className="size-5" />
-          </a>
           <button
             ref={toggleRef}
             type="button"
@@ -221,14 +204,6 @@ export default function SiteHeader() {
           className="flex flex-col gap-5 px-6 pb-8 pt-2"
         >
           {NAV_ITEMS.map(renderNavItem)}
-          <Button
-            variant="whatsapp"
-            href={waMeUrl()}
-            className="mt-2 w-full"
-            onClick={() => setOpen(false)}
-          >
-            Pedir por WhatsApp
-          </Button>
         </nav>
       </div>
     </header>
