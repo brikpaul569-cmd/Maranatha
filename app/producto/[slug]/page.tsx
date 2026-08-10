@@ -106,6 +106,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </nav>
 
         <div className="mt-8 grid gap-10 md:grid-cols-2 md:gap-14">
+          <Reveal delay={0} y={16}>
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-mar-card shadow-sm">
             <Image
               src={mainImage.src}
@@ -116,7 +117,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
               preload
             />
           </div>
+          </Reveal>
 
+          <Reveal delay={0.15} y={16}>
           <div className="flex flex-col items-start gap-6">
             <Eyebrow>{category?.label ?? "Catálogo"}</Eyebrow>
             <h1 className="font-display text-4xl leading-tight tracking-tight text-mar-brown md:text-5xl">
@@ -163,6 +166,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </Button>
             </div>
           </div>
+          </Reveal>
         </div>
 
         {related.length > 0 && (
@@ -171,9 +175,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
               También te puede gustar
             </h2>
             <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-              {related.map((product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
+          {related.map((product, index) => (
+            <Reveal
+              key={product.slug}
+              delay={(index % 4) * 0.08}
+              y={24}
+              className="col-span-1"
+            >
+              <ProductCard product={product} />
+            </Reveal>
+          ))}
             </div>
           </Reveal>
         )}
