@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 /**
  * Dark/light mode toggle (user direction): a bare moon/sun glyph — no boxed
