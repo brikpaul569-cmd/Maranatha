@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NAV_ITEMS, type NavItem } from "@/lib/constants";
@@ -158,9 +159,16 @@ export default function SiteHeader() {
         <a
           href="#inicio"
           onClick={(event) => handleAnchor(event, "#inicio")}
-          className="font-display text-lg leading-none text-mar-brown"
+          aria-label="Detalles Maranatha — inicio"
+          className="flex items-center"
         >
-          Detalles Maranatha
+          <Image
+            src="/maranatha.jpeg"
+            alt=""
+            width={44}
+            height={44}
+            className="size-11 rounded-full object-cover shadow-md ring-2 ring-white/70"
+          />
         </a>
 
         {/* Desktop navigation (md+) */}
