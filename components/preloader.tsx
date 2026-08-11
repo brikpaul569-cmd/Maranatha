@@ -3,47 +3,34 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { signalEntranceReady } from "@/lib/entrance";
-import Button from "@/components/ui/button";
 
 /**
- * Session-gated brand preloader (pre-R1–R8; design D1).
+ * Ready gate (user direction — replaces the logo-stroke preloader).
  *
- * Post-hydration overlay only: `mounted` starts false, so the overlay never
- * exists in the SSR/no-JS DOM and all server-rendered content stays visible
- * beneath it (pre-R6). The overlay background is 96% opaque (color-mix) so
- * the browser cannot skip painting the hero headline underneath — a fully
- * opaque fixed overlay would defer the LCP paint until its fade (pre-R9).
- * On mount it checks the session gate and
- * `prefers-reduced-motion`; when either applies it signals the entrance bus
- * immediately and renders nothing (pre-R1, pre-R7). Otherwise it draws the
- * logo stroke with core GSAP `stroke-dashoffset` (pre-R3 — no DrawSVGPlugin)
- * over `var(--theme-bg)` (pre-R5), with a visible skip control (pre-R4) and a
- * forced exit so the site is fully revealed within the 1.5s budget (pre-R2).
- * On exit it flags the session and signals the entrance bus exactly once (D1).
+ * A full-viewport entrance gate: the page beneath is blurred behind a pastel
+ * rainbow gradient, the headline asks "¿Estás listo?" and a glossy mirror orb
+ * is the only way in — clicking it reveals the site. Post-hydration overlay
+ * only (`mounted` starts false), so the SSR/no-JS DOM never contains it and
+ * all server-rendered content stays visible beneath (pre-R6). The backdrop is
+ * translucent + blurred, never opaque, so the hero still paints underneath
+ * (pre-R9: the gate must not block the LCP paint).
+ *
+ * Session-gated (pre-R1): shows at most once per session via
+ * `mar-preloader-done`; reduced-motion users skip it entirely (pre-R7). On
+ * entry the gate signals the entrance bus exactly once (D1) so the hero
+ * choreography starts the moment the gate lifts.
  */
 
-/** Session gate flag: preloader runs at most once per session (pre-R1). */
+/** Session gate flag: the gate runs at most once per session (pre-R1). */
 const STORAGE_KEY = "mar-preloader-done";
-/**
- * Stroke draw duration (pre-R3). Kept at 550ms — well inside the 1.5s cap —
- * so the intro choreography cannot push LCP past the 2.0s mobile budget
- * (pre-R9: the preloader MUST NOT delay LCP past 2.0s).
- */
-const DRAW_MS = 550;
-/** Overlay fade-out before unmount. */
-const EXIT_MS = 150;
-/**
- * Forced-exit cap: `HARD_CAP_MS + EXIT_MS` keeps the full reveal inside the
- * 1.5s budget even if the draw stalls (pre-R2).
- */
-const HARD_CAP_MS = 650;
+/** Gate fade-out before unmount. */
+const EXIT_MS = 500;
 
 export default function Preloader() {
   const [mounted, setMounted] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const strokeRef = useRef<SVGPathElement>(null);
-  const wordmarkRef = useRef<HTMLDivElement>(null);
-  const finishRef = useRef<() => void>(() => {});
+  const contentRef = useRef<HTMLDivElement>(null);
+  const orbRef = useRef<HTMLButtonElement>(null);
   const doneRef = useRef(false);
 
   // Session gate + reduced-motion check. Client-only by definition (effects),
@@ -69,13 +56,26 @@ export default function Preloader() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  // Draw + exit choreography. Runs before paint once the overlay mounts.
+  // Soft entrance of the gate content, then the mirror orb is the exit: a
+  // click (or Enter/Space on the orb) signals the entrance bus, persists the
+  // session flag and fades the gate out before unmounting (D1).
   useLayoutEffect(() => {
     if (!mounted) return;
     const overlay = overlayRef.current;
-    const stroke = strokeRef.current;
-    const wordmark = wordmarkRef.current;
-    if (!overlay || !stroke || !wordmark) return;
+    const content = contentRef.current;
+    const orb = orbRef.current;
+    if (!overlay || !content || !orb) return;
+
+    gsap.fromTo(
+      content,
+      { autoAlpha: 0, y: 16 },
+      { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }
+    );
+    gsap.fromTo(
+      orb,
+      { scale: 0.9, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: 0.5, ease: "back.out(1.6)", delay: 0.25 }
+    );
 
     const finish = () => {
       if (doneRef.current) return;
@@ -87,46 +87,21 @@ export default function Preloader() {
         // Privacy mode — best effort only.
       }
       gsap.to(overlay, {
-        opacity: 0,
+        autoAlpha: 0,
         duration: EXIT_MS / 1000,
         ease: "power2.inOut",
         onComplete: () => setMounted(false),
       });
     };
-    finishRef.current = finish;
 
-    // `pathLength={1}` normalizes the path to one unit, so dasharray=1 and a
-    // dashoffset 1→0 draws 0%→100% with core GSAP only (pre-R3).
-    gsap.set(stroke, { strokeDasharray: 1, strokeDashoffset: 1, opacity: 1 });
-    gsap.fromTo(
-      wordmark,
-      { autoAlpha: 0, y: 12 },
-      { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out", delay: 0.3 }
-    );
-    const draw = gsap.to(stroke, {
-      strokeDashoffset: 0,
-      duration: DRAW_MS / 1000,
-      ease: "power2.inOut",
-      onComplete: finish,
-    });
-
-    // Signal the entrance before the draw completes (pre-R9): the hero reveal
-    // starts while the logo stroke finishes and the overlay fades, so the
-    // headline paints in parallel with the last draw segment instead of
-    // waiting for it. `signalEntranceReady` is idempotent, so the later
-    // `finish` call (skip/cap) is a no-op for the bus.
-    const signalTimer = window.setTimeout(() => {
-      if (!doneRef.current) signalEntranceReady();
-    }, Math.round(DRAW_MS * 0.75));
-
-    // Forced exit cap (pre-R2): reveal completes within the 1.5s budget no
-    // matter what happens to the draw.
-    const cap = window.setTimeout(finish, HARD_CAP_MS);
-
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") finish();
+    };
+    orb.addEventListener("click", finish);
+    orb.addEventListener("keydown", onKey);
     return () => {
-      window.clearTimeout(signalTimer);
-      window.clearTimeout(cap);
-      draw.kill();
+      orb.removeEventListener("click", finish);
+      orb.removeEventListener("keydown", onKey);
     };
   }, [mounted]);
 
@@ -135,43 +110,65 @@ export default function Preloader() {
   return (
     <div
       ref={overlayRef}
-      aria-hidden="true"
-      className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-10 bg-[color-mix(in_srgb,var(--theme-bg)_96%,transparent)]"
+      className="fixed inset-0 z-[60] flex items-center justify-center overflow-hidden"
     >
-      <svg
-        viewBox="0 0 100 100"
+      {/* Pastel rainbow + blur over the page beneath (user direction). */}
+      <div
         aria-hidden="true"
-        className="size-20 text-[var(--theme-accent)]"
-        fill="none"
-      >
-        <path
-          ref={strokeRef}
-          d="M50 96 C22 74 18 32 50 8 C82 32 78 74 50 96 Z"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          pathLength={1}
-          className="preloader-stroke"
-          opacity={0}
-        />
-      </svg>
+        className="absolute inset-0 bg-[linear-gradient(135deg,rgba(247,201,214,0.6),rgba(251,243,233,0.5),rgba(169,196,160,0.6),rgba(250,220,228,0.5),rgba(217,169,78,0.45))] backdrop-blur-2xl"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.35),transparent_60%)]"
+      />
 
-      <div ref={wordmarkRef} className="flex flex-col items-center gap-2">
-        <p className="font-display text-2xl text-mar-brown">
-          Detalles Maranatha
+      <div
+        ref={contentRef}
+        className="relative z-10 flex flex-col items-center gap-7 px-6 text-center opacity-0"
+      >
+        <p className="font-sans text-xs uppercase tracking-[0.4em] text-mar-brown/70">
+          Detalles Maranatha · Bogotá
         </p>
-        <p className="font-sans text-xs uppercase tracking-[0.35em] text-mar-brown/60">
-          Flores &amp; detalles artesanales
+
+        <p className="font-display text-[clamp(2.8rem,9vw,5.5rem)] leading-none text-mar-brown">
+          ¿Estás listo?
+        </p>
+
+        <p className="max-w-sm font-sans text-base text-mar-brown/80">
+          Entrá y descubrí el detalle perfecto para tu ocasión.
+        </p>
+
+        <button
+          ref={orbRef}
+          type="button"
+          aria-label="Entrar al sitio"
+          className="group relative mt-1 flex size-24 items-center justify-center rounded-full opacity-0"
+        >
+          {/* Glossy mirror orb: radial glass sheen + rim light (user direction). */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.95),rgba(255,255,255,0.45)_45%,rgba(190,215,235,0.7)_75%,rgba(140,170,205,0.85))] shadow-[inset_0_2px_10px_rgba(255,255,255,0.9),0_14px_34px_-8px_rgba(58,42,36,0.35)] transition-transform duration-300 group-hover:scale-105 group-active:scale-95"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute left-6 top-5 h-3 w-6 -rotate-[18deg] rounded-full bg-white/70 blur-[2px]"
+          />
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="relative size-7 text-mar-brown/80"
+            aria-hidden
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <p className="font-sans text-xs text-mar-brown/60">
+          Tocá el espejo para entrar
         </p>
       </div>
-
-      <Button
-        variant="ghost"
-        className="text-xs"
-        onClick={() => finishRef.current()}
-      >
-        Omitir
-      </Button>
     </div>
   );
 }
