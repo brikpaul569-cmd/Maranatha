@@ -7,9 +7,11 @@ import { signalEntranceReady } from "@/lib/entrance";
 /**
  * Ready gate (user direction — replaces the logo-stroke preloader).
  *
- * A full-viewport entrance gate: the page beneath is blurred behind a pastel
- * rainbow gradient, the headline asks "¿Estás listo?" and a glossy mirror orb
- * is the only way in — clicking it reveals the site. Post-hydration overlay
+ * A full-viewport entrance gate: the page beneath is blurred behind a
+ * var-backed backdrop that re-themes per ecosystem × theme-mode (tienda,
+ * taller, dark, lavender-night), the headline is ecosystem-aware ("¿Estás
+ * listo?" / "¿Listo para crear?") and a glossy mirror orb is the only way in
+ * — clicking it reveals the site. Post-hydration overlay
  * only (`mounted` starts false), so the SSR/no-JS DOM never contains it and
  * all server-rendered content stays visible beneath (pre-R6). The backdrop is
  * translucent + blurred, never opaque, so the hero still paints underneath
@@ -26,8 +28,25 @@ const STORAGE_KEY = "mar-preloader-done";
 /** Gate fade-out before unmount. */
 const EXIT_MS = 500;
 
+/** Ecosystem-aware copy (user direction): tienda vs taller read differently. */
+const ECOSYSTEM_COPY = {
+  tienda: {
+    headline: "¿Estás listo?",
+    sub: "Entrá y descubrí el detalle perfecto para tu ocasión.",
+    orbLabel: "Entrar al sitio",
+  },
+  taller: {
+    headline: "¿Listo para crear?",
+    sub: "Entrá al taller y aprendé a hacer los detalles con tus manos.",
+    orbLabel: "Entrar al taller",
+  },
+} as const;
+
+type Ecosystem = keyof typeof ECOSYSTEM_COPY;
+
 export default function Preloader() {
   const [mounted, setMounted] = useState(false);
+  const [ecosystem, setEcosystem] = useState<Ecosystem>("tienda");
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const orbRef = useRef<HTMLButtonElement>(null);
@@ -52,7 +71,17 @@ export default function Preloader() {
       signalEntranceReady();
       return;
     }
-    const timer = window.setTimeout(() => setMounted(true), 0);
+    const timer = window.setTimeout(() => {
+      // data-ecosystem is set pre-paint on <html>, so a first-render read is
+      // authoritative; both state flips stay deferred one macrotask (react-hooks
+      // rule) so the effect body never calls setState synchronously.
+      setEcosystem(
+        document.documentElement.getAttribute("data-ecosystem") === "taller"
+          ? "taller"
+          : "tienda"
+      );
+      setMounted(true);
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -107,19 +136,23 @@ export default function Preloader() {
 
   if (!mounted) return null;
 
+  const copy = ECOSYSTEM_COPY[ecosystem];
+
   return (
     <div
       ref={overlayRef}
       className="fixed inset-0 z-[60] flex items-center justify-center overflow-hidden"
     >
-      {/* Pastel rainbow + blur over the page beneath (user direction). */}
+      {/* Var-backed world backdrop + blur over the page beneath (user
+          direction): --preloader-gradient re-themes per ecosystem × mode. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(135deg,rgba(247,201,214,0.6),rgba(251,243,233,0.5),rgba(169,196,160,0.6),rgba(250,220,228,0.5),rgba(217,169,78,0.45))] backdrop-blur-2xl"
+        className="absolute inset-0 bg-(image:--preloader-gradient) backdrop-blur-2xl"
       />
+      {/* Radial sheen, dimmed toward the dark combos (--preloader-glow). */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.35),transparent_60%)]"
+        className="absolute inset-0 bg-(image:--preloader-glow)"
       />
 
       <div
@@ -131,27 +164,27 @@ export default function Preloader() {
         </p>
 
         <p className="font-display text-[clamp(2.8rem,9vw,5.5rem)] leading-none text-mar-brown">
-          ¿Estás listo?
+          {copy.headline}
         </p>
 
         <p className="max-w-sm font-sans text-base text-mar-brown/80">
-          Entrá y descubrí el detalle perfecto para tu ocasión.
+          {copy.sub}
         </p>
 
         <button
           ref={orbRef}
           type="button"
-          aria-label="Entrar al sitio"
+          aria-label={copy.orbLabel}
           className="group relative mt-1 flex size-24 items-center justify-center rounded-full opacity-0"
         >
           {/* Glossy mirror orb: radial glass sheen + rim light (user direction). */}
           <span
             aria-hidden="true"
-            className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.95),rgba(255,255,255,0.45)_45%,rgba(190,215,235,0.7)_75%,rgba(140,170,205,0.85))] shadow-[inset_0_2px_10px_rgba(255,255,255,0.9),0_14px_34px_-8px_rgba(58,42,36,0.35)] transition-transform duration-300 group-hover:scale-105 group-active:scale-95"
+            className="absolute inset-0 rounded-full bg-(image:--preloader-orb) shadow-(--preloader-orb-shadow) transition-transform duration-300 group-hover:scale-105 group-active:scale-95"
           />
           <span
             aria-hidden="true"
-            className="absolute left-6 top-5 h-3 w-6 -rotate-[18deg] rounded-full bg-white/70 blur-[2px]"
+            className="absolute left-6 top-5 h-3 w-6 -rotate-[18deg] rounded-full bg-(--preloader-orb-highlight) blur-[2px]"
           />
           <svg
             viewBox="0 0 24 24"

@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 const SOCIAL_ICONS = {
   Instagram: InstagramIcon,
   TikTok: TikTokIcon,
-  WhatsApp: WhatsAppIcon,
 } as const;
 
 export default function ContactoPage() {

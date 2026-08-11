@@ -27,7 +27,7 @@
   /* Section-mood fallback — the Section shell overrides it per section (ds-R3). */
   --section-mood: var(--mood-hero);
 
-  /* Parchment-sheet surface (user direction) — flipped in dark mode. */
+  /* Parchment-sheet surface (user direction) — re-themed per ecosystem. */
   --sheet-border: rgba(58, 42, 36, 0.1);
   --sheet-glow: rgba(255, 255, 255, 0.55);
   --sheet-glow-end: rgba(255, 255, 255, 0.16);
@@ -35,6 +35,39 @@
   --sheet-shadow:
     0 2px 0 rgba(58, 42, 36, 0.05),
     0 30px 70px -30px rgba(58, 42, 36, 0.3);
+
+  /* Taller ecosystem (workshop world, eco-E2/E5): moods and surface tokens
+     used by the /taller page and by the curtain transition destination tints.
+     Defaults live here so they resolve before [data-ecosystem="taller"]
+     applies (e.g. a first-time visitor landing straight on /taller). */
+  --mood-taller-hero: #e6dcf2;
+  --mood-taller-talleres: #d6e7dc;
+  --mood-taller-aprende: #fbe6d8;
+  --taller-card-bg: rgba(255, 255, 255, 0.65);
+
+  /* Preloader ready-gate (user direction): var-backed so each ecosystem ×
+     theme-mode combo gets its own world. Defaults below are the tienda-light
+     pastel rainbow; the taller / dark / taller-dark combos override. */
+  --preloader-gradient: linear-gradient(
+    135deg,
+    rgba(247, 201, 214, 0.6),
+    rgba(251, 243, 233, 0.5),
+    rgba(169, 196, 160, 0.6),
+    rgba(250, 220, 228, 0.5),
+    rgba(217, 169, 78, 0.45)
+  );
+  --preloader-glow: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.35), transparent 60%);
+  --preloader-orb: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.45) 45%,
+    rgba(190, 215, 235, 0.7) 75%,
+    rgba(140, 170, 205, 0.85)
+  );
+  --preloader-orb-shadow:
+    inset 0 2px 10px rgba(255, 255, 255, 0.9),
+    0 14px 34px -8px rgba(58, 42, 36, 0.35);
+  --preloader-orb-highlight: rgba(255, 255, 255, 0.7);
 }
 
 @theme inline {
@@ -58,6 +91,7 @@
   --font-display: var(--font-display);
   --font-futura: var(--font-futura);
   --font-script: var(--font-script);
+  --font-stout: var(--font-stout);
 }
 
 body {
@@ -93,10 +127,72 @@ body {
   --theme-accent: #c2a27c;
 }
 
-/* Dark mode (user direction): a single `data-theme-mode="dark"` on <html>
-   flips the var-backed palette, so every component that consumes the brand
-   tokens (mar-*, mood-*) re-themes with zero per-component code. Sits after
-   the session-theme blocks so mode wins over decorative session tints. */
+/* Taller ecosystem (user decision): the sun/moon toggle no longer means dark
+   mode — it swaps the WHOLE site to a different pastel workshop world
+   ("taller"), still unmistakably Maranatha. A single `data-ecosystem="taller"`
+   on <html> flips the var-backed palette (mar-*, mood-*, theme-*, sheet-*),
+   so every component re-themes with zero per-component code. Sits after the
+   session-theme blocks so the ecosystem wins over decorative session tints
+   (same precedence the old dark block had). The taller world is borderless:
+   floating translucent cards, frame-less text, soft lavender shadows. */
+:root[data-ecosystem="taller"] {
+  --color-mar-pink: #f3c6dd;
+  --color-mar-pink-light: #f9e0ec;
+  --color-mar-cream: #f7f2fb;
+  --color-mar-gold: #e2b96f;
+  --color-mar-sage: #b8d4c4;
+  --color-mar-brown: #43364d;
+  --color-mar-card: #fdfaff;
+
+  --mood-hero: #e6dcf2;
+  --mood-nosotros: #f7f2fb;
+  --mood-catalogo-sage: #d6e7dc;
+  --mood-catalogo-gold: #f3e1d2;
+  --mood-galeria: #fdfaff;
+  --mood-contacto: #f3e1d2;
+
+  --theme-bg: #efe7f7;
+  --theme-accent: #9b7cc6;
+
+  --taller-card-bg: rgba(255, 255, 255, 0.72);
+
+  --sheet-border: rgba(67, 54, 77, 0.06);
+  --sheet-glow: rgba(255, 255, 255, 0.75);
+  --sheet-glow-end: rgba(255, 255, 255, 0.3);
+  --sheet-inset: rgba(255, 255, 255, 0.85);
+  --sheet-shadow:
+    0 2px 0 rgba(67, 54, 77, 0.04),
+    0 30px 70px -30px rgba(93, 72, 128, 0.35);
+
+  --preloader-gradient: linear-gradient(
+    135deg,
+    rgba(230, 220, 242, 0.65),
+    rgba(247, 242, 251, 0.5),
+    rgba(214, 231, 220, 0.6),
+    rgba(251, 230, 216, 0.55),
+    rgba(155, 124, 198, 0.3)
+  );
+  --preloader-glow: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.42), transparent 60%);
+  --preloader-orb: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.5) 45%,
+    rgba(214, 214, 240, 0.72) 75%,
+    rgba(170, 160, 205, 0.88)
+  );
+  --preloader-orb-shadow:
+    inset 0 2px 10px rgba(255, 255, 255, 0.9),
+    0 14px 34px -8px rgba(67, 54, 77, 0.35);
+  --preloader-orb-highlight: rgba(255, 255, 255, 0.7);
+}
+
+/* Theme mode (restored dark/light, user decision): a single
+   `data-theme-mode="dark"` on <html> flips the var-backed palette, so every
+   component that consumes the brand tokens (mar-*, mood-*) re-themes with zero
+   per-component code. This is the GENERIC dark baseline — the original tienda
+   dark mode, restored exactly — and it applies to BOTH ecosystems unless the
+   more-specific taller combo below overrides it. Sits after the session-theme
+   and taller-light blocks so mode wins over decorative session tints. */
 :root[data-theme-mode="dark"] {
   --color-mar-pink: #4a2f3a;
   --color-mar-pink-light: #5d3a47;
@@ -123,19 +219,120 @@ body {
   --sheet-shadow:
     0 2px 0 rgba(0, 0, 0, 0.35),
     0 30px 70px -30px rgba(0, 0, 0, 0.6);
+
+  --preloader-gradient: linear-gradient(
+    135deg,
+    rgba(58, 37, 48, 0.88),
+    rgba(43, 32, 26, 0.84) 34%,
+    rgba(39, 49, 42, 0.84) 66%,
+    rgba(51, 41, 27, 0.92)
+  );
+  --preloader-glow: radial-gradient(circle at 50% 35%, rgba(217, 169, 78, 0.18), transparent 60%);
+  --preloader-orb: radial-gradient(
+    circle at 30% 25%,
+    rgba(245, 237, 227, 0.5),
+    rgba(93, 60, 78, 0.55) 40%,
+    rgba(45, 32, 26, 0.85) 70%,
+    rgba(36, 26, 22, 0.95)
+  );
+  --preloader-orb-shadow:
+    inset 0 2px 10px rgba(245, 237, 227, 0.22),
+    inset 0 0 0 1px rgba(217, 169, 78, 0.55),
+    0 14px 34px -8px rgba(0, 0, 0, 0.65);
+  --preloader-orb-highlight: rgba(255, 255, 255, 0.32);
 }
 
-/* Dark mode (user direction): the pastel collage art bleaches the cream
-   headline in dark mode — dim the layers so the text keeps full contrast
-   against the wine hero mood (hero-R6). Filter-only on purpose: GSAP animates
-   scale/opacity/yPercent on these layers, never filter, so no conflict. */
+/* Taller + dark (lavender-night): the workshop world's own dark palette.
+   Deep plum-lavender night that stays borderless and floating — cards keep
+   their translucency + shadows, text stays frame-less. Most specific block of
+   the matrix, so it wins over both the taller-light and the generic-dark
+   baselines. */
+:root[data-ecosystem="taller"][data-theme-mode="dark"] {
+  --color-mar-pink: #4f3245;
+  --color-mar-pink-light: #5d3a4f;
+  --color-mar-cream: #2b2431;
+  --color-mar-gold: #e2b96f;
+  --color-mar-sage: #3a4f41;
+  --color-mar-brown: #e9ddf6;
+  --color-mar-card: #332a3d;
+
+  --mood-hero: #32273f;
+  --mood-nosotros: #282130;
+  --mood-catalogo-sage: #23352c;
+  --mood-catalogo-gold: #3a2d21;
+  --mood-galeria: #241d2b;
+  --mood-contacto: #372a1f;
+
+  --mood-taller-hero: #32273f;
+  --mood-taller-talleres: #23352c;
+  --mood-taller-aprende: #3a2b21;
+
+  --theme-bg: #241d2b;
+  --theme-accent: #e2b96f;
+
+  --taller-card-bg: rgba(255, 255, 255, 0.07);
+
+  --sheet-border: rgba(255, 255, 255, 0.08);
+  --sheet-glow: rgba(255, 255, 255, 0.06);
+  --sheet-glow-end: rgba(255, 255, 255, 0.02);
+  --sheet-inset: rgba(255, 255, 255, 0.06);
+  --sheet-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 30px 70px -30px rgba(0, 0, 0, 0.6);
+
+  --preloader-gradient: linear-gradient(
+    135deg,
+    rgba(50, 39, 63, 0.88),
+    rgba(40, 33, 48, 0.84) 38%,
+    rgba(35, 53, 44, 0.84) 68%,
+    rgba(58, 45, 33, 0.92)
+  );
+  --preloader-glow:
+    radial-gradient(circle at 50% 35%, rgba(226, 185, 111, 0.18), transparent 60%),
+    radial-gradient(circle at 50% 35%, rgba(180, 158, 230, 0.16), transparent 60%);
+  --preloader-orb: radial-gradient(
+    circle at 30% 25%,
+    rgba(233, 221, 246, 0.5),
+    rgba(110, 90, 150, 0.55) 40%,
+    rgba(50, 39, 63, 0.85) 70%,
+    rgba(36, 29, 43, 0.95)
+  );
+  --preloader-orb-shadow:
+    inset 0 2px 10px rgba(233, 221, 246, 0.24),
+    inset 0 0 0 1px rgba(226, 185, 111, 0.55),
+    0 14px 34px -8px rgba(0, 0, 0, 0.6);
+  --preloader-orb-highlight: rgba(255, 255, 255, 0.32);
+}
+
+/* Collage dimmer (tienda): the pastel collage art washes out the headline in
+   the light shop — dim the layers just enough to lift text contrast while
+   keeping the pastel identity intact (hero-R6). Filter-only on purpose: GSAP
+   animates scale/opacity/yPercent on these layers, never filter, so no
+   conflict. */
+:root[data-ecosystem="tienda"] [data-collage-layer] {
+  filter: brightness(0.8) saturate(0.85);
+}
+
+/* Collage dimmer (taller): the workshop world is brighter and airier — keep
+   the layers nearly full-strength so the pastel collage stays luminous. */
+:root[data-ecosystem="taller"] [data-collage-layer] {
+  filter: brightness(0.9) saturate(0.95);
+}
+
+/* Collage dimmer (dark, both ecosystems): the pastel collage art bleaches the
+   light headline in dark mode — dim the layers so the text keeps full
+   contrast against the wine/plum hero moods (hero-R6). Equal specificity to
+   the ecosystem dimmers above, so this later source order makes dark win
+   whenever both apply. */
 :root[data-theme-mode="dark"] [data-collage-layer] {
   filter: brightness(0.5) saturate(0.7);
 }
 
-/* Clean, smooth theme switch: color-only transitions while the mode flips.
-   Transform/opacity animations are untouched (INP-safe); the class is applied
-   for ~400ms by ThemeModeToggle. */
+/* Clean, smooth theme switch: color-only transitions while the mode flips
+   (in-place dark/light, both ecosystems). Transform/opacity animations are
+   untouched (INP-safe); the class is applied for ~400ms by ThemeModeToggle.
+   The global prefers-reduced-motion override below neutralizes it for reduced
+   motion. */
 html.theme-transition body,
 html.theme-transition section,
 html.theme-transition .sheet-parchment,
@@ -152,6 +349,14 @@ html.theme-transition .theme-card {
    own box, so the reveal reads as text lifting into place. */
 .split-reveal .line {
   overflow: hidden;
+}
+
+/* Art-directed hero lines (D4): SplitType forces `display:inline-block` on
+   nested elements during the split, which would collapse the H1's three
+   stamped lines back into one flowing paragraph. Reassert block so the
+   typographic line breaks survive the char split. */
+.split-reveal .hero-line {
+  display: block !important;
 }
 
 /* Site-header scroll state (hdr-R1, D5): `.is-scrolled` is toggled by

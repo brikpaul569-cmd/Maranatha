@@ -1,5 +1,11 @@
-import { HOURS, NAV_ITEMS, ROUTES, SOCIALS } from "@/lib/constants";
-import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { HOURS, ROUTES, SOCIALS } from "@/lib/constants";
+import {
+  BoxCheckIcon,
+  InstagramIcon,
+  ShieldIcon,
+  SproutIcon,
+  TikTokIcon,
+} from "@/components/ui/icons";
 
 /**
  * Global footer (ft-R1–R6; design D7). Server component — everything renders
@@ -12,8 +18,18 @@ import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/icons";
 const SOCIAL_ICONS = {
   Instagram: InstagramIcon,
   TikTok: TikTokIcon,
-  WhatsApp: WhatsAppIcon,
 } as const;
+
+/**
+ * Trust badges (user direction): the footer column that used to repeat the
+ * main nav now reassures with brand/eco signals instead — security seal and
+ * sustainable packaging/sourcing. Pure static copy, no links.
+ */
+const TRUST_BADGES: { label: string; icon: typeof ShieldIcon }[] = [
+  { label: "Sitio seguro para tus transacciones", icon: ShieldIcon },
+  { label: "Empaques 100% amigables con el planeta", icon: BoxCheckIcon },
+  { label: "Materiales de origen responsable", icon: SproutIcon },
+];
 
 export default function SiteFooter() {
   const coverageHref = ROUTES.domiciliosBogota;
@@ -33,34 +49,30 @@ export default function SiteFooter() {
             </p>
           </div>
 
-          {/* Mini-sitemap — only real routes link (ft-R4) */}
-          <nav aria-label="Mapa del sitio" className="flex flex-col gap-3">
+          {/* Trust signals (user direction) — replaces the repeated main-nav
+              mini-sitemap with brand/eco reassurance, ft-R1. */}
+          <div>
             <p className="font-sans text-xs uppercase tracking-[0.35em] text-mar-brown/60">
-              Explora
+              Nuestro compromiso
             </p>
-            {NAV_ITEMS.map((item) =>
-              item.href ? (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="font-sans text-sm text-mar-brown/80 transition-colors hover:text-mar-brown"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <span
-                  key={item.label}
-                  className="flex items-center gap-2 font-sans text-sm text-mar-brown/40"
-                  aria-disabled="true"
-                >
-                  {item.label}
-                  <span className="rounded-full border border-mar-brown/15 px-2 py-0.5 text-[10px] uppercase tracking-widest text-mar-brown/40">
-                    próximamente
-                  </span>
-                </span>
-              )
-            )}
-          </nav>
+            <p className="mt-4 font-display text-lg leading-snug text-mar-brown">
+              Un pequeño detalle con mucho cariño.
+            </p>
+            <ul className="mt-4 flex flex-col gap-3">
+              {TRUST_BADGES.map((badge) => {
+                const Icon = badge.icon;
+                return (
+                  <li
+                    key={badge.label}
+                    className="flex items-start gap-2.5 font-sans text-sm text-mar-brown/80"
+                  >
+                    <Icon className="mt-0.5 size-4 shrink-0 text-mar-gold" />
+                    <span>{badge.label}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
 
           {/* Social links — new tab, no referrer leak (ft-R1) */}
           <div>

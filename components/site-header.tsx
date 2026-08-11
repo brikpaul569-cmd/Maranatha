@@ -1,31 +1,50 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { NAV_ITEMS, type NavItem } from "@/lib/constants";
-import { isLenisActive, scrollToHash, scrollToTop } from "@/lib/lenis";
+import {
+  NAV_ITEMS_DESKTOP,
+  NAV_ITEMS_MOBILE,
+  NAV_ITEMS_TALLER_DESKTOP,
+  NAV_ITEMS_TALLER_MOBILE,
+  type NavItem,
+} from "@/lib/constants";
+import { ECOSYSTEM_CHANGE_EVENT, type Ecosystem } from "@/lib/theme";
 import ThemeModeToggle from "@/components/theme-mode-toggle";
+import EcosystemToggle from "@/components/ecosystem-toggle";
+import NavTransition, {
+  triggerNavTransition,
+} from "@/components/nav-transition";
 import { CloseIcon, MenuIcon } from "@/components/ui/icons";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Semi-fixed global header (hdr-R1–R7; design D5).
+ * Fixed global header (hdr-R1–R7; design D5) — navigation redesign
+ * (user decision).
  *
+ * - No header logo: the brand mark lives in the hero lockup only. The desktop
+ *   nav shows the four primary routes and is truly centered (flex centering +
+ *   absolutely positioned controls); the mobile drawer (id="mobile-nav")
+ *   carries a deliberately DIFFERENT set of destinations.
+ * - Every nav item (desktop + drawer) triggers the curtain transition —
+ *   ripple + container transform + destination mood — before navigating.
+ *   NavTransition renders as a sibling fragment so the fixed overlay is never
+ *   a descendant of this transformed header (a transformed ancestor would turn
+ *   `fixed` into a header-relative box).
  * - Fixed position, no layout shift; ScrollTrigger toggles `.is-scrolled` past
  *   the threshold and CSS transitions transform/opacity in ≤0.8s (hdr-R1).
- * - Only real destinations link: Inicio (`#inicio`) + WhatsApp CTA; future
- *   routes render as muted "próximamente" non-links (hdr-R2).
- * - WhatsApp is the single persistent CTA via the FloatingWhatsApp widget;
- *   the header carries no WhatsApp action (hdr-R3 pills removed), so every
- *   breakpoint surfaces only navigation + the drawer toggle.
+ * - Ecosystem-aware nav (eco-E4): the round scissors toggle swaps the whole
+ *   site between "tienda" (existing nav sets) and "taller" (workshop nav
+ *   sets). The header listens for `maranatha:ecosystem-change` (and
+ *   initializes from the <html> attribute) and swaps the rendered items — the
+ *   curtain overlay covers the swap so it is never visible. The sun/moon
+ *   toggle is the restored dark/light mode: an in-place palette flip that
+ *   applies to both ecosystems and never navigates.
  * - Mobile drawer: `aria-expanded`/`aria-controls`, `inert` when closed,
  *   focus moves in on open and returns to the toggle on close, ESC closes,
  *   Tab cycles inside while main content is `inert` (hdr-R4).
- * - Anchor clicks are intercepted only while Lenis is active; otherwise the
- *   native jump runs — including with JS disabled (hdr-R5, D5).
  */
 
 /** Scroll threshold (px) after which the header switches to the scrolled state. */
@@ -37,6 +56,7 @@ export default function SiteHeader() {
   const panelRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const prevOpenRef = useRef(false);
+  const [ecosystem, setEcosystem] = useState<Ecosystem>("tienda");
 
   // Semi-fixed scroll transition (hdr-R1): toggle the scrolled state with
   // ScrollTrigger; the visual change is CSS transform/opacity only (≤0.8s).
@@ -104,30 +124,42 @@ export default function SiteHeader() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  // Anchor navigation (hdr-R5): close the drawer, then intercept only when
-  // Lenis is active — otherwise let the native jump happen (reduced-motion
-  // and no-JS keep native anchor behavior, D5).
-  const handleAnchor = (
+  // Ecosystem-aware nav (eco-E4): initialize from the <html> attribute and
+  // keep in sync with the toggle via the shared event bus (the toggle fires it
+  // while the curtain covers, so the swap happens behind the transition). The
+  // mount setState is deferred one macrotask so the effect body never calls it
+  // synchronously (react-hooks rule).
+  useEffect(() => {
+    const apply = (next: string) => {
+      if (next === "taller" || next === "tienda") setEcosystem(next);
+    };
+    const timer = window.setTimeout(() => {
+      apply(document.documentElement.getAttribute("data-ecosystem") ?? "tienda");
+    }, 0);
+    const onEcosystemChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ ecosystem: string }>).detail;
+      if (detail) apply(detail.ecosystem);
+    };
+    window.addEventListener(ECOSYSTEM_CHANGE_EVENT, onEcosystemChange);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener(ECOSYSTEM_CHANGE_EVENT, onEcosystemChange);
+    };
+  }, []);
+
+  // Unified nav click (redesign): intercept every item in both menus, close
+  // the drawer, and hand the click coordinates + href to the curtain overlay,
+  // which runs the ripple/container cover, then navigates. Reduced-motion and
+  // no-JS keep working: no-JS never reaches this handler (native anchor), and
+  // reduced-motion navigates immediately inside NavTransition (D5).
+  const handleNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
     href?: string
   ) => {
     if (!href) return;
-    setOpen(false);
-    // Intercept only same-page hash anchors (hdr-R5, D5): path routes must
-    // navigate natively, otherwise scrollToHash throws on an invalid selector.
-    if (!href.startsWith("#")) return;
-    if (!isLenisActive()) return;
     event.preventDefault();
-    scrollToHash(href);
-  };
-
-  // Brand logo (user direction): always returns to the very top of the page.
-  // The href keeps the native #inicio jump as a no-JS/reduced-motion fallback.
-  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     setOpen(false);
-    if (!isLenisActive()) return;
-    event.preventDefault();
-    scrollToTop();
+    triggerNavTransition(event.clientX, event.clientY, href);
   };
 
   const renderNavItem = (item: NavItem) => {
@@ -136,7 +168,7 @@ export default function SiteHeader() {
         <a
           key={item.label}
           href={item.href}
-          onClick={(event) => handleAnchor(event, item.href)}
+          onClick={(event) => handleNavClick(event, item.href)}
           className="font-futura text-sm font-medium text-mar-brown/80 transition-colors hover:text-mar-brown"
         >
           {item.label}
@@ -157,79 +189,80 @@ export default function SiteHeader() {
     );
   };
 
+  // Ecosystem-aware nav sets: the workshop world swaps the whole nav (eco-E4).
+  const desktopItems =
+    ecosystem === "taller" ? NAV_ITEMS_TALLER_DESKTOP : NAV_ITEMS_DESKTOP;
+  const mobileItems =
+    ecosystem === "taller" ? NAV_ITEMS_TALLER_MOBILE : NAV_ITEMS_MOBILE;
+
   return (
-    <header ref={headerRef} className="site-header fixed inset-x-0 top-0 z-50">
-      {/* Background layer fades in once scrolled (transform/opacity only). */}
-      <div
-        aria-hidden="true"
-        className="site-header__bg absolute inset-0 border-b border-mar-brown/10 bg-[var(--theme-bg)]/90 backdrop-blur-md"
-      />
+    <>
+      <header ref={headerRef} className="site-header fixed inset-x-0 top-0 z-50">
+        {/* Background layer fades in once scrolled (transform/opacity only). */}
+        <div
+          aria-hidden="true"
+          className="site-header__bg absolute inset-0 border-b border-mar-brown/10 bg-[var(--theme-bg)]/90 backdrop-blur-md"
+        />
 
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3.5">
-        <a
-          href="#inicio"
-          onClick={handleLogoClick}
-          aria-label="Detalles Maranatha — inicio"
-          className="flex items-center"
-        >
-          <Image
-            src="/maranatha.jpeg"
-            alt=""
-            width={44}
-            height={44}
-            className="size-11 rounded-full object-cover shadow-md ring-2 ring-white/70"
-          />
-        </a>
-
-        {/* Desktop navigation (md+) */}
-        <nav
-          aria-label="Navegación principal"
-          className="ml-auto hidden items-center gap-6 md:flex"
-        >
-          {NAV_ITEMS.map(renderNavItem)}
-        </nav>
-
-        {/* Desktop theme toggle (user direction) — bare glyph, no box */}
-        <div className="hidden md:block">
-          <ThemeModeToggle />
-        </div>
-
-        {/* Mobile bar: theme toggle + drawer toggle (single contact lives in the FloatingWhatsApp widget) */}
-        <div className="flex items-center gap-1 md:hidden">
-          <ThemeModeToggle />
-          <button
-            ref={toggleRef}
-            type="button"
-            className="inline-flex size-11 items-center justify-center rounded-full text-mar-brown"
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            onClick={() => setOpen((value) => !value)}
+        <div className="relative mx-auto flex max-w-6xl items-center justify-center gap-4 px-6 py-3.5">
+          {/* Desktop navigation (md+): truly centered; the theme toggle and
+              the mobile controls sit absolutely at the right edge. */}
+          <nav
+            aria-label="Navegación principal"
+            className="hidden items-center gap-6 md:flex"
           >
-            {open ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
-            <span className="sr-only">{open ? "Cerrar menú" : "Abrir menú"}</span>
-          </button>
-        </div>
-      </div>
+            {desktopItems.map(renderNavItem)}
+          </nav>
 
-      {/* Mobile drawer — always mounted (SSR-safe), inert + off-screen when
-          closed, slides via transform/opacity ≤0.3s (hdr-R4, D5). */}
-      <div
-        id="mobile-nav"
-        ref={panelRef}
-        inert={!open}
-        className={[
-          "absolute inset-x-0 top-full border-b border-mar-brown/10 bg-[var(--theme-bg)]",
-          "transition-[opacity,transform] duration-300 motion-reduce:transition-none md:hidden",
-          open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
-        ].join(" ")}
-      >
-        <nav
-          aria-label="Navegación móvil"
-          className="flex flex-col gap-5 px-6 pb-8 pt-2"
+          {/* Desktop controls (md+): dark/light mode + ecosystem toggles */}
+          <div className="absolute right-6 hidden items-center gap-1 md:flex">
+            <ThemeModeToggle />
+            <EcosystemToggle />
+          </div>
+
+          {/* Mobile bar: dark/light + ecosystem toggles + drawer toggle (single
+              contact lives in the FloatingWhatsApp widget) */}
+          <div className="absolute right-6 flex items-center gap-1 md:hidden">
+            <ThemeModeToggle />
+            <EcosystemToggle />
+            <button
+              ref={toggleRef}
+              type="button"
+              className="inline-flex size-11 items-center justify-center rounded-full text-mar-brown"
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              onClick={() => setOpen((value) => !value)}
+            >
+              {open ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
+              <span className="sr-only">{open ? "Cerrar menú" : "Abrir menú"}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile drawer — always mounted (SSR-safe), inert + off-screen when
+            closed, slides via transform/opacity ≤0.3s (hdr-R4, D5). */}
+        <div
+          id="mobile-nav"
+          ref={panelRef}
+          inert={!open}
+          className={[
+            "absolute inset-x-0 top-full border-b border-mar-brown/10 bg-[var(--theme-bg)]",
+            "transition-[opacity,transform] duration-300 motion-reduce:transition-none md:hidden",
+            open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
+          ].join(" ")}
         >
-          {NAV_ITEMS.map(renderNavItem)}
-        </nav>
-      </div>
-    </header>
+          <nav
+            aria-label="Navegación móvil"
+            className="flex flex-col gap-5 px-6 pb-8 pt-2"
+          >
+            {mobileItems.map(renderNavItem)}
+          </nav>
+        </div>
+      </header>
+
+      {/* Curtain transition overlay — sibling of <header>, not a descendant,
+          so `fixed` stays viewport-relative (see component docs). */}
+      <NavTransition />
+    </>
   );
 }

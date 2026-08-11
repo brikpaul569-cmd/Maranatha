@@ -1,8 +1,6 @@
 import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
-import Button from "@/components/ui/button";
 import Watermark from "@/components/watermark";
-import { waMeUrl } from "@/lib/constants";
 
 /**
  * Home "Explora" section (user direction): a different rhythm from the hero —
@@ -70,10 +68,6 @@ export default function ExploraSection() {
             </a>
           ))}
         </div>
-
-        <Button variant="whatsapp" href={waMeUrl()} className="mt-8">
-          Pedí tu detalle por WhatsApp
-        </Button>
       </div>
     </Section>
   );

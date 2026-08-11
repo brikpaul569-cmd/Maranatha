@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Section from "@/components/ui/section";
-import Button from "@/components/ui/button";
 import SplitReveal from "@/components/split-reveal";
 import FloatingCollage, { type CollageItem } from "@/components/floating-collage";
 
@@ -14,10 +13,13 @@ import FloatingCollage, { type CollageItem } from "@/components/floating-collage
  * is purely decorative and the CTA is a real link (cc-R8). Mood is applied
  * through the Section shell (`--section-mood`, hero-R5).
  *
- * Clean lockup (user direction): brand image logo first, the script wordmark
- * "Maranatha" right below it, then the brutal char-assembly tagline
- * (SplitReveal mode="chars" — letters scatter and assemble into place) and the
- * single WhatsApp CTA.
+ * Brand lockup (user direction): image logo + script wordmark "Maranatha"
+ * side-by-side at the top-left, aligned with the fixed header; the
+ * char-assembly tagline (SplitReveal mode="chars" — letters scatter and
+ * assemble into place) stays centered in the remaining viewport, set in the
+ * Anton condensed display face — stamped signage at 0.9 leading, with the
+ * payoff line as the single gold accent moment (San Rita / F37stout
+ * adaptation).
  */
 
 const COLLAGE_ITEMS: CollageItem[] = [
@@ -53,33 +55,39 @@ export default function HeroHome() {
     >
       <FloatingCollage className="absolute inset-0" items={COLLAGE_ITEMS} />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
-        {/* Brand lockup: image logo + script wordmark right below (user direction). */}
-        <Image
-          src="/maranatha.jpeg"
-          alt=""
-          width={160}
-          height={160}
-          sizes="(min-width: 768px) 160px, 128px"
-          preload
-          className="size-32 rounded-full object-cover shadow-2xl ring-4 ring-white/70 md:size-40"
-          aria-hidden
-        />
+      <div className="relative z-10 flex min-h-screen flex-col gap-5 px-6 pt-20 md:pt-24">
+        {/* Brand lockup: image logo + script wordmark side-by-side, aligned
+            with the fixed-header logo (user direction). */}
+        <div className="flex items-center gap-3 self-start text-left">
+          <Image
+            src="/maranatha.jpeg"
+            alt=""
+            width={160}
+            height={160}
+            sizes="(min-width: 768px) 80px, 64px"
+            preload
+            className="size-16 rounded-full object-cover shadow-2xl ring-4 ring-white/70 md:size-20"
+            aria-hidden
+          />
 
-        <span className="font-script text-4xl leading-none text-mar-brown md:text-5xl">
-          Maranatha
-        </span>
+          <span className="font-script text-4xl leading-none text-mar-brown md:text-5xl">
+            Maranatha
+          </span>
+        </div>
 
-        <SplitReveal
-          mode="chars"
-          className="mt-1 max-w-4xl font-display text-[clamp(2.4rem,8.5vw,6rem)] leading-[0.95] tracking-tight text-mar-brown"
-        >
-          Detalles que dicen lo que las palabras no alcanzan
-        </SplitReveal>
-
-        <Button variant="whatsapp" className="mt-3">
-          Pedir por WhatsApp
-        </Button>
+        <div className="flex flex-1 flex-col items-center justify-center text-center">
+          <SplitReveal
+            mode="chars"
+            className="mt-1 font-stout text-[clamp(2.2rem,8vw,6rem)] uppercase leading-[0.9] tracking-normal text-mar-brown"
+          >
+            <span className="hero-line block">Detalles</span>
+            <span className="hero-line block">que dicen lo que</span>
+            <span className="hero-line block text-mar-gold">
+              las palabras{" "}
+              <span className="whitespace-nowrap">no alcanzan</span>
+            </span>
+          </SplitReveal>
+        </div>
       </div>
     </Section>
   );

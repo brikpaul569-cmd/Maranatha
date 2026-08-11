@@ -4,6 +4,11 @@ import type { CSSProperties, ReactNode } from "react";
  * Section shell (ds-R3). Applies a mood via `--section-mood` on the section
  * container; children consume it as `bg-[var(--section-mood)]` (hero-R5).
  * Default padding + max-width follow the ~60% negative-space rule.
+ *
+ * The taller ecosystem extends the mood set with the workshop moods
+ * (eco-E5). `sheet={false}` renders a full-bleed band instead of the frosted
+ * parchment leaf — the taller world is borderless and frame-less, so its
+ * sections float directly on the pastel background.
  */
 
 export type SectionMood =
@@ -12,7 +17,10 @@ export type SectionMood =
   | "catalogo-sage"
   | "catalogo-gold"
   | "galeria"
-  | "contacto";
+  | "contacto"
+  | "taller-hero"
+  | "taller-talleres"
+  | "taller-aprende";
 
 export type SectionProps = {
   children: ReactNode;
@@ -20,6 +28,8 @@ export type SectionProps = {
   id?: string;
   className?: string;
   innerClassName?: string;
+  /** Render a full-bleed band instead of the frosted parchment sheet. */
+  sheet?: boolean;
 };
 
 const MOOD_VARS: Record<SectionMood, string> = {
@@ -29,6 +39,9 @@ const MOOD_VARS: Record<SectionMood, string> = {
   "catalogo-gold": "var(--mood-catalogo-gold)",
   galeria: "var(--mood-galeria)",
   contacto: "var(--mood-contacto)",
+  "taller-hero": "var(--mood-taller-hero)",
+  "taller-talleres": "var(--mood-taller-talleres)",
+  "taller-aprende": "var(--mood-taller-aprende)",
 };
 
 export default function Section({
@@ -37,6 +50,7 @@ export default function Section({
   id,
   className = "",
   innerClassName = "",
+  sheet = true,
 }: SectionProps) {
   const style = mood
     ? ({ "--section-mood": MOOD_VARS[mood] } as CSSProperties)
@@ -45,16 +59,18 @@ export default function Section({
   /**
    * Parchment sheet (user direction): every non-hero section renders as a
    * separate frosted-paper leaf (see `.sheet-parchment` in globals.css).
-   * Skipped on `hero` so the full-bleed parallax layers keep the raw mood
-   * background. Sheets carry their own vertical rhythm so each reads as a
-   * divided page, like the COSECHAS reference.
+   * Skipped on the hero moods so the full-bleed background keeps the raw mood;
+   * skipped too when `sheet={false}` (taller bands). Sheets carry their own
+   * vertical rhythm so each reads as a divided page, like the COSECHAS
+   * reference.
    */
-  const sheet = mood !== "hero" ? "sheet-parchment my-4 md:my-8" : "";
+  const isHeroMood = mood === "hero" || mood === "taller-hero";
+  const sheetClass = !isHeroMood && sheet ? "sheet-parchment my-4 md:my-8" : "";
 
   return (
     <section id={id} style={style} className={className}>
       <div
-        className={`${sheet ? sheet + " " : ""}mx-auto w-full max-w-6xl px-6 py-16 md:px-10 md:py-20 ${innerClassName}`}
+        className={`${sheetClass ? sheetClass + " " : ""}mx-auto w-full max-w-6xl px-6 py-16 md:px-10 md:py-20 ${innerClassName}`}
       >
         {children}
       </div>

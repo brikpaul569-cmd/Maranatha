@@ -1,30 +1,35 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import {
+  THEME_MODE_CHANGE_EVENT,
+  THEME_MODE_STORAGE_KEY,
+  readThemeMode,
+} from "@/lib/theme";
 
 /**
- * Dark/light mode toggle (user direction): a bare moon/sun glyph — no boxed
- * background. Flips `data-theme-mode` on <html> (the whole palette is
+ * Dark/light mode toggle (user decision): a bare moon/sun glyph — no boxed
+ * background. Flips `data-theme-mode` on <html> in-place (the whole palette is
  * var-backed, so no component needs touching), persists the choice in
  * localStorage, and adds a short color transition for a clean, smooth switch.
+ * It is a pure palette flip — no navigation, no curtain (the curtain belongs
+ * to the ecosystem scissors toggle).
  *
- * The pre-paint script in ThemeInit applies the stored/default mode before
+ * Applies to BOTH ecosystems: the `:root[data-theme-mode="dark"]` baseline
+ * darkens the tienda, and the `:root[data-ecosystem="taller"][data-theme-mode="dark"]`
+ * combo darkens the taller world with its own lavender-night palette.
+ *
+ * The pre-paint script in layout.tsx applies the stored/default mode before
  * first paint (no flash). Icon visibility is CSS-driven by the attribute
  * (`html[data-theme-mode='dark']`), so the server and client always render
  * identical markup — no hydration mismatch, and the glyph reflects the real
  * mode even before React takes over.
+ *
+ * Two instances are mounted (desktop + mobile). The icons self-sync via CSS;
+ * only the aria state needs a bus: on click we dispatch
+ * `maranatha:theme-mode-change` so the sibling instance flips its
+ * aria-label/aria-pressed too.
  */
-
-const STORAGE_KEY = "maranatha-theme-mode";
-
-function readMode(): "dark" | "light" {
-  if (typeof window === "undefined") return "light";
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "dark" || stored === "light") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
 
 function MoonIcon({ className }: { className?: string }) {
   return (
@@ -63,11 +68,33 @@ function SunIcon({ className }: { className?: string }) {
 export default function ThemeModeToggle() {
   const [dark, setDark] = useState(false);
 
-  // Re-apply after React clears it on the dev StrictMode remount (Next.js
-  // guide: "Re-applying attributes in development"). No-op in production;
-  // never touches React state, so it stays INP-safe and lint-clean.
+  // Re-apply the attribute after React clears it on the dev StrictMode remount
+  // (Next.js guide: "Re-applying attributes in development"). No-op in
+  // production; never touches React state, so it stays INP-safe and lint-clean.
   useLayoutEffect(() => {
-    document.documentElement.setAttribute("data-theme-mode", readMode());
+    document.documentElement.setAttribute("data-theme-mode", readThemeMode());
+  }, []);
+
+  // Keep this toggle's aria state in sync with the other mounted instance and
+  // with the persisted/OS-preference mode. On mount the setState is deferred
+  // one macrotask so the effect body never calls it synchronously
+  // (react-hooks rule).
+  useEffect(() => {
+    const timer = window.setTimeout(
+      () => setDark(readThemeMode() === "dark"),
+      0
+    );
+    const onThemeModeChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ dark: boolean }>).detail;
+      if (detail && typeof detail.dark === "boolean") {
+        setDark(detail.dark);
+      }
+    };
+    window.addEventListener(THEME_MODE_CHANGE_EVENT, onThemeModeChange);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener(THEME_MODE_CHANGE_EVENT, onThemeModeChange);
+    };
   }, []);
 
   const toggle = () => {
@@ -77,10 +104,18 @@ export default function ThemeModeToggle() {
     root.classList.add("theme-transition");
     root.setAttribute("data-theme-mode", next ? "dark" : "light");
     try {
-      window.localStorage.setItem(STORAGE_KEY, next ? "dark" : "light");
+      window.localStorage.setItem(
+        THEME_MODE_STORAGE_KEY,
+        next ? "dark" : "light"
+      );
     } catch {
       // Storage unavailable (private mode): the toggle still works this visit.
     }
+    window.dispatchEvent(
+      new CustomEvent<{ dark: boolean }>(THEME_MODE_CHANGE_EVENT, {
+        detail: { dark: next },
+      })
+    );
     window.setTimeout(() => root.classList.remove("theme-transition"), 400);
   };
 

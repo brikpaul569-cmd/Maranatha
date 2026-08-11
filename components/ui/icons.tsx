@@ -60,3 +60,34 @@ export function CloseIcon(props: IconProps) {
     </svg>
   );
 }
+
+/** Shield with check — trust/security seal (stroke). */
+export function ShieldIcon(props: IconProps) {
+  return (
+    <svg {...iconBase} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 3l7 2.7v5.1c0 4.4-3 7.4-7 9.2-4-1.8-7-4.8-7-9.2V5.7L12 3z" />
+      <path d="M9 11.8l2.1 2.1 4.1-4.2" />
+    </svg>
+  );
+}
+
+/** Cardboard box with check — eco packaging seal (stroke). */
+export function BoxCheckIcon(props: IconProps) {
+  return (
+    <svg {...iconBase} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M4 7l8-3 8 3v10l-8 3-8-3V7z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  );
+}
+
+/** Sprout/young plant — responsible sourcing seal (stroke). */
+export function SproutIcon(props: IconProps) {
+  return (
+    <svg {...iconBase} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 21v-7" />
+      <path d="M12 14c0-3.8-2.6-6-6-6 0 3.8 2.6 6 6 6z" />
+      <path d="M12 14c0-3.2 2.2-5.4 6-5.4 0 3.2-2.2 5.4-6 5.4z" />
+    </svg>
+  );
+}
