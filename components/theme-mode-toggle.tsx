@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 /**
  * Dark/light mode toggle (user direction): a bare moon/sun glyph — no boxed
@@ -9,7 +9,10 @@ import { useState } from "react";
  * localStorage, and adds a short color transition for a clean, smooth switch.
  *
  * The pre-paint script in ThemeInit applies the stored/default mode before
- * first paint, so there is no flash (FOUC-free).
+ * first paint (no flash). Icon visibility is CSS-driven by the attribute
+ * (`html[data-theme-mode='dark']`), so the server and client always render
+ * identical markup — no hydration mismatch, and the glyph reflects the real
+ * mode even before React takes over.
  */
 
 const STORAGE_KEY = "maranatha-theme-mode";
@@ -23,7 +26,7 @@ function readMode(): "dark" | "light" {
     : "light";
 }
 
-function MoonIcon() {
+function MoonIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -32,7 +35,7 @@ function MoonIcon() {
       strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="size-5"
+      className={className}
       aria-hidden
     >
       <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
@@ -40,7 +43,7 @@ function MoonIcon() {
   );
 }
 
-function SunIcon() {
+function SunIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -48,7 +51,7 @@ function SunIcon() {
       stroke="currentColor"
       strokeWidth="1.8"
       strokeLinecap="round"
-      className="size-5"
+      className={className}
       aria-hidden
     >
       <circle cx="12" cy="12" r="4.5" />
@@ -58,16 +61,19 @@ function SunIcon() {
 }
 
 export default function ThemeModeToggle() {
-  // Lazy initializer reads the stored/system mode on the client; the button
-  // carries suppressHydrationWarning because the server can only render the
-  // default (light) icon while the stored mode may be dark (the pre-paint
-  // script already flipped <html data-theme-mode> before hydration).
-  const [dark, setDark] = useState<boolean>(() => readMode() === "dark");
+  const [dark, setDark] = useState(false);
+
+  // Re-apply after React clears it on the dev StrictMode remount (Next.js
+  // guide: "Re-applying attributes in development"). No-op in production;
+  // never touches React state, so it stays INP-safe and lint-clean.
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute("data-theme-mode", readMode());
+  }, []);
 
   const toggle = () => {
-    const next = !dark;
-    setDark(next);
     const root = document.documentElement;
+    const next = root.getAttribute("data-theme-mode") !== "dark";
+    setDark(next);
     root.classList.add("theme-transition");
     root.setAttribute("data-theme-mode", next ? "dark" : "light");
     try {
@@ -82,12 +88,12 @@ export default function ThemeModeToggle() {
     <button
       type="button"
       onClick={toggle}
-      suppressHydrationWarning
       aria-label={dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
       aria-pressed={dark}
       className="inline-flex size-9 items-center justify-center text-mar-brown/80 transition-colors hover:text-mar-gold"
     >
-      {dark ? <SunIcon /> : <MoonIcon />}
+      <SunIcon className="hidden size-5 [html[data-theme-mode='dark']_&]:block" />
+      <MoonIcon className="size-5 [html[data-theme-mode='dark']_&]:hidden" />
     </button>
   );
 }
