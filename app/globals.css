@@ -48,6 +48,7 @@
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-futura: var(--font-futura);
+  --font-script: var(--font-script);
 }
 
 body {
@@ -113,6 +114,46 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-mar-gold);
   outline-offset: 3px;
+}
+
+/* Parchment sheet (user direction): every non-hero section reads as a
+   separate frosted-paper leaf stacked on the pastel background (COSECHAS
+   reference). Keeps the clean-glass family (blur + translucency) while adding
+   a paper gradient, soft edge and stacked shadow. */
+.sheet-parchment {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.16)),
+    var(--theme-bg);
+  border: 1px solid rgba(58, 42, 36, 0.1);
+  border-radius: 2rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 2px 0 rgba(58, 42, 36, 0.05),
+    0 30px 70px -30px rgba(58, 42, 36, 0.3);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Anthropic-style motif watermarks (user direction): faint professional
+   "detalle" icons that drift gently inside a section. Transform-only and
+   disabled under reduced motion. */
+.watermark-float {
+  animation: watermark-float 12s ease-in-out infinite alternate;
+}
+
+@keyframes watermark-float {
+  from {
+    transform: translate3d(0, -6px, 0) rotate(-2deg);
+  }
+  to {
+    transform: translate3d(0, 6px, 0) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watermark-float {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

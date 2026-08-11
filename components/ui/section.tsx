@@ -43,19 +43,18 @@ export default function Section({
     : undefined;
 
   /**
-   * Frosted "clean crystal" sheet (glassmorphism, Brief 05) applied to the
-   * content surface of every section; deliberately skipped on `hero` so the
-   * full-bleed parallax layers keep their raw mood background (no double blur).
+   * Parchment sheet (user direction): every non-hero section renders as a
+   * separate frosted-paper leaf (see `.sheet-parchment` in globals.css).
+   * Skipped on `hero` so the full-bleed parallax layers keep the raw mood
+   * background. Sheets carry their own vertical rhythm so each reads as a
+   * divided page, like the COSECHAS reference.
    */
-  const glass =
-    mood !== "hero"
-      ? "bg-[var(--theme-bg)]/60 backdrop-blur-xl border border-white/10"
-      : "";
+  const sheet = mood !== "hero" ? "sheet-parchment my-4 md:my-8" : "";
 
   return (
     <section id={id} style={style} className={className}>
       <div
-        className={`${glass ? glass + " " : ""}mx-auto w-full max-w-6xl px-6 py-24 md:px-10 md:py-32 ${innerClassName}`}
+        className={`${sheet ? sheet + " " : ""}mx-auto w-full max-w-6xl px-6 py-16 md:px-10 md:py-20 ${innerClassName}`}
       >
         {children}
       </div>
