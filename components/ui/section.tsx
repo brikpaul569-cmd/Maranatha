@@ -42,10 +42,20 @@ export default function Section({
     ? ({ "--section-mood": MOOD_VARS[mood] } as CSSProperties)
     : undefined;
 
+  /**
+   * Frosted "clean crystal" sheet (glassmorphism, Brief 05) applied to the
+   * content surface of every section; deliberately skipped on `hero` so the
+   * full-bleed parallax layers keep their raw mood background (no double blur).
+   */
+  const glass =
+    mood !== "hero"
+      ? "bg-[var(--theme-bg)]/60 backdrop-blur-xl border border-white/10"
+      : "";
+
   return (
     <section id={id} style={style} className={className}>
       <div
-        className={`mx-auto w-full max-w-6xl px-6 py-24 md:px-10 md:py-32 ${innerClassName}`}
+        className={`${glass ? glass + " " : ""}mx-auto w-full max-w-6xl px-6 py-24 md:px-10 md:py-32 ${innerClassName}`}
       >
         {children}
       </div>
