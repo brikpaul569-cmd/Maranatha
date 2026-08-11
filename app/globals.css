@@ -125,6 +125,14 @@ body {
     0 30px 70px -30px rgba(0, 0, 0, 0.6);
 }
 
+/* Dark mode (user direction): the pastel collage art bleaches the cream
+   headline in dark mode — dim the layers so the text keeps full contrast
+   against the wine hero mood (hero-R6). Filter-only on purpose: GSAP animates
+   scale/opacity/yPercent on these layers, never filter, so no conflict. */
+:root[data-theme-mode="dark"] [data-collage-layer] {
+  filter: brightness(0.5) saturate(0.7);
+}
+
 /* Clean, smooth theme switch: color-only transitions while the mode flips.
    Transform/opacity animations are untouched (INP-safe); the class is applied
    for ~400ms by ThemeModeToggle. */
