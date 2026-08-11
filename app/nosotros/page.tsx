@@ -3,6 +3,7 @@ import Reveal from "@/components/reveal";
 import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
+import Watermark from "@/components/watermark";
 
 export const metadata: Metadata = {
   title: "Nosotros",
@@ -36,7 +37,16 @@ const VALUES = [
 export default function NosotrosPage() {
   return (
     <main>
-      <Section mood="nosotros" className="bg-[var(--section-mood)]">
+      <Section mood="nosotros" className="relative bg-[var(--section-mood)]">
+        <Watermark
+          src="/placeholders/flower.svg"
+          className="right-8 top-6 w-20 md:w-24"
+        />
+        <Watermark
+          src="/placeholders/ribbon.svg"
+          className="bottom-8 left-6 w-16 md:w-20"
+          opacity={0.12}
+        />
         <div className="max-w-3xl">
           <Reveal>
             <Eyebrow>Detalles Maranatha</Eyebrow>

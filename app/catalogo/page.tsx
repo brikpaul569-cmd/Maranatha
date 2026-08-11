@@ -4,6 +4,7 @@ import ProductCard from "@/components/product-card";
 import CategoryFilter from "@/components/category-filter";
 import CatalogOccasionFilter from "@/components/catalog-occasion-filter";
 import Section from "@/components/ui/section";
+import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
 import Reveal from "@/components/reveal";
 
@@ -16,7 +17,16 @@ export const metadata: Metadata = {
 export default function CatalogoPage() {
   return (
     <main>
-      <Section mood="catalogo-sage" className="bg-[var(--section-mood)]">
+      <Section mood="catalogo-sage" className="relative bg-[var(--section-mood)]">
+        <Watermark
+          src="/placeholders/gift.svg"
+          className="left-8 top-6 w-16 md:w-20"
+        />
+        <Watermark
+          src="/placeholders/flower.svg"
+          className="bottom-8 right-8 w-20 md:w-24"
+          opacity={0.12}
+        />
         <div className="max-w-2xl">
           <Reveal>
             <Eyebrow>Detalles para cada ocasión</Eyebrow>

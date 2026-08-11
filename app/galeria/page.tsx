@@ -5,6 +5,7 @@ import Reveal from "@/components/reveal";
 import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
+import Watermark from "@/components/watermark";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -54,7 +55,16 @@ const GALLERY_ITEMS = [
 export default function GaleriaPage() {
   return (
     <main>
-      <Section mood="galeria" className="bg-[var(--section-mood)]">
+      <Section mood="galeria" className="relative bg-[var(--section-mood)]">
+        <Watermark
+          src="/placeholders/ribbon.svg"
+          className="right-8 top-6 w-20 md:w-24"
+        />
+        <Watermark
+          src="/placeholders/flower.svg"
+          className="bottom-8 left-6 w-16 md:w-20"
+          opacity={0.12}
+        />
         <div className="max-w-2xl">
           <Reveal>
             <Eyebrow>Nuestros detalles</Eyebrow>
