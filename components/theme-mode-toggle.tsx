@@ -58,11 +58,11 @@ function SunIcon() {
 }
 
 export default function ThemeModeToggle() {
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    setDark(readMode() === "dark");
-  }, []);
+  // Lazy initializer reads the stored/system mode on the client; the button
+  // carries suppressHydrationWarning because the server can only render the
+  // default (light) icon while the stored mode may be dark (the pre-paint
+  // script already flipped <html data-theme-mode> before hydration).
+  const [dark, setDark] = useState<boolean>(() => readMode() === "dark");
 
   const toggle = () => {
     const next = !dark;
@@ -82,6 +82,7 @@ export default function ThemeModeToggle() {
     <button
       type="button"
       onClick={toggle}
+      suppressHydrationWarning
       aria-label={dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
       aria-pressed={dark}
       className="inline-flex size-9 items-center justify-center text-mar-brown/80 transition-colors hover:text-mar-gold"
