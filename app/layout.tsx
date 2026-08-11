@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter, Jost } from "next/font/google";
 import Script from "next/script";
 import { LOCALBUSINESS_SCHEMA } from "@/lib/seo";
 import SmoothScroll from "@/components/smooth-scroll";
@@ -22,6 +22,11 @@ const sans = Inter({
   variable: "--font-sans",
 });
 
+const futura = Jost({
+  subsets: ["latin"],
+  variable: "--font-futura",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Detalles Maranatha",
@@ -40,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
+      className={`${display.variable} ${sans.variable} ${futura.variable} h-full antialiased`}
     >
         <head>
           {/* Pre-paint theme script (D2): sets <html data-theme> before first

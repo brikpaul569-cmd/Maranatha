@@ -53,7 +53,7 @@ export default function Button({
 
   const classes = [
     "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5",
-    "font-sans text-sm font-semibold uppercase tracking-widest",
+    "font-futura text-sm font-semibold uppercase tracking-widest",
     "transition-transform duration-300 motion-reduce:transition-none",
     "motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0",
     "disabled:pointer-events-none disabled:opacity-60",

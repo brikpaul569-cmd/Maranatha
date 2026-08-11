@@ -47,6 +47,7 @@
   /* Font variables are defined by next/font on <html> */
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
+  --font-futura: var(--font-futura);
 }
 
 body {
