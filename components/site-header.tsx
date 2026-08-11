@@ -5,7 +5,8 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NAV_ITEMS, type NavItem } from "@/lib/constants";
-import { isLenisActive, scrollToHash } from "@/lib/lenis";
+import { isLenisActive, scrollToHash, scrollToTop } from "@/lib/lenis";
+import ThemeModeToggle from "@/components/theme-mode-toggle";
 import { CloseIcon, MenuIcon } from "@/components/ui/icons";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -120,6 +121,15 @@ export default function SiteHeader() {
     scrollToHash(href);
   };
 
+  // Brand logo (user direction): always returns to the very top of the page.
+  // The href keeps the native #inicio jump as a no-JS/reduced-motion fallback.
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+    if (!isLenisActive()) return;
+    event.preventDefault();
+    scrollToTop();
+  };
+
   const renderNavItem = (item: NavItem) => {
     if (item.href) {
       return (
@@ -158,7 +168,7 @@ export default function SiteHeader() {
       <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3.5">
         <a
           href="#inicio"
-          onClick={(event) => handleAnchor(event, "#inicio")}
+          onClick={handleLogoClick}
           aria-label="Detalles Maranatha — inicio"
           className="flex items-center"
         >
@@ -174,13 +184,19 @@ export default function SiteHeader() {
         {/* Desktop navigation (md+) */}
         <nav
           aria-label="Navegación principal"
-          className="hidden items-center gap-6 md:flex"
+          className="ml-auto hidden items-center gap-6 md:flex"
         >
           {NAV_ITEMS.map(renderNavItem)}
         </nav>
 
-        {/* Mobile bar: drawer toggle (single contact lives in the FloatingWhatsApp widget) */}
+        {/* Desktop theme toggle (user direction) — bare glyph, no box */}
+        <div className="hidden md:block">
+          <ThemeModeToggle />
+        </div>
+
+        {/* Mobile bar: theme toggle + drawer toggle (single contact lives in the FloatingWhatsApp widget) */}
         <div className="flex items-center gap-1 md:hidden">
+          <ThemeModeToggle />
           <button
             ref={toggleRef}
             type="button"

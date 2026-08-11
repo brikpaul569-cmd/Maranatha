@@ -46,3 +46,17 @@ export function scrollToHash(hash: string, offset = 0): boolean {
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   return false;
 }
+
+/**
+ * Scrolls to the very top of the page (user direction: the brand logo always
+ * returns to the start). Uses the shared Lenis instance when one is active;
+ * otherwise falls back to a native smooth scroll.
+ */
+export function scrollToTop(): boolean {
+  if (instance) {
+    instance.scrollTo(0);
+    return true;
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  return false;
+}

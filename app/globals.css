@@ -26,6 +26,15 @@
 
   /* Section-mood fallback — the Section shell overrides it per section (ds-R3). */
   --section-mood: var(--mood-hero);
+
+  /* Parchment-sheet surface (user direction) — flipped in dark mode. */
+  --sheet-border: rgba(58, 42, 36, 0.1);
+  --sheet-glow: rgba(255, 255, 255, 0.55);
+  --sheet-glow-end: rgba(255, 255, 255, 0.16);
+  --sheet-inset: rgba(255, 255, 255, 0.65);
+  --sheet-shadow:
+    0 2px 0 rgba(58, 42, 36, 0.05),
+    0 30px 70px -30px rgba(58, 42, 36, 0.3);
 }
 
 @theme inline {
@@ -84,6 +93,53 @@ body {
   --theme-accent: #c2a27c;
 }
 
+/* Dark mode (user direction): a single `data-theme-mode="dark"` on <html>
+   flips the var-backed palette, so every component that consumes the brand
+   tokens (mar-*, mood-*) re-themes with zero per-component code. Sits after
+   the session-theme blocks so mode wins over decorative session tints. */
+:root[data-theme-mode="dark"] {
+  --color-mar-pink: #4a2f3a;
+  --color-mar-pink-light: #5d3a47;
+  --color-mar-cream: #2b201a;
+  --color-mar-gold: #d9a94e;
+  --color-mar-sage: #3a4a3a;
+  --color-mar-brown: #f5ede3;
+  --color-mar-card: #2e221c;
+
+  --mood-hero: #3a2530;
+  --mood-nosotros: #2b201a;
+  --mood-catalogo-sage: #27312a;
+  --mood-catalogo-gold: #33291b;
+  --mood-galeria: #241a16;
+  --mood-contacto: #332419;
+
+  --theme-bg: #241a16;
+  --theme-accent: #d9a94e;
+
+  --sheet-border: rgba(255, 255, 255, 0.08);
+  --sheet-glow: rgba(255, 255, 255, 0.06);
+  --sheet-glow-end: rgba(255, 255, 255, 0.02);
+  --sheet-inset: rgba(255, 255, 255, 0.06);
+  --sheet-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 30px 70px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* Clean, smooth theme switch: color-only transitions while the mode flips.
+   Transform/opacity animations are untouched (INP-safe); the class is applied
+   for ~400ms by ThemeModeToggle. */
+html.theme-transition body,
+html.theme-transition section,
+html.theme-transition .sheet-parchment,
+html.theme-transition .site-header__bg,
+html.theme-transition .theme-card {
+  transition:
+    background-color 350ms ease,
+    color 350ms ease,
+    border-color 350ms ease,
+    box-shadow 350ms ease;
+}
+
 /* Split-reveal line mask (D4): each line rises from below clipped inside its
    own box, so the reveal reads as text lifting into place. */
 .split-reveal .line {
@@ -118,20 +174,27 @@ body {
 
 /* Parchment sheet (user direction): every non-hero section reads as a
    separate frosted-paper leaf stacked on the pastel background (COSECHAS
-   reference). Keeps the clean-glass family (blur + translucency) while adding
-   a paper gradient, soft edge and stacked shadow. */
+   reference). Semi-transparent on purpose — the section mood glows through
+   the frosted paper, fusing parchment with glassmorphism. */
 .sheet-parchment {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.16)),
-    var(--theme-bg);
-  border: 1px solid rgba(58, 42, 36, 0.1);
+  background-color: rgba(251, 243, 233, 0.5); /* fallback: translucent paper */
+  background-color: color-mix(in srgb, var(--theme-bg) 55%, transparent);
+  background-image: linear-gradient(
+    180deg,
+    var(--sheet-glow, rgba(255, 255, 255, 0.55)),
+    var(--sheet-glow-end, rgba(255, 255, 255, 0.16))
+  );
+  border: 1px solid var(--sheet-border, rgba(58, 42, 36, 0.1));
   border-radius: 2rem;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 2px 0 rgba(58, 42, 36, 0.05),
-    0 30px 70px -30px rgba(58, 42, 36, 0.3);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+    inset 0 1px 0 var(--sheet-inset, rgba(255, 255, 255, 0.65)),
+    var(
+      --sheet-shadow,
+      0 2px 0 rgba(58, 42, 36, 0.05),
+      0 30px 70px -30px rgba(58, 42, 36, 0.3)
+    );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 /* Anthropic-style motif watermarks (user direction): faint professional
