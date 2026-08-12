@@ -280,12 +280,12 @@ export default function BearDiagram({ className = "" }: BearDiagramProps) {
     <div
       ref={rootRef}
       className={
-        "relative mx-auto w-full max-w-4xl overflow-hidden " +
-        "rounded-2xl shadow-xl shadow-black/10 " +
+        "relative mx-auto w-full max-w-5xl overflow-hidden " +
         className
       }
     >
-      {/* Bear image */}
+      {/* Bear image — TEMP: mix-blend-mode: multiply makes white BG transparent
+           against the section mood. Replace Oso.png with transparent version ASAP. */}
       <div
         ref={imageRef}
         data-parallax={0.12}
@@ -296,7 +296,7 @@ export default function BearDiagram({ className = "" }: BearDiagramProps) {
           alt="Osito de peluche artesanal Maranatha sosteniendo una flor de terciopelo púrpura — diagrama de desglose técnico"
           fill
           sizes="(min-width: 768px) 48rem, 100vw"
-          className="object-contain"
+          className="object-contain mix-blend-multiply"
           loading="eager"
           priority
         />

@@ -11,19 +11,13 @@ import BearDiagram from "@/components/bear-diagram";
  * Home hero (hero-R1–R9; design D3; user art-direction update).
  *
  * Client component: GSAP-driven entrance only. All text is server-rendered
- * HTML (hero-R1) — the SplitReveal H1 is never hidden without JS, the bear
- * diagram is the central visual and the CTA is a real link (cc-R8). Mood is
- * applied through the Section shell (`--section-mood`, hero-R5).
+ * HTML (hero-R1). The BearDiagram lives as a **background layer** (z-0,
+ * absolute inset) behind the text content (z-10). Mood applied via
+ * Section shell (`--section-mood`, hero-R5).
  *
- * Brand lockup (user direction): image logo + script wordmark "Maranatha"
- * side-by-side at the top-left, raised to the top of the viewport (the
- * Section shell's vertical padding is disabled for the hero so the lockup
- * sits near the top edge). The char-assembly tagline
- * (SplitReveal mode="chars" — letters scatter and assemble into place)
- * stays above the central BearDiagram, set in the Anton condensed display
- * face — stamped signage at 0.9 leading, with the payoff line as the
- * single gold accent moment (San Rita / F37stout adaptation). A real
- * catalog CTA (server-rendered `<a>`, cc-R8) sits below the bear.
+ * Brand lockup: image logo + script wordmark top-left, raised to viewport top.
+ * Char-assembly tagline (SplitReveal) centered above the bear.
+ * Real catalog CTA below the tagline.
  */
 
 export default function HeroHome() {
@@ -34,9 +28,14 @@ export default function HeroHome() {
       className="relative overflow-hidden bg-[var(--section-mood)]"
       innerClassName="py-0! px-0! md:px-0!"
     >
+      {/* BACKGROUND LAYER: Bear + exploded-view diagram (z-0) */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center px-6">
+        <BearDiagram className="w-full max-w-5xl" />
+      </div>
+
+      {/* FOREGROUND CONTENT: all text/UI on top (z-10) */}
       <div className="relative z-10 flex min-h-screen flex-col gap-5 px-6 pt-6 md:pt-8">
-        {/* Brand lockup (user direction): image logo + script wordmark
-            top-left, raised to the top of the viewport. */}
+        {/* Brand lockup: top-left, raised to viewport top */}
         <div className="flex items-center gap-3">
           <Image
             src="/maranatha.jpeg"
@@ -67,9 +66,6 @@ export default function HeroHome() {
               <span className="whitespace-nowrap">no alcanzan</span>
             </span>
           </SplitReveal>
-
-          {/* Central: the handmade teddy bear with exploded-view diagram */}
-          <BearDiagram className="mb-4" />
 
           {/* Catalog CTA */}
           <Reveal delay={1.0} y={16} className="mt-4 md:mt-6">
