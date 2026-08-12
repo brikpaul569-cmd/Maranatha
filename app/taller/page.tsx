@@ -142,13 +142,6 @@ export default function TallerPage() {
                   {workshop.level}
                 </span>
               </div>
-              <Button
-                variant="whatsapp"
-                message={`Hola 👋 Quiero reservar cupo para el taller «${workshop.title}»`}
-                className="w-full"
-              >
-                Reservar cupo
-              </Button>
             </article>
           ))}
         </div>

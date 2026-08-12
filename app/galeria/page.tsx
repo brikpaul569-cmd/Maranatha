@@ -111,11 +111,8 @@ export default function GaleriaPage() {
           ))}
         </div>
 
-        <Reveal delay={0.1} className="mt-14 flex flex-wrap gap-3">
+        <Reveal delay={0.1} className="mt-14">
           <Button href="/catalogo">Ver catálogo completo</Button>
-          <Button variant="whatsapp" message="Hola 👋 Quiero ver el catálogo de Detalles Maranatha">
-            Pedir por WhatsApp
-          </Button>
         </Reveal>
       </Section>
     </main>

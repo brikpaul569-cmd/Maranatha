@@ -432,6 +432,23 @@ html.theme-transition .theme-card {
   }
 }
 
+/* Hero scroll cue (user direction): gentle chevron bob at the bottom of
+   the hero inviting to keep scrolling. Transform-only; the global
+   reduced-motion block below freezes it. */
+.scroll-cue {
+  animation: scroll-cue 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

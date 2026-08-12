@@ -11,6 +11,9 @@ export async function GET() {
     { loc: `${SEO_BASE_URL}/nosotros`, priority: "0.5", changefreq: "monthly" },
     { loc: `${SEO_BASE_URL}/galeria`, priority: "0.5", changefreq: "monthly" },
     { loc: `${SEO_BASE_URL}/contacto`, priority: "0.5", changefreq: "monthly" },
+    // New routes shipped after Brief 03 — ocasiones hub + taller ecosystem.
+    { loc: `${SEO_BASE_URL}/ocasiones`, priority: "0.7", changefreq: "weekly" },
+    { loc: `${SEO_BASE_URL}/taller`, priority: "0.6", changefreq: "weekly" },
   ];
   const urls = [
     ...staticUrls,
