@@ -284,19 +284,18 @@ export default function BearDiagram({ className = "" }: BearDiagramProps) {
         className
       }
     >
-      {/* Bear image — TEMP: mix-blend-mode: multiply makes white BG transparent
-           against the section mood. Replace Oso.png with transparent version ASAP. */}
+      {/* Bear image — transparent BG (Photoroom cutout) */}
       <div
         ref={imageRef}
         data-parallax={0.12}
         className="relative aspect-[16/9] w-full"
       >
         <Image
-          src="/placeholders/Oso.png"
+          src="/placeholders/Oso-Photoroom.png"
           alt="Osito de peluche artesanal Maranatha sosteniendo una flor de terciopelo púrpura — diagrama de desglose técnico"
           fill
           sizes="(min-width: 768px) 48rem, 100vw"
-          className="object-contain mix-blend-multiply"
+          className="object-contain"
           loading="eager"
           priority
         />
