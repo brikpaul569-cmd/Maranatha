@@ -308,9 +308,9 @@ export default function BearDiagram({ className = "" }: BearDiagramProps) {
         />
       </div>
 
-      {/* Technical diagram overlay (SVG on top of image) */}
+      {/* Technical diagram overlay (SVG on top of image) — z-10 above bear */}
       <svg
-        className="absolute inset-0 -z-10 h-full w-full"
+        className="absolute inset-0 z-10 h-full w-full pointer-events-none"
         viewBox="0 0 1152 648"
         preserveAspectRatio="xMidYMid meet"
         aria-hidden="true"
