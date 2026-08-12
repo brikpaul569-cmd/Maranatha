@@ -4,6 +4,7 @@ import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import Watermark from "@/components/watermark";
+import BearDiagram from "@/components/bear-diagram";
 import { TALLER_WORKSHOPS, waMeUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -85,6 +86,12 @@ export default function TallerPage() {
             de listón, bouquets de limpiapipas, canastas de regalo y envolturas
             hechas a mano, paso a paso y sin experiencia previa.
           </p>
+
+          {/* Diagrama técnico del osito artesanal — producto estrella del taller */}
+          <div className="mt-10 flex justify-center">
+            <BearDiagram className="w-full max-w-3xl" />
+          </div>
+
           <div className="mt-8 flex flex-wrap gap-3">
             <Button href="#talleres">Ver los talleres</Button>
             <Button

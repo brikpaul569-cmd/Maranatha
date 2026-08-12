@@ -36,96 +36,103 @@ type Callout = {
   text: string;
 };
 
-/** Annotation set — positions tuned to a 1152×648 bear image.
- *  Adjust `from[]` and `box[]` as we iterate on the actual image. */
+/** Annotation set — positions tuned to a 1152×648 SEATED bear image.
+ *  Bear centered horizontally (~576px). Anatomy (from your spec):
+ *  - Head/face: upper-center (y ~120-240)
+ *  - Ears: top of head (y ~80-130)
+ *  - Front paws + flower: center (x ~576, y ~320-400)
+ *  - Body/torso: middle (y ~240-450)
+ *  - Back feet/soles: bottom (y ~520-620)
+ *  - Left sole (viewer's left = bear's RIGHT): x ~400-480, y ~560-600
+ *  Adjust `from[]` and `box[]` as we iterate. */
 const CALLOUTS: Callout[] = [
-  // ── CABEZA ──
+  // ── CABEZA / ROSTRO ──
   {
     id: "cabeza-1",
-    from: [560, 140],
+    from: [576, 160],
     box: [780, 80],
-    text: "Tela de Peluche Sintético (Marrón Canela, ~5mm)",
+    text: "Tela de Peluche Sintético (Marrón Canela, Pelo Corto Mullido)",
   },
   {
     id: "cabeza-2",
-    from: [520, 120],
+    from: [530, 100],
     box: [800, 130],
-    text: "Orejas de Dos Piezas (Tela Exterior Marrón, Tela Interior Naranja Suave)",
+    text: "Orejas Redondeadas (Tela Exterior Marrón, Interior Naranja Suave/Coral)",
   },
   {
     id: "cabeza-3",
-    from: [600, 110],
+    from: [576, 130],
     box: [300, 40],
-    text: "Costura Central Profunda (Costura de Máquina de Seguridad)",
+    text: "Costura Central Vertical Visible (Cabeza Esférica Articulada)",
   },
   {
     id: "cabeza-4",
-    from: [540, 180],
+    from: [540, 190],
     box: [300, 190],
-    text: "Ojos de Seguridad de Plástico (Brillantes, Estilo Anime, Fijación Interna)",
+    text: "Ojos de Seguridad Plástico (Negros, Grandes, Redondos, Brillo Anime/Kawaii)",
   },
   {
     id: "cabeza-5",
-    from: [620, 200],
-    box: [780, 220],
-    text: "Mejillas de Terciopelo Rosa (Técnica de Flocado o Bordado Plano)",
+    from: [610, 210],
+    box: [780, 230],
+    text: "Mejillas Rubor Rosa Aterciopelado (Flocado / Bordado Plano)",
   },
   {
     id: "cabeza-6",
-    from: [580, 160],
-    box: [820, 430],
-    text: "Hocico Bordado (Hilo Marrón Claro, Costura Satinada)",
+    from: [576, 230],
+    box: [820, 400],
+    text: "Hocico y Sonrisa Bordados (Hilo Marrón Claro/Beige, Definido)",
   },
-  // ── CUERPO / EXTREMIDADES SUPERIORES ──
+  // ── CUERPO / PATAS DELANTERAS + FLOR ──
   {
     id: "cuerpo-1",
-    from: [560, 320],
+    from: [576, 340],
     box: [300, 380],
-    text: "Relleno Interno de Poliéster Hipoalergénico (Media Densidad para Achuchabilidad)",
+    text: "Relleno Interno Poliéster Hipoalergénico (Media Densidad 'Achuchabilidad')",
   },
   {
     id: "cuerpo-2",
-    from: [430, 380],
+    from: [500, 370],
     box: [200, 520],
-    text: "Manos/Garras Articuladas (Estructura de Alambre Interna para Sujeción Poseable)",
+    text: "Patas Delanteras Dobladadas al Centro (Sujetan Tallo de la Flor)",
   },
   {
     id: "cuerpo-3",
-    from: [460, 400],
+    from: [530, 360],
     box: [620, 520],
-    text: "Material del Tallo (Tallo de Flor de Chenilla Verde Flexible)",
+    text: "Tallo de Flor de Chenilla Verde Flexible (Pipe Cleaner, 2 Hojas Tela)",
   },
-  // ── LA FLOR ──
+  // ── LA FLOR (en las manos) ──
   {
     id: "flor-1",
-    from: [520, 390],
+    from: [550, 350],
     box: [380, 580],
-    text: "Pétalos de Terciopelo (Telas Púrpura Cortadas con Láser, 5 Unidades)",
+    text: "Flor 5 Pétalos Terciopelo Púrpura Vibrante",
   },
   {
     id: "flor-2",
-    from: [540, 410],
+    from: [570, 330],
     box: [640, 480],
-    text: "Estambre de Polímero (Punto Amarillo con Textura Granulada)",
+    text: "Estambre Amarillo Textura Granulada",
   },
-  // ── EXTREMIDADES INFERIORES ──
+  // ── PATAS TRASERAS / SUELAS ──
   {
     id: "pata-1",
-    from: [420, 490],
+    from: [440, 580],
     box: [200, 580],
-    text: "Pata Izquierda con Texto Bordado (Texto Verbatim: 'Maranatha', Hilo Marrón Oscuro)",
+    text: "Suela Pata Izquierda (Espectador) con 'Maranatha' Bordado Script (Hilo Marrón Oscuro)",
   },
   {
     id: "pata-2",
-    from: [400, 560],
+    from: [420, 610],
     box: [180, 630],
-    text: "Base de la Pata de Dos Piezas (Tela de Suela Naranja Claro, Costura Externa Visible)",
+    text: "Suelas Redondeadas Tela Plana Naranja Claro/Coral (Diferente al Peluche)",
   },
   {
     id: "pata-3",
-    from: [590, 540],
+    from: [650, 580],
     box: [780, 540],
-    text: "Costura de Seguridad del Culo (Costura Oculta Reforzada)",
+    text: "Costura de Seguridad Trasera (Reforzada, Oculta)",
   },
 ];
 

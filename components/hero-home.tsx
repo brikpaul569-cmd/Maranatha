@@ -5,18 +5,15 @@ import Section from "@/components/ui/section";
 import SplitReveal from "@/components/split-reveal";
 import Button from "@/components/ui/button";
 import Reveal from "@/components/reveal";
-import BearDiagram from "@/components/bear-diagram";
 
 /**
  * Home hero (hero-R1–R9; design D3; user art-direction update).
  *
  * Client component: GSAP-driven entrance only. All text is server-rendered
- * HTML (hero-R1). The BearDiagram lives as a **background layer** (z-0,
- * absolute inset) behind the text content (z-10). Mood applied via
- * Section shell (`--section-mood`, hero-R5).
+ * HTML (hero-R1). Mood applied via Section shell (`--section-mood`, hero-R5).
  *
  * Brand lockup: image logo + script wordmark top-left, raised to viewport top.
- * Char-assembly tagline (SplitReveal) centered above the bear.
+ * Char-assembly tagline (SplitReveal) centered.
  * Real catalog CTA below the tagline.
  */
 
@@ -28,12 +25,6 @@ export default function HeroHome() {
       className="relative overflow-hidden bg-[var(--section-mood)]"
       innerClassName="py-0! px-0! md:px-0!"
     >
-      {/* BACKGROUND LAYER: Bear + exploded-view diagram (z-0) */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center px-6">
-        <BearDiagram className="w-full max-w-5xl" />
-      </div>
-
-      {/* FOREGROUND CONTENT: all text/UI on top (z-10) */}
       <div className="relative z-10 flex min-h-screen flex-col gap-5 px-6 pt-6 md:pt-8">
         {/* Brand lockup: top-left, raised to viewport top */}
         <div className="flex items-center gap-3">
@@ -79,7 +70,7 @@ export default function HeroHome() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center md:bottom-6"
         >
-          <span className="scroll-cue flex flex-col items-center gap-1.5 text-mar-brown/60">
+          <span className="scroll-cue flex-flex-col items-center gap-1.5 text-mar-brown/60">
             <svg
               width="18"
               height="18"
