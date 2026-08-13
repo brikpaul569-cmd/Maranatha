@@ -173,10 +173,10 @@ export default function InterestHotspots({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-      {/* ── Left: clean image (no overlays) ── */}
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
+      {/* ── Left: large image (no overlays) ── */}
       <div
-        className="relative aspect-[3/2] w-full max-h-[600px] overflow-hidden lg:max-h-[700px]"
+        className="relative aspect-[3/2] w-full max-h-[700px] overflow-hidden lg:max-h-[800px]"
         onClick={handleImageClick}
         style={isEditing ? { cursor: "crosshair" } : undefined}
       >
