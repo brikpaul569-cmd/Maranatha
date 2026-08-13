@@ -112,8 +112,8 @@ export default function InterestHotspots({
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-      {/* ── Left: image with invisible hotspots (fade in on hover) ── */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden">
+      {/* ── Left: image with numbered hotspots always visible ── */}
+      <div className="relative aspect-[3/2] w-full max-h-[600px] overflow-hidden lg:max-h-[700px]">
         <Image
           src={imageSrc}
           alt={imageAlt}
@@ -131,7 +131,7 @@ export default function InterestHotspots({
             className={
               activeSpot?.id === spot.id
                 ? "annotation-dot scale-125 cursor-pointer opacity-100 ring-2 ring-white ring-offset-2"
-                : "annotation-dot cursor-pointer opacity-0 transition-opacity duration-300 hover:opacity-100 hover:scale-110"
+                : "annotation-dot cursor-pointer opacity-100 hover:scale-110"
             }
             style={{
               left: `${spot.x}%`,
@@ -143,7 +143,7 @@ export default function InterestHotspots({
               className={
                 activeSpot?.id === spot.id
                   ? "annotation-number opacity-100"
-                  : "annotation-number opacity-0 hover:opacity-100"
+                  : "annotation-number opacity-70"
               }
             >
               {spot.id}
