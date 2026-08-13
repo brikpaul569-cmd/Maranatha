@@ -6,9 +6,7 @@ import CatalogOccasionFilter from "@/components/catalog-occasion-filter";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
-import GlassSurface from "@/components/glass-surface";
 import ParallaxFloat from "@/components/parallax-float";
-import SplitText from "@/components/split-text";
 
 export const metadata: Metadata = {
   title: "Catálogo",
@@ -34,40 +32,19 @@ export default function CatalogoPage() {
           opacity={0.12}
         />
 
-        {/* Texto flotante sobre fondo: sin cajas contenedoras, espejo/cristal
-            sutil detrás del texto, parallax + SplitText reveal al hacer scroll. */}
+        {/* Texto sobre fondo: sin cajas, sin animación, texto directo al fondo. */}
         <div className="max-w-2xl">
-          <ParallaxFloat speed={0.15} float>
-            <Eyebrow>Detalles para cada ocasión</Eyebrow>
-          </ParallaxFloat>
+          <Eyebrow>Detalles para cada ocasión</Eyebrow>
 
-          <GlassSurface className="mt-4">
-            <ParallaxFloat speed={0.5} float>
-              <SplitText
-                as="h1"
-                by="chars"
-                stagger={0.05}
-                className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown"
-              >
-                Catálogo
-              </SplitText>
-            </ParallaxFloat>
-          </GlassSurface>
+          <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
+            Catálogo
+          </h1>
 
-          <GlassSurface className="mt-6 max-w-xl">
-            <ParallaxFloat speed={0.2} float>
-              <SplitText
-                as="p"
-                by="words"
-                stagger={0.04}
-                className="font-sans text-base text-mar-brown/80 md:text-lg"
-              >
-                Arreglos florales y detalles hechos a mano en Bogotá. Elige una
-                categoría o una ocasión, o explora todo el catálogo: cada precio
-                está a la vista y puedes pedir por WhatsApp con un solo clic.
-              </SplitText>
-            </ParallaxFloat>
-          </GlassSurface>
+          <p className="mt-6 max-w-xl font-sans text-base text-mar-brown/80 md:text-lg">
+            Arreglos florales y detalles hechos a mano en Bogotá. Elige una
+            categoría o una ocasión, o explora todo el catálogo: cada precio
+            está a la vista y puedes pedir por WhatsApp con un solo clic.
+          </p>
 
           <ParallaxFloat className="mt-8" speed={0.05} float>
             <CategoryFilter />

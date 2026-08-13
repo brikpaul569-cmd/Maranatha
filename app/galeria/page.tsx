@@ -5,9 +5,7 @@ import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
-import GlassSurface from "@/components/glass-surface";
 import ParallaxFloat from "@/components/parallax-float";
-import SplitText from "@/components/split-text";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -72,43 +70,22 @@ export default function GaleriaPage() {
           opacity={0.12}
         />
 
-        {/* Texto flotante: espejo/cristal detrás del texto, parallax diferenciado
-            y SplitText reveal al hacer scroll — sin cajas contenedoras. */}
+        {/* Texto sobre fondo: sin cajas, sin animación, texto directo al fondo. */}
         <div className="max-w-2xl">
-          <ParallaxFloat speed={0.15} float>
-            <Eyebrow>Nuestros detalles</Eyebrow>
-          </ParallaxFloat>
+          <Eyebrow>Nuestros detalles</Eyebrow>
 
-          <GlassSurface className="mt-4">
-            <ParallaxFloat speed={0.5} float>
-              <SplitText
-                as="h1"
-                by="chars"
-                stagger={0.05}
-                className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown"
-              >
-                Galería
-              </SplitText>
-            </ParallaxFloat>
-          </GlassSurface>
+          <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
+            Galería
+          </h1>
 
-          <GlassSurface className="mt-6 max-w-xl">
-            <ParallaxFloat speed={0.2} float>
-              <SplitText
-                as="p"
-                by="words"
-                stagger={0.04}
-                className="font-sans text-base text-mar-brown/80 md:text-lg"
-              >
-                Cada arreglo de Detalles Maranatha se hace a mano en Bogotá:
-                flores de listón que no se marchitan, bouquets de limpiapipas,
-                arreglos con peluche y canastas de café Cerquera. Pronto
-                publicaremos la galería completa con nuestros trabajos reales.
-                Mientras tanto, explora las categorías y pide el tuyo por
-                WhatsApp.
-              </SplitText>
-            </ParallaxFloat>
-          </GlassSurface>
+          <p className="mt-6 max-w-xl font-sans text-base text-mar-brown/80 md:text-lg">
+            Cada arreglo de Detalles Maranatha se hace a mano en Bogotá:
+            flores de listón que no se marchitan, bouquets de limpiapipas,
+            arreglos con peluche y canastas de café Cerquera. Pronto
+            publicaremos la galería completa con nuestros trabajos reales.
+            Mientras tanto, explora las categorías y pide el tuyo por
+            WhatsApp.
+          </p>
         </div>
 
         {/* Grid de galería: items sin bordes, sin fondo de caja, sin sombra.
@@ -134,7 +111,7 @@ export default function GaleriaPage() {
                     loading="lazy"
                   />
                 </div>
-                <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown glass-surface">
+                <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown">
                   {item.caption}
                 </p>
               </Link>
