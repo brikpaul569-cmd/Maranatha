@@ -4,7 +4,7 @@ import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import Watermark from "@/components/watermark";
-import BearDiagram from "@/components/bear-diagram";
+import InterestHotspots from "@/components/interest-hotspots";
 import { TALLER_WORKSHOPS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -74,8 +74,11 @@ export default function TallerPage() {
         </div>
       </Section>
 
-      {/* Diagrama técnico del osito artesanal — producto estrella del taller */}
-      <BearDiagram className="mx-auto w-full max-w-6xl px-6 py-16 md:px-10 md:py-24" />
+      {/* Diagrama interactivo del osito artesanal — producto estrella del taller.
+          Haz clic en cada número para descubrir los componentes del detalle. */}
+      <div className="px-6 py-16 md:px-10 md:py-24">
+        <InterestHotspots />
+      </div>
 
       {/* Zona de talleres — mint band, floating borderless cards */}
       <Section
