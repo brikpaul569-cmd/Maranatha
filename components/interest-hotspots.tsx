@@ -1,21 +1,15 @@
 /**
- * InterestHotspots — interactive image with numbered hotspots positioned
- * exactly over a bear plush image.
+ * InterestHotspots — clean image with a side-panel of numbered
+ * construction steps.
  *
- * Left column: image (next/image `fill`) with permanently-visible numbered
- * markers positioned via `top` / `left` percentage strings from the data.
- * Clicking a marker (image or side list) sets `activeSpot`.
+ * Left column: image (next/image `fill`) — no overlays, no markers.
  *
- * Right column: numbered list acting as the primary selector, plus a
- * detail panel rendering category, title, and description with fade-in.
+ * Right column: numbered list acting as the sole selector.  Clicking
+ * a number shows the detail panel (category, title, description)
+ * with a fade-in transition.
  *
- * Data structure:
- *   const bearHotspots = [
- *     { id, title, top, left, description, category, color },
- *     …
- *   ];
- * The image container is `position: relative`; each marker is
- * `position: absolute` with `top` / `left` applied verbatim.
+ * The data structure is an extensible array of objects so consumers
+ * can pass their own hotspots without touching the component.
  */
 
 "use client";
@@ -166,7 +160,7 @@ export default function InterestHotspots({
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-      {/* ── Left: image with numbered hotspots positioned via data ── */}
+      {/* ── Left: clean image (no overlays) ── */}
       <div className="relative aspect-[3/2] w-full max-h-[600px] overflow-hidden lg:max-h-[700px]">
         <Image
           src={imageSrc}
@@ -176,40 +170,12 @@ export default function InterestHotspots({
           className="object-cover image-rendering-optimize"
           priority={false}
         />
-        {hotspots.map((spot) => (
-          <button
-            key={spot.id}
-            type="button"
-            onClick={() => setActiveSpot(spot)}
-            aria-label={`Ver detalles de ${spot.title}`}
-            className={
-              activeSpot?.id === spot.id
-                ? "annotation-dot scale-125 cursor-pointer opacity-100 ring-2 ring-white ring-offset-2"
-                : "annotation-dot cursor-pointer opacity-100 hover:scale-110"
-            }
-            style={{
-              left: spot.left,
-              top: spot.top,
-              ...(spot.color ? { backgroundColor: spot.color } : {}),
-            }}
-          >
-            <span
-              className={
-                activeSpot?.id === spot.id
-                  ? "annotation-number opacity-100"
-                  : "annotation-number opacity-70"
-              }
-            >
-              {spot.id}
-            </span>
-          </button>
-        ))}
       </div>
 
       {/* ── Right: numbered list selector + detail panel ── */}
       <div className="bg-mar-card p-8">
-        <h3 className="font-futura text-xs uppercase tracking-widest text-mar-gold mb-6">
-          Puntos de Interés
+          <h3 className="font-futura text-xs uppercase tracking-widest text-mar-gold mb-6">
+          Cómo se construye
         </h3>
 
         <ul className="space-y-2">
