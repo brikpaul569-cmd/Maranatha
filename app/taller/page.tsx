@@ -5,7 +5,7 @@ import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import Watermark from "@/components/watermark";
 import BearDiagram from "@/components/bear-diagram";
-import { TALLER_WORKSHOPS, waMeUrl } from "@/lib/constants";
+import { TALLER_WORKSHOPS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Talleres",
@@ -20,25 +20,6 @@ export const metadata: Metadata = {
  * frame-less text, but the same Maranatha brand, WhatsApp CTAs and warm
  * handmade voice.
  */
-
-const LEARN_CHIPS: { label: string; message: string }[] = [
-  {
-    label: "Flores de listón",
-    message: "Hola 👋 Quiero aprender a hacer flores de listón",
-  },
-  {
-    label: "Bouquets de limpiapipas",
-    message: "Hola 👋 Quiero aprender a hacer bouquets de limpiapipas",
-  },
-  {
-    label: "Canastas de regalo",
-    message: "Hola 👋 Quiero aprender a armar canastas de regalo",
-  },
-  {
-    label: "Envolturas y tarjetas",
-    message: "Hola 👋 Quiero aprender envoltura floral y tarjetas",
-  },
-];
 
 export default function TallerPage() {
   return (
@@ -87,22 +68,14 @@ export default function TallerPage() {
             hechas a mano, paso a paso y sin experiencia previa.
           </p>
 
-          {/* Diagrama técnico del osito artesanal — producto estrella del taller */}
-          <div className="mt-10 flex justify-center">
-            <BearDiagram className="w-full max-w-3xl" />
-          </div>
-
           <div className="mt-8 flex flex-wrap gap-3">
             <Button href="#talleres">Ver los talleres</Button>
-            <Button
-              variant="whatsapp"
-              message="Hola 👋 Quiero inscribirme a un taller de Detalles Maranatha"
-            >
-              Inscribirme por WhatsApp
-            </Button>
           </div>
         </div>
       </Section>
+
+      {/* Diagrama técnico del osito artesanal — producto estrella del taller */}
+      <BearDiagram className="mx-auto w-full max-w-6xl px-6 py-16 md:px-10 md:py-24" />
 
       {/* Zona de talleres — mint band, floating borderless cards */}
       <Section
@@ -182,20 +155,6 @@ export default function TallerPage() {
             Escribinos por WhatsApp y te contamos fechas, horarios y cómo
             reservar tu cupo.
           </p>
-        </div>
-
-        <div className="mt-10 flex flex-wrap gap-3">
-          {LEARN_CHIPS.map((chip) => (
-            <a
-              key={chip.label}
-              href={waMeUrl(chip.message)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full bg-[var(--taller-card-bg)] px-5 py-2.5 font-futura text-sm font-semibold text-mar-brown/90 shadow-[0_12px_28px_-14px_rgba(93,72,128,0.5)] backdrop-blur-sm transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-0.5"
-            >
-              {chip.label}
-            </a>
-          ))}
         </div>
       </Section>
     </main>
