@@ -1,16 +1,21 @@
 /**
- * InterestHotspots — interactive image with invisible clickable hotspots
- * and a numbered side-list selector.
+ * InterestHotspots — interactive image with numbered hotspots positioned
+ * exactly over a bear plush image.
  *
- * Left column: image (next/image `fill`) with invisible hotspots that
- * fade in on hover.  Clicking any hotspot (image or list) sets activeSpot.
+ * Left column: image (next/image `fill`) with permanently-visible numbered
+ * markers positioned via `top` / `left` percentage strings from the data.
+ * Clicking a marker (image or side list) sets `activeSpot`.
  *
- * Right column: a numbered list of all hotspots (always visible) acting
- * as the primary selector, plus a detail panel that renders the active
- * hotspot's category, title, and description with a fade-in transition.
+ * Right column: numbered list acting as the primary selector, plus a
+ * detail panel rendering category, title, and description with fade-in.
  *
- * The data shape is an extensible array of objects so consumers can pass
- * their own hotspots without touching the component.
+ * Data structure:
+ *   const bearHotspots = [
+ *     { id, title, top, left, description, category, color },
+ *     …
+ *   ];
+ * The image container is `position: relative`; each marker is
+ * `position: absolute` with `top` / `left` applied verbatim.
  */
 
 "use client";
@@ -21,81 +26,130 @@ import Image from "next/image";
 interface Hotspot {
   /** Numeric / sequential identifier shown on the marker. */
   id: number;
-  /** Horizontal position as a percentage 0–100 (relative to image width). */
-  x: number;
-  /** Vertical position as a percentage 0–100 (relative to image height). */
-  y: number;
-  /** Short title displayed in the detail panel. */
+  /** Title displayed in the list and detail panel. */
   title: string;
-  /** Longer description shown in the panel body. */
+  /** Vertical position as a percentage string (CSS top). */
+  top: string;
+  /** Horizontal position as a percentage string (CSS left). */
+  left: string;
+  /** Longer description shown in the detail panel body. */
   description: string;
-  /** Category tag (flores, detalles, estructura, …). */
+  /** Category tag. */
   category: string;
-  /** Optional dot colour; falls back to gold when omitted. */
+  /** Dot colour (hex string). Falls back to gold. */
   color?: string;
 }
 
 /**
- * Default hotspots — coordinates map to the BearDiagram subject area
- * (image 1152×648, subject cx 540 / cy 284 / w 262 / h 316).
- * Values are normalised to 0–100 % across the full image so they
- * stay correct when the image scales responsively.
+ * Bear anatomy hotspots — coordinates are percentage top/left
+ * relative to the image container, estimated from a standard
+ * seated bear-plush silhouette.
  */
-const DEFAULT_HOTSPOTS: Hotspot[] = [
+const bearHotspots: Hotspot[] = [
   {
     id: 1,
-    x: 84,
-    y: 38,
-    title: "Rosas Satinadas Clásicas",
+    title: "Ojos",
+    top: "28%",
+    left: "40%",
     description:
-      "Nuestras rosas de seda clásicas en tonos pastel, perfectas para ocasiones formales. Cada rama se selecciona a mano y se combina con cintas de organza brillante.",
-    category: "Flores",
-    color: "#d9a94e",
+      "Los dos ojos del osito están tejidos a mano con hilo de colores suaves. Expresan ternura y vida en cada detalle.",
+    category: "Características",
+    color: "#fff",
   },
   {
     id: 2,
-    x: 33,
-    y: 50,
-    title: "Cinta de Organza",
+    title: "Orejas",
+    top: "15%",
+    left: "25%",
     description:
-      "Cinta de organza brillante que añade un toque elegante a cada arreglo. Disponible en varios colores para combinar con tu paleta.",
-    category: "Detalles",
-    color: "#f7c9d6",
+      "Las orejas redondeadas captan cada movimiento y son suave al tacto, perfectas para acurrucar.",
+    category: "Características",
+    color: "#fff",
   },
   {
     id: 3,
-    x: 28,
-    y: 84,
-    title: "Base de Espuma Floral",
+    title: "Nariz/Hocico",
+    top: "35%",
+    left: "48%",
     description:
-      "Espuma floral de alta densidad que mantiene las flores frescas y permite una disposición precisa de cada elemento.",
+      "El hocico de goma negra es el centro de expresión del oso, con un tacto húmedo al besar.",
+    category: "Características",
+    color: "#fff",
+  },
+  {
+    id: 4,
+    title: "Boca",
+    top: "42%",
+    left: "48%",
+    description:
+      "Una sonrisa sutil bordada que da vida al rostro del osito.",
+    category: "Características",
+    color: "#fff",
+  },
+  {
+    id: 5,
+    title: "Patas Delanteras",
+    top: "55%",
+    left: "35%",
+    description:
+      "Las patas delanteriores están rellenas con espuma de alta densidad y se mueven con suavidad.",
     category: "Estructura",
     color: "#a9c4a0",
   },
   {
-    id: 4,
-    x: 72,
-    y: 84,
-    title: "Bandeja de Presentación",
+    id: 6,
+    title: "Panza",
+    top: "65%",
+    left: "50%",
     description:
-      "Bandeja de cartón reciclado con acabado mate, diseñada para proteger el arreglo durante el transporte y la presentación.",
-    category: "Empaque",
-    color: "#8a6e45",
+      "La panza del osito tiene un tejido sedoso de tono crema que contrasta con el pelaje marrón.",
+    category: "Estructura",
+    color: "#a9c4a0",
   },
   {
-    id: 5,
-    x: 52,
-    y: 24,
-    title: "Peluche de Calidad",
+    id: 7,
+    title: "Patas Traseras",
+    top: "80%",
+    left: "30%",
     description:
-      "Osito de peluche de algodón 100 % con detalles bordados, el acompañante perfecto para los arreglos de flores.",
-    category: "Complementos",
-    color: "#a74c3f",
+      "Las patas traseras sostienen al oso con firmeza, cosidas a mano con refuerzo doble.",
+    category: "Estructura",
+    color: "#a9c4a0",
+  },
+  {
+    id: 8,
+    title: "Flor",
+    top: "35%",
+    left: "65%",
+    description:
+      "Una flor de terciopelo púrpura sostenida en las patas delanteras del oso, clave del detalle Maranatha.",
+    category: "Flores",
+    color: "#f7c9d6",
+  },
+  {
+    id: 9,
+    title: "Tallo",
+    top: "50%",
+    left: "55%",
+    description:
+      "El tallo verde conecta la flor al oso, con venas dibujadas a mano.",
+    category: "Flores",
+    color: "#a9c4a0",
+  },
+  {
+    id: 10,
+    title: "Firma 'Naranatha'",
+    top: "82%",
+    left: "45%",
+    description:
+      "La firma 'Naranatha' bordada en la panza, distintivo de autenticidad de cada pieza.",
+    category: "Detalles",
+    color: "#d9a94e",
   },
 ];
 
 interface InterestHotspotsProps {
-  /** Custom hotspots; defaults to maranatha bear labels. */
+  /** Custom hotspots; defaults to bear anatomy labels. */
   hotspots?: Hotspot[];
   /** Image source (defaults to the bear placeholder). */
   imageSrc?: string;
@@ -104,15 +158,15 @@ interface InterestHotspotsProps {
 }
 
 export default function InterestHotspots({
-  hotspots = DEFAULT_HOTSPOTS,
+  hotspots = bearHotspots,
   imageSrc = "/placeholders/Oso-Photoroom.png",
-  imageAlt = "Osito de peluche artesanal Maranatha sosteniendo una flor de terciopelo púrpura",
+  imageAlt = "Osito de peluche artesanal Maranatha sentado sosteniendo una flor de terciopelo púrpura",
 }: InterestHotspotsProps) {
   const [activeSpot, setActiveSpot] = useState<Hotspot | null>(null);
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-      {/* ── Left: image with numbered hotspots always visible ── */}
+      {/* ── Left: image with numbered hotspots positioned via data ── */}
       <div className="relative aspect-[3/2] w-full max-h-[600px] overflow-hidden lg:max-h-[700px]">
         <Image
           src={imageSrc}
@@ -134,8 +188,8 @@ export default function InterestHotspots({
                 : "annotation-dot cursor-pointer opacity-100 hover:scale-110"
             }
             style={{
-              left: `${spot.x}%`,
-              top: `${spot.y}%`,
+              left: spot.left,
+              top: spot.top,
               ...(spot.color ? { backgroundColor: spot.color } : {}),
             }}
           >
