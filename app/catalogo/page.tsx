@@ -7,6 +7,7 @@ import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
 import ParallaxFloat from "@/components/parallax-float";
+import CascadeReveal from "@/components/cascade-reveal";
 
 export const metadata: Metadata = {
   title: "Catálogo",
@@ -51,21 +52,19 @@ export default function CatalogoPage() {
           </ParallaxFloat>
         </div>
 
-        {/* Grid de productos: cada card flota con parallax diferenciado,
+        {/* Grid de productos: revelación en cascada al hacer scroll,
             sin bordes, sin sombras, sin fondo de caja. */}
         <div className="mt-10">
           <CatalogOccasionFilter occasions={OCCASIONS}>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {PRODUCTS.map((product, index) => (
-                <ParallaxFloat
-                  key={product.slug}
-                  speed={(index % 4) * 0.1 + 0.15}
-                  float
-                >
-                  <ProductCard product={product} />
-                </ParallaxFloat>
-              ))}
-            </div>
+            <CascadeReveal>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                {PRODUCTS.map((product) => (
+                  <div key={product.slug} data-cascade>
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </CascadeReveal>
           </CatalogOccasionFilter>
         </div>
       </Section>

@@ -20,6 +20,8 @@ export type ProductPart = {
   color: string;
   /** 1–3 lines describing the part. */
   description: string;
+  /** Optional position for on-image annotation (percentage 0-100, relative to imageSubject crop). */
+  annotation?: { x: number; y: number };
 };
 
 export type TechnicalInfo = {
@@ -198,8 +200,29 @@ export default function ProductBreakdownDiagram({
                   alt={imageAlt}
                   fill
                   sizes={imageSizes}
+                  className="image-rendering-optimize"
                 />
               </div>
+              {parts.some((p) => p.annotation) && (
+                <div className="pointer-events-none absolute inset-0">
+                  {parts.map((part, index) => {
+                    if (!part.annotation) return null;
+                    return (
+                      <div
+                        key={part.id}
+                        className="annotation-dot"
+                        style={{
+                          left: `${part.annotation.x}%`,
+                          top: `${part.annotation.y}%`,
+                          backgroundColor: part.color,
+                        }}
+                      >
+                        <span className="annotation-number">{index + 1}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           ) : (
             <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden">
@@ -216,13 +239,21 @@ export default function ProductBreakdownDiagram({
 
         {/* Cards column — scroll-reveal cards, one per part + tech card */}
         <div className="space-y-[40vh] lg:space-y-[50vh]">
-          {parts.map((part) => (
+          {parts.map((part, index) => (
             <article
               key={part.id}
               data-reveal-card
               className="p-6"
             >
               <div className="flex items-center gap-2">
+                {part.annotation && (
+                  <span
+                    className="flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                    style={{ backgroundColor: part.color }}
+                  >
+                    {index + 1}
+                  </span>
+                )}
                 <span
                   className="size-2.5 rounded-full"
                   style={{ backgroundColor: part.color }}

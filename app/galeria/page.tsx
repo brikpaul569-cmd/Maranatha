@@ -6,6 +6,7 @@ import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import ParallaxFloat from "@/components/parallax-float";
+import CascadeReveal from "@/components/cascade-reveal";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -89,35 +90,33 @@ export default function GaleriaPage() {
         </div>
 
         {/* Grid de galería: items sin bordes, sin fondo de caja, sin sombra.
-            El texto del caption flota sobre el fondo con efecto espejo/cristal. */}
-        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-          {GALLERY_ITEMS.map((item, index) => (
-            <ParallaxFloat
-              key={item.caption}
-              speed={(index % 3) * 0.1 + 0.15}
-              float
-            >
-              <Link
-                href={item.href}
-                className="group block overflow-hidden transition-transform duration-300 motion-safe:hover:-translate-y-1"
-              >
-                <div className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="(min-width: 768px) 33vw, 50vw"
-                    className="object-cover transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown">
-                  {item.caption}
-                </p>
-              </Link>
-            </ParallaxFloat>
-          ))}
-        </div>
+            Revelación en cascada al hacer scroll, caption directo al fondo. */}
+        <CascadeReveal>
+          <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+            {GALLERY_ITEMS.map((item) => (
+              <div key={item.caption} data-cascade>
+                <Link
+                  href={item.href}
+                  className="group block overflow-hidden transition-transform duration-300 motion-safe:hover:-translate-y-1"
+                >
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light">
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 50vw"
+                      className="object-cover transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown">
+                    {item.caption}
+                  </p>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </CascadeReveal>
 
         <ParallaxFloat className="mt-14" speed={0.2} float>
           <Button href="/catalogo">Ver catálogo completo</Button>

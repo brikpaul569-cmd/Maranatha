@@ -33,6 +33,7 @@ const COLORS = {
 };
 
 /* ── Bear callout data (storytelling order) ────────────────────────── */
+/* annotation.x/y are percentages relative to the imageSubject crop area. */
 const BEAR_PARTS: ProductPart[] = [
   {
     id: "ojos",
@@ -40,6 +41,7 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.OJOS,
     description:
       "Ojos de Seguridad Plástico (Negros, Grandes, Redondos, Brillo Anime/Kawaii)",
+    annotation: { x: 50, y: 25 },
   },
   {
     id: "orejas",
@@ -47,12 +49,14 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.OREJAS,
     description:
       "Orejas Redondeadas (Tela Exterior Marrón, Interior Naranja Suave/Coral)",
+    annotation: { x: 25, y: 8 },
   },
   {
     id: "mejillas",
     name: "MEJILLAS",
     color: COLORS.MEJILLAS,
     description: "Rubor Rosa Aterciopelado (Flocado / Bordado Plano)",
+    annotation: { x: 18, y: 48 },
   },
   {
     id: "hocico",
@@ -60,6 +64,7 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.HOCICO,
     description:
       "Hocico y Sonrisa Bordados (Hilo Marrón Claro/Beige, Definido)",
+    annotation: { x: 50, y: 72 },
   },
   {
     id: "cuerpo",
@@ -67,6 +72,7 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.RELLENO,
     description:
       "Relleno Interno Poliéster Hipoalergénico (Media Densidad 'Achuchabilidad')",
+    annotation: { x: 50, y: 88 },
   },
   {
     id: "brazos",
@@ -74,24 +80,28 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.BRAZOS,
     description:
       "Patas Delanteras Dobladas al Centro (Sujetan Tallo de la Flor)",
+    annotation: { x: 80, y: 52 },
   },
   {
     id: "tela",
     name: "TELA",
     color: COLORS.TELA,
     description: "Tela de Peluche Sintético (Marrón Canela Pelo Corto Mullido)",
+    annotation: { x: 50, y: 55 },
   },
   {
     id: "flor-petalos",
     name: "FLOR - PÉTALOS",
     color: COLORS.PETALOS,
     description: "Pétalos Terciopelo Púrpura (5 Unidades, Corte Láser)",
+    annotation: { x: 85, y: 28 },
   },
   {
     id: "flor-estambre",
     name: "FLOR - ESTAMBRE",
     color: COLORS.ESTAMBRE,
     description: "Estambre Amarillo Textura Granulada",
+    annotation: { x: 82, y: 38 },
   },
   {
     id: "flor-tallo",
@@ -99,6 +109,7 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.TALLO,
     description:
       "Tallo de Flor de Chenilla Verde Flexible (Pipe Cleaner, 2 Hojas Tela)",
+    annotation: { x: 78, y: 50 },
   },
   {
     id: "pata-izquierda",
@@ -106,19 +117,21 @@ const BEAR_PARTS: ProductPart[] = [
     color: COLORS.PATA_IZQ,
     description:
       "Suela Pata Izquierda (Espectador) con 'Maranatha' Bordado Script (Hilo Marrón Oscuro)",
+    annotation: { x: 35, y: 92 },
   },
   {
     id: "pata-derecha",
     name: "PATA DERECHA",
     color: COLORS.PATA_DER,
-    description:
-      "Suelas Redondeadas Tela Plana Naranja Claro/Coral (Diferente al Peluche)",
+    description: "Suela Pata Derecha (Espectador)",
+    annotation: { x: 65, y: 92 },
   },
   {
     id: "costura",
     name: "COSTURA",
     color: COLORS.COSTURA,
     description: "Costura de Seguridad Trasera (Reforzada, Oculta)",
+    annotation: { x: 50, y: 62 },
   },
   {
     id: "escala",
