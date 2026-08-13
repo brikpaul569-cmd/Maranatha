@@ -169,7 +169,7 @@ export default function SiteHeader() {
           key={item.label}
           href={item.href}
           onClick={(event) => handleNavClick(event, item.href)}
-          className="font-futura text-sm font-medium text-mar-brown/80 transition-colors hover:text-mar-brown"
+          className="font-futura text-base font-medium text-mar-brown/80 transition-colors hover:text-mar-brown"
         >
           {item.label}
         </a>
@@ -178,7 +178,7 @@ export default function SiteHeader() {
     return (
       <span
         key={item.label}
-        className="flex items-center gap-2 font-futura text-sm text-mar-brown/40"
+        className="flex items-center gap-2 font-futura text-base text-mar-brown/40"
         aria-disabled="true"
       >
         {item.label}
