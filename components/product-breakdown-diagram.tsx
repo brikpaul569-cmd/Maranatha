@@ -222,7 +222,7 @@ export default function ProductBreakdownDiagram({
                   {part.name}
                 </h3>
               </div>
-              <p className="mt-2 font-sans text-base text-mar-brown/80">
+              <p className="mt-2 font-sans text-lg text-mar-brown/80">
                 {part.description}
               </p>
             </article>
@@ -239,7 +239,7 @@ export default function ProductBreakdownDiagram({
                   FICHA TÉCNICA DE CONSTRUCCIÓN
                 </h3>
               </div>
-              <p className="mt-2 font-sans text-base text-mar-brown/80">
+              <p className="mt-2 font-sans text-lg text-mar-brown/80">
                 • Técnica: {technicalInfo.technique}
                 <br />
                 • Composición: {technicalInfo.composition}
