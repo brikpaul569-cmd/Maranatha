@@ -152,7 +152,7 @@ export default function NosotrosPage() {
           {VALUES.map((value, index) => (
             <Reveal key={value.title} delay={(index % 4) * 0.08} y={24}>
               <div
-                className={`flex h-full flex-col gap-3 rounded-2xl bg-mar-card p-6 drop-shadow-[0_12px_24px_rgba(93,64,55,0.12)] transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1 ${
+                className={`flex h-full flex-col gap-3 glass-surface p-6 transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1 ${
                   index % 2 === 0 ? "md:rotate-1" : "md:-rotate-1"
                 }`}
               >

@@ -56,7 +56,7 @@ export default function ExploraSection() {
             <a
               key={item.href}
               href={item.href}
-              className="theme-card group rounded-3xl border border-mar-brown/10 bg-mar-card/40 p-7 transition-transform duration-300 motion-safe:hover:-translate-y-1"
+              className="theme-card group glass-surface p-7 transition-transform duration-300 motion-safe:hover:-translate-y-1"
             >
               <h3 className="font-futura text-sm font-semibold uppercase tracking-widest text-mar-brown">
                 {item.title}

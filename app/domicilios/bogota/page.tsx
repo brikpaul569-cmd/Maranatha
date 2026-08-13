@@ -59,7 +59,7 @@ export default function DomiciliosBogotaPage() {
         </div>
 
         <Reveal delay={0.2} className="mt-10">
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-6 rounded-2xl bg-mar-card p-6 shadow-sm md:p-8">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-6 glass-surface p-6 md:p-8">
             <div>
               <p className="font-sans text-xs uppercase tracking-[0.35em] text-mar-brown/60">
                 Entrega estimada
@@ -95,7 +95,7 @@ export default function DomiciliosBogotaPage() {
               >
                 <Link
                   href={`/domicilios/${zone.slug}`}
-                  className="group flex h-full flex-col gap-2 rounded-2xl bg-mar-card p-6 shadow-sm transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1"
+                  className="group flex h-full flex-col gap-2 glass-surface p-6 transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1"
                 >
                   <h3 className="font-display text-2xl text-mar-brown">
                     {zone.name}

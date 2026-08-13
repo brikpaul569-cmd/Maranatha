@@ -106,7 +106,7 @@ export default function TallerPage() {
           {TALLER_WORKSHOPS.map((workshop) => (
             <article
               key={workshop.id}
-              className="flex h-full flex-col gap-4 rounded-3xl bg-[var(--taller-card-bg)] p-7 shadow-[0_18px_40px_-18px_rgba(93,72,128,0.45)] backdrop-blur-sm transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1"
+              className="flex h-full flex-col gap-4 p-7 transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1"
             >
               <h3 className="font-display text-lg text-mar-brown">
                 {workshop.title}

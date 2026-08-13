@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <article
       data-occasion={product.occasion.join(" ")}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-mar-card shadow-sm"
+      className="group relative flex h-full flex-col overflow-hidden glass-card"
     >
       <Link
         href={`/producto/${product.slug}`}

@@ -87,7 +87,7 @@ export default async function ZonePage({ params }: ZonePageProps) {
         </Reveal>
 
         <Reveal delay={0.15} className="mt-10">
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-6 rounded-2xl bg-mar-card p-6 shadow-sm md:p-8">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-6 glass-surface p-6 md:p-8">
             <div>
               <p className="font-sans text-xs uppercase tracking-[0.35em] text-mar-brown/60">
                 Entrega estimada

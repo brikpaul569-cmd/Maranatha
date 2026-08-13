@@ -104,7 +104,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <div className="mt-8 grid gap-10 md:grid-cols-2 md:gap-14">
           <Reveal delay={0} y={16}>
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-mar-card shadow-sm">
+          <div className="relative aspect-[4/5] w-full overflow-hidden glass-card">
             <Image
               src={mainImage.src}
               alt={mainImage.alt}

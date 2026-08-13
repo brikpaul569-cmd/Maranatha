@@ -151,6 +151,15 @@ export default function ProductBreakdownDiagram({
       }
     : undefined;
 
+  // Desktop card max-width is 400px (grid minmax). The crop layer scales the
+  // image by (imageWidth / subject.width), so the rendered image is wider than
+  // the card — sizes must reflect that to prevent next/image from serving a
+  // too-small optimized source that gets upscaled (pixelation).
+  const desktopImageWidth = imageSubject
+    ? Math.round((imageWidth / imageSubject.width) * 400)
+    : 400;
+  const imageSizes = `(min-width: 1024px) ${desktopImageWidth}px, 90vw`;
+
   return (
     <div
       ref={rootRef}
@@ -188,7 +197,7 @@ export default function ProductBreakdownDiagram({
                   src={imageSrc}
                   alt={imageAlt}
                   fill
-                  sizes="(min-width: 1024px) 400px, 90vw"
+                  sizes={imageSizes}
                 />
               </div>
             </div>
@@ -198,7 +207,7 @@ export default function ProductBreakdownDiagram({
                 src={imageSrc}
                 alt={imageAlt}
                 fill
-                sizes="(min-width: 1024px) 400px, 90vw"
+                sizes={imageSizes}
                 className="object-contain"
               />
             </div>
@@ -211,7 +220,7 @@ export default function ProductBreakdownDiagram({
             <article
               key={part.id}
               data-reveal-card
-              className="rounded-3xl border border-mar-brown/10 bg-mar-card p-6 shadow-sm"
+              className="p-6"
             >
               <div className="flex items-center gap-2">
                 <span
@@ -231,7 +240,7 @@ export default function ProductBreakdownDiagram({
           {technicalInfo && (
             <article
               data-reveal-card
-              className="rounded-3xl border border-mar-brown/10 bg-mar-card p-6 shadow-sm"
+              className="p-6"
             >
               <div className="flex items-center gap-2">
                 <span className="size-2.5 rounded-full bg-mar-gold" />

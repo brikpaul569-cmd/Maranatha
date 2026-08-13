@@ -55,7 +55,7 @@ export default function ContactoPage() {
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Reveal>
-            <div className="flex h-full flex-col gap-2 rounded-2xl bg-mar-card p-6 shadow-sm">
+            <div className="flex h-full flex-col gap-2 glass-surface p-6">
               <h2 className="font-display text-xl text-mar-brown">Horario</h2>
               <p className="font-sans text-sm text-mar-brown/80">
                 {HOURS.days}
@@ -67,7 +67,7 @@ export default function ContactoPage() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="flex h-full flex-col gap-2 rounded-2xl bg-mar-card p-6 shadow-sm">
+            <div className="flex h-full flex-col gap-2 glass-surface p-6">
               <h2 className="flex items-center gap-2 font-display text-xl text-mar-brown">
                 <WhatsAppIcon className="size-5 text-mar-gold" />
                 WhatsApp
@@ -80,7 +80,7 @@ export default function ContactoPage() {
           </Reveal>
 
           <Reveal delay={0.16}>
-            <div className="flex h-full flex-col gap-2 rounded-2xl bg-mar-card p-6 shadow-sm">
+            <div className="flex h-full flex-col gap-2 glass-surface p-6">
               <h2 className="font-display text-xl text-mar-brown">Redes</h2>
               <p className="font-sans text-sm text-mar-brown/80">
                 Síguenos para ver los últimos arreglos, promociones y detalle

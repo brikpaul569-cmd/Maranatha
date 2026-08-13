@@ -4,7 +4,7 @@ import Image from "next/image";
  * PhotoFrame — paper photo frame primitive for the collage-zigzag redesign
  * (nosotros pilot; PROJECT-BRIEF-05 "Collage Flotante").
  *
- * A rounded paper mat (`bg-mar-card` + padding) around a `next/image` media
+ * A rounded paper mat (`glass-surface` + padding) around a `next/image` media
  * area. The frame reads as a physical object through a soft mar-brown-tinted
  * `drop-shadow` — never a hard box-shadow (art-direction rule §3.3) — and a
  * gentle static tilt passed in via `rotate` (e.g. `-rotate-3`). Only the
@@ -53,7 +53,7 @@ export default function PhotoFrame({
     <figure
       className={`drop-shadow-[0_20px_30px_rgba(93,64,55,0.18)] ${rotate} ${className}`}
     >
-      <div className="relative rounded-2xl bg-mar-card p-3 md:p-4">
+      <div className="relative glass-surface p-3 md:p-4">
         {tape && (
           <div
             aria-hidden

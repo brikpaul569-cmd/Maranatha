@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Reveal from "@/components/reveal";
-import Button from "@/components/ui/button";
-import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
+import Eyebrow from "@/components/ui/eyebrow";
+import Button from "@/components/ui/button";
+import GlassSurface from "@/components/glass-surface";
+import ParallaxFloat from "@/components/parallax-float";
+import SplitText from "@/components/split-text";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -55,7 +57,11 @@ const GALLERY_ITEMS = [
 export default function GaleriaPage() {
   return (
     <main>
-      <Section mood="galeria" className="relative bg-[var(--section-mood)]">
+      <Section
+        mood="galeria"
+        className="relative bg-[var(--section-mood)]"
+        sheet={false}
+      >
         <Watermark
           src="/placeholders/ribbon.svg"
           className="right-8 top-6 w-20 md:w-24"
@@ -65,33 +71,58 @@ export default function GaleriaPage() {
           className="bottom-8 left-6 w-16 md:w-20"
           opacity={0.12}
         />
+
+        {/* Texto flotante: espejo/cristal detrás del texto, parallax diferenciado
+            y SplitText reveal al hacer scroll — sin cajas contenedoras. */}
         <div className="max-w-2xl">
-          <Reveal>
+          <ParallaxFloat speed={0.15} float>
             <Eyebrow>Nuestros detalles</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
-              Galería
-            </h1>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-6 font-sans text-base text-mar-brown/80 md:text-lg">
-              Cada arreglo de Detalles Maranatha se hace a mano en Bogotá:
-              flores de listón que no se marchitan, bouquets de limpiapipas,
-              arreglos con peluche y canastas de café Cerquera. Pronto
-              publicaremos la galería completa con nuestros trabajos reales.
-              Mientras tanto, explora las categorías y pide el tuyo por
-              WhatsApp.
-            </p>
-          </Reveal>
+          </ParallaxFloat>
+
+          <GlassSurface className="mt-4">
+            <ParallaxFloat speed={0.5} float>
+              <SplitText
+                as="h1"
+                by="chars"
+                stagger={0.05}
+                className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown"
+              >
+                Galería
+              </SplitText>
+            </ParallaxFloat>
+          </GlassSurface>
+
+          <GlassSurface className="mt-6 max-w-xl">
+            <ParallaxFloat speed={0.2} float>
+              <SplitText
+                as="p"
+                by="words"
+                stagger={0.04}
+                className="font-sans text-base text-mar-brown/80 md:text-lg"
+              >
+                Cada arreglo de Detalles Maranatha se hace a mano en Bogotá:
+                flores de listón que no se marchitan, bouquets de limpiapipas,
+                arreglos con peluche y canastas de café Cerquera. Pronto
+                publicaremos la galería completa con nuestros trabajos reales.
+                Mientras tanto, explora las categorías y pide el tuyo por
+                WhatsApp.
+              </SplitText>
+            </ParallaxFloat>
+          </GlassSurface>
         </div>
 
+        {/* Grid de galería: items sin bordes, sin fondo de caja, sin sombra.
+            El texto del caption flota sobre el fondo con efecto espejo/cristal. */}
         <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
           {GALLERY_ITEMS.map((item, index) => (
-            <Reveal key={item.caption} delay={(index % 3) * 0.08} y={24}>
+            <ParallaxFloat
+              key={item.caption}
+              speed={(index % 3) * 0.1 + 0.15}
+              float
+            >
               <Link
                 href={item.href}
-                className="group block overflow-hidden rounded-2xl bg-mar-card shadow-sm transition-transform duration-300 motion-safe:hover:-translate-y-1"
+                className="group block overflow-hidden transition-transform duration-300 motion-safe:hover:-translate-y-1"
               >
                 <div className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light">
                   <Image
@@ -103,17 +134,17 @@ export default function GaleriaPage() {
                     loading="lazy"
                   />
                 </div>
-                <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown">
+                <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown glass-surface">
                   {item.caption}
                 </p>
               </Link>
-            </Reveal>
+            </ParallaxFloat>
           ))}
         </div>
 
-        <Reveal delay={0.1} className="mt-14">
+        <ParallaxFloat className="mt-14" speed={0.2} float>
           <Button href="/catalogo">Ver catálogo completo</Button>
-        </Reveal>
+        </ParallaxFloat>
       </Section>
     </main>
   );

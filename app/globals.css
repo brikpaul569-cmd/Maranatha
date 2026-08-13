@@ -68,6 +68,12 @@
     inset 0 2px 10px rgba(255, 255, 255, 0.9),
     0 14px 34px -8px rgba(58, 42, 36, 0.35);
   --preloader-orb-highlight: rgba(255, 255, 255, 0.7);
+
+  /* Glass/mirror surface (refactor 2026-08-13): subtle frosted backing for text
+     that floats on the page background without looking boxed. Theme-adapted
+     via --glass-bg / --glass-highlight. */
+  --glass-bg: color-mix(in srgb, var(--theme-bg) 30%, transparent);
+  --glass-highlight: color-mix(in srgb, white 10%, transparent);
 }
 
 @theme inline {
@@ -184,6 +190,10 @@ body {
     inset 0 2px 10px rgba(255, 255, 255, 0.9),
     0 14px 34px -8px rgba(67, 54, 77, 0.35);
   --preloader-orb-highlight: rgba(255, 255, 255, 0.7);
+
+  /* Glass: taller is airier — bump the frosted tint and the white highlight. */
+  --glass-bg: color-mix(in srgb, var(--theme-bg) 25%, transparent);
+  --glass-highlight: color-mix(in srgb, white 18%, transparent);
 }
 
 /* Theme mode (restored dark/light, user decision): a single
@@ -240,6 +250,9 @@ body {
     inset 0 0 0 1px rgba(217, 169, 78, 0.55),
     0 14px 34px -8px rgba(0, 0, 0, 0.65);
   --preloader-orb-highlight: rgba(255, 255, 255, 0.32);
+
+  /* Glass: dark mode — highlight tinted toward gold, barely there. */
+  --glass-highlight: color-mix(in srgb, var(--theme-accent) 8%, transparent);
 }
 
 /* Taller + dark (lavender-night): the workshop world's own dark palette.
@@ -302,6 +315,9 @@ body {
     inset 0 0 0 1px rgba(226, 185, 111, 0.55),
     0 14px 34px -8px rgba(0, 0, 0, 0.6);
   --preloader-orb-highlight: rgba(255, 255, 255, 0.32);
+
+  /* Glass: taller+dark — highlight tinted toward gold, barely there. */
+  --glass-highlight: color-mix(in srgb, var(--theme-accent) 6%, transparent);
 }
 
 /* Collage dimmer (tienda): the pastel collage art washes out the headline in
@@ -409,6 +425,49 @@ html.theme-transition .theme-card {
     );
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+}
+
+/* Glass/mirror surface (refactor 2026-08-13): subtle frosted backing for text
+   that floats directly on the page background — NO border, NO shadow, NO
+   border-radius box. Just light backdrop-blur + a whisper gradient highlight
+   behind content. Theme-adapted via --glass-bg / --glass-highlight. */
+.glass-surface {
+  position: relative;
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  isolation: isolate;
+}
+
+.glass-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, var(--glass-highlight) 0%, transparent 30%);
+  pointer-events: none;
+}
+
+/* Glass card (overflow-hidden safe): same as .glass-surface but without the
+   ::before highlight (clipped by overflow:hidden on ProductCard/gallery items). */
+.glass-card {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+/* SplitText reveal children (split-type): inline-block so transforms/opacity
+   animate cleanly without line reflows. Tiny horizontal padding prevents
+   adjacent chars from touching during the reveal. */
+.split-text .word,
+.split-text .char {
+  display: inline-block;
+  padding: 0 0.025em;
+}
+
+/* ParallaxFloat elements: hint the compositor for transform-heavy animation. */
+[data-parallax-float] {
+  will-change: transform;
 }
 
 /* Anthropic-style motif watermarks (user direction): faint professional

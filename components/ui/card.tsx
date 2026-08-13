@@ -27,7 +27,7 @@ export default function Card({
 }: CardProps) {
   return (
     <article
-      className={`group flex flex-col overflow-hidden rounded-2xl bg-mar-card shadow-sm ${className}`}
+      className={`group flex flex-col overflow-hidden glass-card ${className}`}
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden">
         <Image

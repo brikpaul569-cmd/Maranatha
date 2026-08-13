@@ -63,7 +63,7 @@ export default function OcasionesPage() {
             <Reveal key={occasion.slug} delay={(index % 3) * 0.08} y={24}>
               <Link
                 href={`/ocasiones/${occasion.slug}`}
-                className="group flex h-full flex-col gap-3 rounded-2xl bg-mar-card p-6 drop-shadow-[0_12px_24px_rgba(93,64,55,0.12)] transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1"
+                className="group flex h-full flex-col gap-3 glass-surface p-6 transition-transform duration-300 motion-reduce:transition-none motion-safe:hover:-translate-y-1"
               >
                 <span aria-hidden className="size-2 rounded-full bg-mar-gold" />
                 <h2 className="font-display text-xl text-mar-brown">
