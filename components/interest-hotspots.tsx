@@ -1,12 +1,13 @@
 /**
- * InterestHotspots — interactive image with clickable numbered overlays.
+ * InterestHotspots — interactive image with invisible clickable hotspots
+ * and a numbered side-list selector.
  *
- * Left column: image (next/image `fill`) with absolutely-positioned
- * numbered markers.  Clicking a marker sets `activeSpot`.
+ * Left column: image (next/image `fill`) with invisible hotspots that
+ * fade in on hover.  Clicking any hotspot (image or list) sets activeSpot.
  *
- * Right column: detail panel that renders activeSpot's data with a
- * fade-in transition.  Falls back to an empty-state prompt when nothing
- * is selected.
+ * Right column: a numbered list of all hotspots (always visible) acting
+ * as the primary selector, plus a detail panel that renders the active
+ * hotspot's category, title, and description with a fade-in transition.
  *
  * The data shape is an extensible array of objects so consumers can pass
  * their own hotspots without touching the component.
@@ -111,7 +112,7 @@ export default function InterestHotspots({
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-      {/* ── Left: image + interactive markers ── */}
+      {/* ── Left: image with invisible hotspots (fade in on hover) ── */}
       <div className="relative aspect-[16/9] w-full overflow-hidden">
         <Image
           src={imageSrc}
@@ -129,8 +130,8 @@ export default function InterestHotspots({
             aria-label={`Ver detalles de ${spot.title}`}
             className={
               activeSpot?.id === spot.id
-                ? "annotation-dot scale-125 cursor-pointer ring-2 ring-white ring-offset-2"
-                : "annotation-dot cursor-pointer hover:scale-110"
+                ? "annotation-dot scale-125 cursor-pointer opacity-100 ring-2 ring-white ring-offset-2"
+                : "annotation-dot cursor-pointer opacity-0 transition-opacity duration-300 hover:opacity-100 hover:scale-110"
             }
             style={{
               left: `${spot.x}%`,
@@ -142,7 +143,7 @@ export default function InterestHotspots({
               className={
                 activeSpot?.id === spot.id
                   ? "annotation-number opacity-100"
-                  : "annotation-number opacity-70"
+                  : "annotation-number opacity-0 hover:opacity-100"
               }
             >
               {spot.id}
@@ -151,38 +152,63 @@ export default function InterestHotspots({
         ))}
       </div>
 
-      {/* ── Right: dynamic detail panel ── */}
-      <div className="flex items-center justify-center bg-mar-card p-8">
-        {activeSpot ? (
-          <div key={activeSpot.id} className="animate-fadeIn w-full">
-            <span className="font-futura text-xs uppercase tracking-widest text-mar-gold">
-              {activeSpot.category}
-            </span>
-            <h3 className="mt-2 text-2xl font-bold text-mar-brown">
-              {activeSpot.title}
-            </h3>
-            <p className="mt-4 text-mar-text/80 leading-relaxed">
-              {activeSpot.description}
-            </p>
-          </div>
-        ) : (
-          <div className="w-full text-center py-12">
-            <svg
-              className="mx-auto mb-4 h-12 w-12 text-mar-text/20"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <circle cx="12" cy="12" r="10" strokeWidth="1" />
-              <path d="M12 8v4l2 2" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-            <p className="text-sm text-mar-text/60">
-              Haz clic en un número de la imagen para ver detalles del
-              punto de interés.
-            </p>
-          </div>
-        )}
+      {/* ── Right: numbered list selector + detail panel ── */}
+      <div className="bg-mar-card p-8">
+        <h3 className="font-futura text-xs uppercase tracking-widest text-mar-gold mb-6">
+          Puntos de Interés
+        </h3>
+
+        <ul className="space-y-2">
+          {hotspots.map((spot) => (
+            <li key={spot.id}>
+              <button
+                type="button"
+                onClick={() => setActiveSpot(spot)}
+                className={
+                  activeSpot?.id === spot.id
+                    ? "flex w-full items-center gap-3 rounded-lg bg-mar-gold/10 px-4 py-3 text-left"
+                    : "flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left hover:bg-mar-gold/5"
+                }
+              >
+                <span
+                  className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white"
+                  style={{
+                    backgroundColor: spot.color || "#d9a94e",
+                  }}
+                >
+                  {spot.id}
+                </span>
+                <span className="font-medium text-mar-brown">
+                  {spot.title}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {/* ── Detail panel ── */}
+        <div className="mt-6 min-h-[160px]">
+          {activeSpot ? (
+            <div key={activeSpot.id} className="animate-fadeIn">
+              <span className="font-futura text-xs uppercase tracking-widest text-mar-gold">
+                {activeSpot.category}
+              </span>
+              <h3 className="mt-2 text-xl font-bold text-mar-brown">
+                {activeSpot.title}
+              </h3>
+              <p className="mt-3 text-mar-text/80 leading-relaxed">
+                {activeSpot.description}
+              </p>
+            </div>
+          ) : (
+            <div className="flex min-h-[120px] items-center justify-center text-center">
+              <p className="text-sm text-mar-text/60">
+                Selecciona un número para ver detalles del punto de
+                interés.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
