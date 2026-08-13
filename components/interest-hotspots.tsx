@@ -149,19 +149,37 @@ interface InterestHotspotsProps {
   imageSrc?: string;
   /** Alt text for the image. */
   imageAlt?: string;
+  /** When true, clicking the image prints {top, left} percentages to console. */
+  isEditing?: boolean;
 }
 
 export default function InterestHotspots({
   hotspots = bearHotspots,
   imageSrc = "/placeholders/Oso-Photoroom.png",
   imageAlt = "Osito de peluche artesanal Maranatha sentado sosteniendo una flor de terciopelo púrpura",
+  isEditing = false,
 }: InterestHotspotsProps) {
   const [activeSpot, setActiveSpot] = useState<Hotspot | null>(null);
+
+  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isEditing) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    console.log(
+      "[InterestHotspots] Click position:",
+      JSON.stringify({ top: `${y.toFixed(1)}%`, left: `${x.toFixed(1)}%` }),
+    );
+  };
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
       {/* ── Left: clean image (no overlays) ── */}
-      <div className="relative aspect-[3/2] w-full max-h-[600px] overflow-hidden lg:max-h-[700px]">
+      <div
+        className="relative aspect-[3/2] w-full max-h-[600px] overflow-hidden lg:max-h-[700px]"
+        onClick={handleImageClick}
+        style={isEditing ? { cursor: "crosshair" } : undefined}
+      >
         <Image
           src={imageSrc}
           alt={imageAlt}
@@ -175,8 +193,8 @@ export default function InterestHotspots({
       {/* ── Right: numbered list selector + detail panel ── */}
       <div className="bg-mar-card p-8">
           <h3 className="font-futura text-xs uppercase tracking-widest text-mar-gold mb-6">
-          Cómo se construye
-        </h3>
+            Cómo se construye
+          </h3>
 
         <ul className="space-y-2">
           {hotspots.map((spot) => (
