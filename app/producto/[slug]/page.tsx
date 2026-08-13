@@ -7,7 +7,6 @@ import Reveal from "@/components/reveal";
 import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
-import { waMeUrl } from "@/lib/constants";
 import {
   OCCASIONS,
   PRODUCTS,
@@ -54,8 +53,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .map((zoneSlug) => getZoneBySlug(zoneSlug)?.name)
     .filter((name): name is string => Boolean(name));
   const mainImage = product.images[0];
-
-  const message = `Hola 👋 Me interesa: ${product.name} (${product.priceLabel}). ¿Está disponible?`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -158,9 +155,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
             )}
 
             <div className="flex flex-wrap gap-3">
-              <Button variant="whatsapp" href={waMeUrl(message)}>
-                Pedir por WhatsApp
-              </Button>
               <Button variant="ghost" href="/catalogo">
                 Ver catálogo
               </Button>

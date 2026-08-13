@@ -170,9 +170,6 @@ export default function NosotrosPage() {
 
         {/* CTA */}
         <Reveal delay={0.1} className="mt-20 flex flex-wrap gap-3">
-          <Button variant="whatsapp" message="Hola 👋 Quiero saber más sobre Detalles Maranatha">
-            Escríbenos por WhatsApp
-          </Button>
           <Button variant="ghost" href="/catalogo">
             Ver catálogo
           </Button>

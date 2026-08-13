@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { waMeUrl } from "@/lib/constants";
 import { PRODUCTS } from "@/lib/products";
 import { ZONES, getZoneBySlug } from "@/lib/zones";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
-import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 
@@ -98,13 +96,6 @@ export default async function ZonePage({ params }: ZonePageProps) {
                 {zone.deliveryTime}
               </p>
             </div>
-            <Button
-              variant="whatsapp"
-              href={waMeUrl(zone.whatsappMessage)}
-              className="ml-auto"
-            >
-              Pedir por WhatsApp
-            </Button>
           </div>
         </Reveal>
 

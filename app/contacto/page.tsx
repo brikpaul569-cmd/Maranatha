@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { HOURS, SOCIALS, waMeUrl } from "@/lib/constants";
+import { HOURS, SOCIALS } from "@/lib/constants";
 import {
   InstagramIcon,
   TikTokIcon,
   WhatsAppIcon,
 } from "@/components/ui/icons";
 import Reveal from "@/components/reveal";
-import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
@@ -77,13 +76,6 @@ export default function ContactoPage() {
                 El canal más rápido para pedir: cuéntanos el detalle y
                 coordinamos el domicilio el mismo día en Bogotá.
               </p>
-              <Button
-                variant="whatsapp"
-                href={waMeUrl("Hola 👋 Quiero hacer un pedido a Detalles Maranatha")}
-                className="mt-auto self-start"
-              >
-                Escribir por WhatsApp
-              </Button>
             </div>
           </Reveal>
 
@@ -116,15 +108,6 @@ export default function ContactoPage() {
             </div>
           </Reveal>
         </div>
-
-        <Reveal delay={0.1} className="mt-14">
-          <Button
-            variant="whatsapp"
-            href={waMeUrl("Hola 👋 Quiero saber más sobre Detalles Maranatha")}
-          >
-            Pedir por WhatsApp
-          </Button>
-        </Reveal>
       </Section>
     </main>
   );

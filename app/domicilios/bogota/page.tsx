@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HOURS, waMeUrl } from "@/lib/constants";
+import { HOURS } from "@/lib/constants";
 import { getFeaturedProducts, PRODUCTS } from "@/lib/products";
 import { HUB_ZONE, ZONES } from "@/lib/zones";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
-import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 
@@ -77,13 +76,6 @@ export default function DomiciliosBogotaPage() {
                 {HOURS.days} · {HOURS.time}
               </p>
             </div>
-            <Button
-              variant="whatsapp"
-              href={waMeUrl(HUB_ZONE.whatsappMessage)}
-              className="ml-auto"
-            >
-              Pedir por WhatsApp
-            </Button>
           </div>
         </Reveal>
 
