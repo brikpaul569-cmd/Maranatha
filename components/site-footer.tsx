@@ -100,10 +100,21 @@ export default function SiteFooter() {
           </div>
         </div>
 
+        {/* New features CTA (user direction) — strategic spot above the legal
+            line: invites the business owner to grow the web with new ideas. */}
+        <div className="mx-auto mt-14 max-w-xl text-center">
+          <p className="font-display text-lg text-mar-brown">
+            ¿Querés sumar nuevas funcionalidades a tu negocio?
+          </p>
+          <p className="mt-2 font-sans text-sm text-mar-brown/70">
+            Contanos tu idea y llevemos tu web al siguiente nivel.
+          </p>
+        </div>
+
         {/* Legal line (ft-R5) + conditional coverage link (ft-R3/D7) */}
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-mar-brown/10 pt-6 sm:flex-row">
           <p className="font-sans text-xs text-mar-brown/60">
-            © {year} Detalles Maranatha · Hecho a mano
+            © {year} Detalles Maranatha · Todos los derechos reservados
           </p>
           {coverageHref && (
             <a
@@ -114,6 +125,12 @@ export default function SiteFooter() {
             </a>
           )}
         </div>
+
+        {/* Developer credit (user direction) — short, small, at the very end. */}
+        <p className="mt-6 text-center font-sans text-xs text-mar-brown/60 sm:text-right">
+          Diseñado y desarrollado{" "}
+          <span className="font-semibold text-mar-gold">by Brik</span>
+        </p>
       </div>
     </footer>
   );
