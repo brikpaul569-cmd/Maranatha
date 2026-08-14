@@ -3,5 +3,5 @@
 :HL["/Maranatha/_next/static/media/9dd75fadc5b3df29-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/Maranatha/_next/static/media/af4bf8399d1aacdf-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/Maranatha/_next/static/media/e4af272ccee01ff0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/Maranatha/_next/static/css/021de12bfe9d1d72.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"ocasiones","param":null,"prefetchHints":4160,"slots":{"children":{"name":"ocasion","param":{"type":"d","key":"agradecimiento","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"TEfruo7IqOzpVXNy2qOI7"}
+:HL["/Maranatha/_next/static/css/541d80113475a3e9.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"ocasiones","param":null,"prefetchHints":4160,"slots":{"children":{"name":"ocasion","param":{"type":"d","key":"agradecimiento","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"b9eVljOeZRfZi5YvapQLn"}
