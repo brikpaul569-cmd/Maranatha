@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow only one concurrent deploy; cancel in-flight runs when a new push lands.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Webpack build (project convention on this repo). GitHub Pages has no
+      # Next.js server, so `output: "export"` renders ./out; the prod-only
+      # basePath /Maranatha is applied automatically because CI sets
+      # NODE_ENV=production.
+      - name: Build static site
+        run: npm run build:webpack
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          # Keep history of the gh-pages branch (allows easy rollback).
+          keep_history: true
