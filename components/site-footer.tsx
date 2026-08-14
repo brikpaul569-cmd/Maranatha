@@ -138,7 +138,7 @@ export default function SiteFooter() {
               height={24}
               loading="lazy"
               aria-hidden
-              className="h-4 w-4 shrink-0 object-contain opacity-70"
+              className="h-5 w-5 shrink-0 object-contain opacity-70"
             />
             <span>
               Nuevos módulos para el sitio web y el negocio están en camino.
@@ -151,14 +151,16 @@ export default function SiteFooter() {
               height={24}
               loading="lazy"
               aria-hidden
-              className="h-4 w-4 shrink-0 object-contain opacity-70"
+              className="h-5 w-5 shrink-0 object-contain opacity-70"
             />
           </p>
         </div>
 
-        {/* Legal line (ft-R5) + conditional coverage link (ft-R3/D7) */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-mar-brown/10 pt-6 sm:flex-row">
-          <p className="font-sans text-xs text-mar-brown/60">
+        {/* Legal line (ft-R5) + conditional coverage link (ft-R3/D7).
+            Centered and stacked on every breakpoint so the footer always
+            finishes with an organized, centered block. */}
+        <div className="mt-12 flex flex-col items-center gap-3 border-t border-mar-brown/10 pt-6">
+          <p className="text-center font-sans text-xs text-mar-brown/60">
             © {year} Detalles Maranatha · Todos los derechos reservados
           </p>
           {coverageHref && (

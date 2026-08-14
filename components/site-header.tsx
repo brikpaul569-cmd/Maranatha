@@ -204,7 +204,7 @@ export default function SiteHeader() {
           className="site-header__bg absolute inset-0 border-b border-mar-brown/10 bg-[var(--theme-bg)]/90 backdrop-blur-md"
         />
 
-        <div className="relative mx-auto flex max-w-6xl items-center justify-center gap-4 px-6 py-3.5">
+        <div className="relative mx-auto flex min-h-14 max-w-6xl items-center justify-center gap-4 px-6 py-3.5">
           {/* Desktop navigation (md+): truly centered; the theme toggle and
               the mobile controls sit absolutely at the right edge. */}
           <nav

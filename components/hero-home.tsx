@@ -70,7 +70,7 @@ export default function HeroHome() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center md:bottom-6"
         >
-          <span className="scroll-cue flex-flex-col items-center gap-1.5 text-mar-brown/60">
+          <span className="scroll-cue flex flex-col items-center gap-1.5 text-mar-brown/60">
             <svg
               width="18"
               height="18"
