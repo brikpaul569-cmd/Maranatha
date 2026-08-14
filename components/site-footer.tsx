@@ -100,14 +100,16 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        {/* New features CTA (user direction) — strategic spot above the legal
-            line: invites the business owner to grow the web with new ideas. */}
+        {/* Coming-soon teaser (user direction) — strategic spot above the
+            legal line: announces that more modules are coming to the site for
+            the Maranatha business. */}
         <div className="mx-auto mt-14 max-w-xl text-center">
           <p className="font-display text-lg text-mar-brown">
-            ¿Querés sumar nuevas funcionalidades a tu negocio?
+            Próximamente: más funcionalidades para Maranatha
           </p>
           <p className="mt-2 font-sans text-sm text-mar-brown/70">
-            Contanos tu idea y llevemos tu web al siguiente nivel.
+            Nuevos módulos para el sitio web y el negocio están en camino.
+            ¡Muy pronto!
           </p>
         </div>
 
@@ -126,10 +128,18 @@ export default function SiteFooter() {
           )}
         </div>
 
-        {/* Developer credit (user direction) — short, small, at the very end. */}
+        {/* Developer credit (user direction) — short, small, at the very end;
+            links to the developer portfolio in a new tab. */}
         <p className="mt-6 text-center font-sans text-xs text-mar-brown/60 sm:text-right">
           Diseñado y desarrollado{" "}
-          <span className="font-semibold text-mar-gold">by Brik</span>
+          <a
+            href="https://brikpaul569-cmd.github.io/BrikOficial/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-mar-gold underline-offset-4 transition-colors hover:text-mar-brown hover:underline"
+          >
+            by Brik
+          </a>
         </p>
       </div>
     </footer>
