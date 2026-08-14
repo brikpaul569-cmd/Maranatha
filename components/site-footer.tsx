@@ -96,12 +96,13 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Social links — new tab, no referrer leak (ft-R1) */}
-          <div>
+          {/* Social links — new tab, no referrer leak (ft-R1); pushed to the
+              right edge on desktop, centered on mobile. */}
+          <div className="text-center md:text-right">
             <p className="font-sans text-xs uppercase tracking-[0.35em] text-mar-brown/60">
               Síguenos
             </p>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex justify-center gap-3 md:justify-end">
               {SOCIALS.map((social) => {
                 const Icon = SOCIAL_ICONS[social.label as keyof typeof SOCIAL_ICONS];
                 if (!Icon) return null;
@@ -174,7 +175,7 @@ export default function SiteFooter() {
             very end with a tiny floating ghost; links to the developer
             portfolio in a new tab. */}
         <p className="mt-6 flex items-center justify-center gap-1.5 font-sans text-xs text-mar-brown/60">
-          Diseñado y desarrollado{" "}
+          Diseñado y Desarrollado{" "}
           <a
             href="https://brikpaul569-cmd.github.io/BrikOficial/"
             target="_blank"
