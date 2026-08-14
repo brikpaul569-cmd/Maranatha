@@ -516,6 +516,29 @@ html.theme-transition .theme-card {
   }
 }
 
+/* Ghost float (footer credit, user direction): the tiny spirit levitates
+   gently next to the developer signature. Transform-only, frozen under
+   reduced motion. */
+.ghost-float {
+  animation: ghost-float 4s ease-in-out infinite;
+}
+
+@keyframes ghost-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost-float {
+    animation: none;
+  }
+}
+
 /* Hero scroll cue (user direction): gentle chevron bob at the bottom of
    the hero inviting to keep scrolling. Transform-only; the global
    reduced-motion block below freezes it. */

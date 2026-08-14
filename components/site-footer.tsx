@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { HOURS, ROUTES, SOCIALS } from "@/lib/constants";
 import {
   BoxCheckIcon,
@@ -30,6 +31,27 @@ const TRUST_BADGES: { label: string; icon: typeof ShieldIcon }[] = [
   { label: "Empaques 100% amigables con el planeta", icon: BoxCheckIcon },
   { label: "Materiales de origen responsable", icon: SproutIcon },
 ];
+
+/** Tiny ghost glyph for the developer credit — floats gently next to the
+ *  "by Brik" signature (see `.ghost-float` in globals.css). Decorative. */
+function GhostIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
+    >
+      <path d="M6 11.5A6 6 0 0 1 18 11.5V20l-2-1.2-2 1.2-2-1.2-2 1.2-2-1.2-2 1.2v-8.5Z" />
+      <path d="M9.5 10h.01" />
+      <path d="M14.5 10h.01" />
+    </svg>
+  );
+}
 
 export default function SiteFooter() {
   const coverageHref = ROUTES.domiciliosBogota;
@@ -102,14 +124,34 @@ export default function SiteFooter() {
 
         {/* Coming-soon teaser (user direction) — strategic spot above the
             legal line: announces that more modules are coming to the site for
-            the Maranatha business. */}
+            the Maranatha business, in cursive with little "detalle" motifs. */}
         <div className="mx-auto mt-14 max-w-xl text-center">
           <p className="font-display text-lg text-mar-brown">
             Próximamente: más funcionalidades para Maranatha
           </p>
-          <p className="mt-2 font-sans text-sm text-mar-brown/70">
-            Nuevos módulos para el sitio web y el negocio están en camino.
-            ¡Muy pronto!
+          <p className="mt-3 flex items-center justify-center gap-2.5 font-script text-xl leading-snug text-mar-brown/80 md:text-2xl">
+            <Image
+              src="/placeholders/gift.svg"
+              alt=""
+              width={24}
+              height={24}
+              loading="lazy"
+              aria-hidden
+              className="h-4 w-4 shrink-0 object-contain opacity-70"
+            />
+            <span>
+              Nuevos módulos para el sitio web y el negocio están en camino.
+              ¡Muy pronto!
+            </span>
+            <Image
+              src="/placeholders/flower.svg"
+              alt=""
+              width={24}
+              height={24}
+              loading="lazy"
+              aria-hidden
+              className="h-4 w-4 shrink-0 object-contain opacity-70"
+            />
           </p>
         </div>
 
@@ -128,9 +170,10 @@ export default function SiteFooter() {
           )}
         </div>
 
-        {/* Developer credit (user direction) — short, small, at the very end;
-            links to the developer portfolio in a new tab. */}
-        <p className="mt-6 text-center font-sans text-xs text-mar-brown/60 sm:text-right">
+        {/* Developer credit (user direction) — short, small, centered at the
+            very end with a tiny floating ghost; links to the developer
+            portfolio in a new tab. */}
+        <p className="mt-6 flex items-center justify-center gap-1.5 font-sans text-xs text-mar-brown/60">
           Diseñado y desarrollado{" "}
           <a
             href="https://brikpaul569-cmd.github.io/BrikOficial/"
@@ -140,6 +183,7 @@ export default function SiteFooter() {
           >
             by Brik
           </a>
+          <GhostIcon className="ghost-float size-3.5" />
         </p>
       </div>
     </footer>
