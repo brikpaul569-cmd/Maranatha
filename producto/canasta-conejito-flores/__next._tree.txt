@@ -1,0 +1,7 @@
+:HL["/Maranatha/_next/static/media/62c97acc3aa63787-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/Maranatha/_next/static/media/87069f06a4f1ee13-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/Maranatha/_next/static/media/9dd75fadc5b3df29-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/Maranatha/_next/static/media/af4bf8399d1aacdf-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/Maranatha/_next/static/media/e4af272ccee01ff0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/Maranatha/_next/static/css/021de12bfe9d1d72.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"producto","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"canasta-conejito-flores","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"qf8TcDIkUrPpWDV5kMYam"}
