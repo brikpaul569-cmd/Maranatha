@@ -4,7 +4,8 @@ import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import Watermark from "@/components/watermark";
-import InterestHotspots from "@/components/interest-hotspots";
+import ParallaxFloat from "@/components/parallax-float";
+import BearInfographic from "@/components/bear-infographic";
 import { TALLER_WORKSHOPS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -29,32 +30,36 @@ export default function TallerPage() {
         mood="taller-hero"
         className="relative overflow-hidden bg-[var(--section-mood)]"
       >
-        <div
-          aria-hidden
+        <ParallaxFloat
+          speed={0.2}
           className="pointer-events-none absolute -right-10 top-20 w-40 rotate-12 md:w-60"
         >
-          <Image
-            src="/placeholders/flower.svg"
-            alt=""
-            width={400}
-            height={400}
-            loading="lazy"
-            className="h-auto w-full object-contain drop-shadow-[0_20px_32px_rgba(93,72,128,0.35)]"
-          />
-        </div>
-        <div
-          aria-hidden
+          <div aria-hidden>
+            <Image
+              src="/placeholders/flower.svg"
+              alt=""
+              width={400}
+              height={400}
+              loading="lazy"
+              className="h-auto w-full object-contain drop-shadow-[0_20px_32px_rgba(93,72,128,0.35)]"
+            />
+          </div>
+        </ParallaxFloat>
+        <ParallaxFloat
+          speed={0.12}
           className="pointer-events-none absolute -left-8 bottom-14 w-32 -rotate-6 md:w-44"
         >
-          <Image
-            src="/placeholders/ribbon.svg"
-            alt=""
-            width={400}
-            height={400}
-            loading="lazy"
-            className="h-auto w-full object-contain drop-shadow-[0_20px_32px_rgba(93,72,128,0.35)]"
-          />
-        </div>
+          <div aria-hidden>
+            <Image
+              src="/placeholders/ribbon.svg"
+              alt=""
+              width={400}
+              height={400}
+              loading="lazy"
+              className="h-auto w-full object-contain drop-shadow-[0_20px_32px_rgba(93,72,128,0.35)]"
+            />
+          </div>
+        </ParallaxFloat>
 
         <div className="relative flex min-h-[72vh] flex-col justify-center py-16 md:min-h-[80vh]">
           <Eyebrow>Detalles Maranatha · Taller</Eyebrow>
@@ -74,10 +79,18 @@ export default function TallerPage() {
         </div>
       </Section>
 
-      {/* Diagrama interactivo del osito artesanal — producto estrella del taller.
-          Haz clic en cada número para descubrir los componentes del detalle. */}
+      {/* Bear infographic — warm scrapbook panel with the real product photo.
+          Static server-rendered content, no client JS. */}
       <div className="px-6 py-16 md:px-10 md:py-24">
-        <InterestHotspots />
+        <BearInfographic />
+
+        {/* Coming-soon teaser for the next product infographic */}
+        <div className="mx-auto mt-6 max-w-[500px] px-6 text-center md:mt-8">
+          <p className="font-script text-3xl text-mar-brown">Próximamente</p>
+          <p className="mt-2 font-futura text-[11px] uppercase tracking-[0.25em] text-mar-brown/70">
+            Más infografías de nuestros productos
+          </p>
+        </div>
       </div>
 
       {/* Zona de talleres — mint band, floating borderless cards */}
@@ -87,11 +100,17 @@ export default function TallerPage() {
         sheet={false}
         className="relative scroll-mt-20 bg-[var(--section-mood)]"
       >
-        <Watermark
-          src="/placeholders/gift.svg"
-          className="right-8 top-8 w-16 md:w-20"
-          opacity={0.12}
-        />
+        <ParallaxFloat
+          speed={0.12}
+          className="pointer-events-none absolute right-8 top-8 w-16 md:w-20"
+        >
+          <Watermark
+            src="/placeholders/gift.svg"
+            className="h-auto w-full"
+            opacity={0.12}
+            float={false}
+          />
+        </ParallaxFloat>
 
         <div className="max-w-2xl">
           <Eyebrow>Zona de talleres</Eyebrow>
@@ -117,11 +136,11 @@ export default function TallerPage() {
               <p className="flex-1 font-sans text-sm text-mar-brown/80">
                 {workshop.description}
               </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full bg-mar-pink-light px-3 py-1 font-futura text-[11px] font-semibold uppercase tracking-widest text-mar-brown/75">
+              <div className="mt-auto flex flex-col items-start gap-2">
+                <span className="whitespace-nowrap rounded-full bg-mar-pink-light px-3 py-1 font-futura text-[11px] font-semibold uppercase tracking-widest text-mar-brown/75">
                   {workshop.duration}
                 </span>
-                <span className="rounded-full bg-mar-sage/40 px-3 py-1 font-futura text-[11px] font-semibold uppercase tracking-widest text-mar-brown/75">
+                <span className="whitespace-nowrap rounded-full bg-mar-sage/40 px-3 py-1 font-futura text-[11px] font-semibold uppercase tracking-widest text-mar-brown/75">
                   {workshop.level}
                 </span>
               </div>
@@ -137,11 +156,17 @@ export default function TallerPage() {
         sheet={false}
         className="relative scroll-mt-20 bg-[var(--section-mood)]"
       >
-        <Watermark
-          src="/placeholders/flower.svg"
-          className="bottom-8 right-8 w-16 md:w-20"
-          opacity={0.12}
-        />
+        <ParallaxFloat
+          speed={0.1}
+          className="pointer-events-none absolute bottom-8 right-8 w-16 md:w-20"
+        >
+          <Watermark
+            src="/placeholders/flower.svg"
+            className="h-auto w-full"
+            opacity={0.12}
+            float={false}
+          />
+        </ParallaxFloat>
 
         <div className="max-w-2xl">
           <Eyebrow>Aprende el oficio</Eyebrow>
