@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { waMeUrl } from "@/lib/constants";
 import { WhatsAppIcon } from "./icons";
 
 /**
  * Button primitive (ds-R1). Variants: primary (mar-brown/card), whatsapp
- * (mar-gold + WA icon), ghost (outline). Renders an `<a>` when a href is
- * available — including the WhatsApp variant, which deep-links via
- * `waMeUrl(message)` from lib/constants.ts (cc-R8) — and a `<button>`
- * otherwise (ds-R1 "Non-link button").
+ * (mar-gold + WA icon), ghost (outline). Renders a next/link `<Link>` for
+ * internal hrefs (so basePath/trailingSlash are applied automatically under
+ * static export), a plain `<a>` for external links — including the WhatsApp
+ * variant, which deep-links via `waMeUrl(message)` from lib/constants.ts
+ * (cc-R8) — and a `<button>` otherwise (ds-R1 "Non-link button").
  *
  * Hover feedback is CSS transform-only (INP-safe) and disabled under
  * prefers-reduced-motion via the motion-safe: variant (ds-R10).
@@ -62,17 +64,25 @@ export default function Button({
   ].join(" ");
 
   if (resolvedHref) {
+    if (isExternal) {
+      return (
+        <a
+          href={resolvedHref}
+          className={classes}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...rest}
+        >
+          {variant === "whatsapp" && <WhatsAppIcon className="size-4 shrink-0" />}
+          {children}
+        </a>
+      );
+    }
     return (
-      <a
-        href={resolvedHref}
-        className={classes}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noopener noreferrer" : undefined}
-        {...rest}
-      >
+      <Link href={resolvedHref} className={classes} {...rest}>
         {variant === "whatsapp" && <WhatsAppIcon className="size-4 shrink-0" />}
         {children}
-      </a>
+      </Link>
     );
   }
 

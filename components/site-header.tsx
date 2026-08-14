@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -165,14 +166,14 @@ export default function SiteHeader() {
   const renderNavItem = (item: NavItem) => {
     if (item.href) {
       return (
-        <a
+        <Link
           key={item.label}
           href={item.href}
           onClick={(event) => handleNavClick(event, item.href)}
           className="font-futura text-base font-medium text-mar-brown/80 transition-colors hover:text-mar-brown"
         >
           {item.label}
-        </a>
+        </Link>
       );
     }
     return (

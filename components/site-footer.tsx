@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { HOURS, ROUTES, SOCIALS } from "@/lib/constants";
 import {
   BoxCheckIcon,
@@ -164,12 +165,12 @@ export default function SiteFooter() {
             © {year} Detalles Maranatha · Todos los derechos reservados
           </p>
           {coverageHref && (
-            <a
+            <Link
               href={coverageHref}
               className="font-sans text-xs text-mar-brown/70 underline underline-offset-4 hover:text-mar-brown"
             >
               Domicilios en Bogotá
-            </a>
+            </Link>
           )}
         </div>
 

@@ -1,6 +1,7 @@
 import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Watermark from "@/components/watermark";
+import Link from "next/link";
 
 /**
  * Home "Explora" section (user direction): a different rhythm from the hero —
@@ -53,7 +54,7 @@ export default function ExploraSection() {
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {EXPLORA_ITEMS.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="theme-card group glass-surface p-7 transition-transform duration-300 motion-safe:hover:-translate-y-1"
@@ -65,7 +66,7 @@ export default function ExploraSection() {
               <span className="mt-4 inline-block font-futura text-xs font-semibold uppercase tracking-widest text-mar-gold">
                 Ver →
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
