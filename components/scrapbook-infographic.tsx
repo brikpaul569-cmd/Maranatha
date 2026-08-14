@@ -146,7 +146,7 @@ export default function ScrapbookInfographic({
       </header>
 
       <div className="mt-10 grid items-center gap-10 md:mt-14 md:grid-cols-[1fr_auto_1fr] md:gap-8">
-        <div className="order-2 grid grid-cols-2 gap-6 md:order-none md:w-44 md:grid-cols-1 md:gap-y-10">
+        <div className="order-2 mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:order-none md:mt-0 md:w-44 md:grid-cols-1 md:gap-y-10">
           {left.map((feature) => (
             <FeatureBox key={feature.id} feature={feature} />
           ))}
@@ -156,7 +156,7 @@ export default function ScrapbookInfographic({
           {illustration}
         </div>
 
-        <div className="order-3 grid grid-cols-2 gap-6 md:order-none md:w-44 md:grid-cols-1 md:gap-y-10">
+        <div className="order-3 mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:order-none md:mt-0 md:w-44 md:grid-cols-1 md:gap-y-10">
           {right.map((feature) => (
             <FeatureBox key={feature.id} feature={feature} />
           ))}

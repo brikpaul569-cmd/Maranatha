@@ -26,8 +26,10 @@ export default function HeroHome() {
       innerClassName="py-0! px-0! md:px-0!"
     >
       <div className="relative z-10 flex min-h-screen flex-col gap-5 px-6 pt-6 md:pt-8">
-        {/* Brand lockup: top-left, raised to viewport top */}
-        <div className="flex items-center gap-3">
+        {/* Brand lockup: centered & stacked on mobile so the script wordmark
+            sits below the fixed header (no collision with the dark-mode icon
+            or burger menu); top-left row on md+. */}
+        <div className="flex flex-col items-center gap-3 md:flex-row md:items-center md:justify-start md:gap-3">
           <Image
             src="/maranatha.jpeg"
             alt=""
@@ -39,7 +41,7 @@ export default function HeroHome() {
             aria-hidden
           />
 
-          <span className="font-script text-4xl leading-none text-mar-brown md:text-5xl">
+          <span className="font-script text-3xl leading-none text-mar-brown md:text-5xl">
             Maranatha
           </span>
         </div>
