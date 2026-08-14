@@ -39,6 +39,15 @@ const stout = Anton({
   variable: "--font-stout",
 });
 
+/**
+ * GitHub Pages serves the static export under /<repo>/ (see next.config.ts).
+ * Next.js does NOT apply basePath to metadata `icons` URLs automatically, so
+ * the favicon links must carry the prefix explicitly — otherwise the browser
+ * requests /favicon.png at the domain root and 404s. In dev the prefix is
+ * empty and localhost works unchanged.
+ */
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/Maranatha" : "";
+
 export const metadata: Metadata = {
   title: {
     default: "Detalles Maranatha",
@@ -47,8 +56,8 @@ export const metadata: Metadata = {
   description:
     "Arreglos florales artesanales hechos a mano en Colombia. Detalles únicos para cada ocasión, con pedidos por WhatsApp.",
   icons: {
-    icon: [{ url: "/icon.png", sizes: "512x512", type: "image/png" }],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    icon: [{ url: `${BASE_PATH}/favicon.png`, sizes: "512x512", type: "image/png" }],
+    apple: [{ url: `${BASE_PATH}/apple-touch-icon.png`, sizes: "180x180", type: "image/png" }],
   },
 };
 
