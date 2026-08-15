@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import BearDoodle from "@/components/ui/bear-doodle";
 
 export type ScrapbookIconName =
   | "plush"
@@ -38,16 +39,7 @@ const STROKE = {
 function ScrapbookIcon({ name }: { name: ScrapbookIconName }) {
   switch (name) {
     case "plush":
-      return (
-        <svg {...STROKE} className="h-6 w-6">
-          <circle cx="12" cy="11.5" r="7.5" />
-          <circle cx="6.8" cy="5.4" r="2.9" />
-          <circle cx="17.2" cy="5.4" r="2.9" />
-          <circle cx="9.7" cy="10" r="0.9" />
-          <circle cx="14.3" cy="10" r="0.9" />
-          <path d="M 10.3 13.6 Q 12 15.5 13.7 13.6" />
-        </svg>
-      );
+      return <BearDoodle className="h-6 w-6" />;
     case "stitch":
       return (
         <svg {...STROKE} className="h-6 w-6">
