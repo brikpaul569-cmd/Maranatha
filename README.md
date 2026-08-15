@@ -167,7 +167,7 @@ Abre [http://localhost:3000](http://localhost:3000).
 
 ## 🔗 Redes y contacto
 
-- Instagram: [@detallesmaranatha](https://www.instagram.com/detallesmaranatha)
+- Instagram: [@maranatha.detalles](https://www.instagram.com/maranatha.detalles/)
 - TikTok: [@detallesmaranatha](https://www.tiktok.com/@detallesmaranatha)
 - WhatsApp: botón flotante en el sitio
 

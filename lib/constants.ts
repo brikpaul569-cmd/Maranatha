@@ -6,9 +6,7 @@
 
 import { OCCASIONS } from "@/lib/products";
 
-// TODO(launch): replace with the real Maranatha WhatsApp number.
-// Format: country code (57 for Colombia) + city number, no "+" or spaces.
-export const WHATSAPP_NUMBER = "573000000000";
+export const WHATSAPP_NUMBER = "573203989838";
 
 export const WHATSAPP_DEFAULT_MESSAGE = "Hola 👋 Qué deseas comprar hoy!";
 
@@ -140,7 +138,7 @@ export const OCASION_LINKS: { label: string; slug: string; description: string }
 // floating widget and the page CTAs own the WhatsApp channel — waMeUrl() is
 // the single source for the deep link.
 export const SOCIALS: { label: string; href: string }[] = [
-  { label: "Instagram", href: "https://www.instagram.com/detallesmaranatha" },
+  { label: "Instagram", href: "https://www.instagram.com/maranatha.detalles/" },
   { label: "TikTok", href: "https://www.tiktok.com/@detallesmaranatha" },
 ];
 
