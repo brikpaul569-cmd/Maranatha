@@ -272,9 +272,9 @@ export default function Preloader() {
       <div
         ref={doodleWrapRef}
         aria-hidden="true"
-        className="absolute inset-0 z-10 flex items-center justify-center opacity-0 text-mar-brown/80"
+        className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 text-mar-brown/80"
       >
-        <BearDoodle className="size-28 md:size-36" />
+        <BearDoodle className="pointer-events-none size-28 md:size-36" />
       </div>
     </div>
   );
