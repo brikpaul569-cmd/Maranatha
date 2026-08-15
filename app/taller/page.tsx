@@ -74,7 +74,7 @@ export default function TallerPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="#talleres">Ver los talleres</Button>
+            <Button href="#talleres" magnetic>Ver los talleres</Button>
           </div>
         </div>
       </Section>

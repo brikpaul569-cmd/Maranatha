@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { waMeUrl } from "@/lib/constants";
+import Magnetic from "@/components/magnetic";
 import { WhatsAppIcon } from "./icons";
 
 /**
@@ -13,6 +14,10 @@ import { WhatsAppIcon } from "./icons";
  *
  * Hover feedback is CSS transform-only (INP-safe) and disabled under
  * prefers-reduced-motion via the motion-safe: variant (ds-R10).
+ *
+ * `magnetic` (opt-in, default false) wraps the control in <Magnetic>, the
+ * desktop-only cursor-pull micro-interaction. Deliberately NOT automatic —
+ * only the named primary CTAs should enable it, never ghost/outline buttons.
  */
 
 export type ButtonVariant = "primary" | "whatsapp" | "ghost";
@@ -28,6 +33,8 @@ export type ButtonProps = {
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   disabled?: boolean;
+  /** Opt-in desktop-only magnetic cursor-pull (ds-R10). Only primary CTAs. */
+  magnetic?: boolean;
   "aria-expanded"?: boolean;
   "aria-controls"?: string;
 };
@@ -48,6 +55,7 @@ export default function Button({
   type = "button",
   onClick,
   disabled,
+  magnetic = false,
   ...rest
 }: ButtonProps) {
   const resolvedHref = href ?? (variant === "whatsapp" ? waMeUrl(message) : undefined);
@@ -63,9 +71,11 @@ export default function Button({
     className,
   ].join(" ");
 
+  let content: ReactNode;
+
   if (resolvedHref) {
     if (isExternal) {
-      return (
+      content = (
         <a
           href={resolvedHref}
           className={classes}
@@ -77,19 +87,22 @@ export default function Button({
           {children}
         </a>
       );
+    } else {
+      content = (
+        <Link href={resolvedHref} className={classes} {...rest}>
+          {variant === "whatsapp" && <WhatsAppIcon className="size-4 shrink-0" />}
+          {children}
+        </Link>
+      );
     }
-    return (
-      <Link href={resolvedHref} className={classes} {...rest}>
+  } else {
+    content = (
+      <button type={type} className={classes} onClick={onClick} disabled={disabled} {...rest}>
         {variant === "whatsapp" && <WhatsAppIcon className="size-4 shrink-0" />}
         {children}
-      </Link>
+      </button>
     );
   }
 
-  return (
-    <button type={type} className={classes} onClick={onClick} disabled={disabled} {...rest}>
-      {variant === "whatsapp" && <WhatsAppIcon className="size-4 shrink-0" />}
-      {children}
-    </button>
-  );
+  return magnetic ? <Magnetic>{content}</Magnetic> : content;
 }

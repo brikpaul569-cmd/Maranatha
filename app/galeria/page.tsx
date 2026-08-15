@@ -119,7 +119,7 @@ export default function GaleriaPage() {
         </CascadeReveal>
 
         <ParallaxFloat className="mt-14" speed={0.2} float>
-          <Button href="/catalogo">Ver catálogo completo</Button>
+          <Button href="/catalogo" magnetic>Ver catálogo completo</Button>
         </ParallaxFloat>
       </Section>
     </main>
