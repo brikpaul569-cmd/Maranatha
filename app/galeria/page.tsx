@@ -7,6 +7,7 @@ import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import ParallaxFloat from "@/components/parallax-float";
 import CascadeReveal from "@/components/cascade-reveal";
+import DetailClip from "@/components/detail-clip";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -75,9 +76,9 @@ export default function GaleriaPage() {
         <div className="max-w-2xl">
           <Eyebrow>Nuestros detalles</Eyebrow>
 
-          <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
-            Galería
-          </h1>
+           <h1 className="mt-4 inline-flex flex-wrap items-center gap-2 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
+             Galería <DetailClip variant="gift" />
+           </h1>
 
           <p className="mt-6 max-w-xl font-sans text-base text-mar-brown/80 md:text-lg">
             Cada arreglo de Detalles Maranatha se hace a mano en Bogotá:
