@@ -395,7 +395,10 @@ html.theme-transition .theme-card {
   opacity: 1;
 }
 
-/* Visible keyboard focus (ds-R10) */
+/* Visible keyboard focus (ds-R10). */
+:focus {
+  outline: none;
+}
 :focus-visible {
   outline: 2px solid var(--color-mar-gold);
   outline-offset: 3px;

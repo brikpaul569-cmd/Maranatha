@@ -81,14 +81,13 @@ export default function DetailClip({
 
   return (
     <span
-      onClick={reveal}
-      data-drawn={drawn ? "true" : "false"}
-      className={`detail-clip inline-flex cursor-pointer items-center justify-center p-0.5 transition-opacity ${
-        drawn
-          ? "text-mar-brown/90"
-          : "text-mar-brown/40 hover:text-mar-brown/70"
-      } ${className}`}
-    >
+  onClick={reveal}
+  data-drawn={drawn ? "true" : "false"}
+  className={`detail-clip inline-flex cursor-pointer items-center justify-center p-0.5 transition-opacity ${
+    drawn
+      ? "text-mar-brown/95"
+      : "text-mar-brown/55 hover:text-mar-brown/80"
+  } ${className}`}>
       <DetailDoodle ref={svgRef} variant={variant} className="size-full" />
       {children}
     </span>

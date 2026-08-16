@@ -202,7 +202,7 @@ export default function SiteHeader() {
         {/* Background layer fades in once scrolled (transform/opacity only). */}
         <div
           aria-hidden="true"
-          className="site-header__bg absolute inset-0 border-b border-mar-brown/10 bg-[var(--theme-bg)]/90 backdrop-blur-md"
+          className="site-header__bg absolute inset-0 bg-[var(--theme-bg)]/90 backdrop-blur-md"
         />
 
         <div className="relative mx-auto flex min-h-14 max-w-6xl items-center justify-center gap-4 px-6 py-3.5">
@@ -247,7 +247,7 @@ export default function SiteHeader() {
           ref={panelRef}
           inert={!open}
           className={[
-            "absolute inset-x-0 top-full border-b border-mar-brown/10 bg-[var(--theme-bg)]",
+            "absolute inset-x-0 top-full bg-[var(--theme-bg)]",
             "transition-[opacity,transform] duration-300 motion-reduce:transition-none md:hidden",
             open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
           ].join(" ")}
