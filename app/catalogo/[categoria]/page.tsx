@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
+import CatalogGridTransition from "@/components/catalog-grid-transition";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import {
@@ -61,13 +62,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </p>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
-          {products.map((product, index) => (
-            <Reveal key={product.slug} delay={(index % 4) * 0.08} y={24}>
-              <ProductCard product={product} />
-            </Reveal>
-          ))}
-        </div>
+        <CatalogGridTransition>
+          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+            {products.map((product, index) => (
+              <Reveal key={product.slug} delay={(index % 4) * 0.08} y={24}>
+                <ProductCard product={product} />
+              </Reveal>
+            ))}
+          </div>
+        </CatalogGridTransition>
       </Section>
     </main>
   );

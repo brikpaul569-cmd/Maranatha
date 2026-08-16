@@ -8,6 +8,7 @@ import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
 import ParallaxFloat from "@/components/parallax-float";
 import CascadeReveal from "@/components/cascade-reveal";
+import CatalogGridTransition from "@/components/catalog-grid-transition";
 
 export const metadata: Metadata = {
   title: "Catálogo",
@@ -57,13 +58,15 @@ export default function CatalogoPage() {
         <div className="mt-10">
           <CatalogOccasionFilter occasions={OCCASIONS}>
             <CascadeReveal>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                {PRODUCTS.map((product) => (
-                  <div key={product.slug} data-cascade>
-                    <ProductCard product={product} />
-                  </div>
-                ))}
-              </div>
+              <CatalogGridTransition>
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  {PRODUCTS.map((product) => (
+                    <div key={product.slug} data-cascade>
+                      <ProductCard product={product} />
+                    </div>
+                  ))}
+                </div>
+              </CatalogGridTransition>
             </CascadeReveal>
           </CatalogOccasionFilter>
         </div>

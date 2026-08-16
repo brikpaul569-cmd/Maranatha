@@ -13,6 +13,13 @@ import { getCategoryBySlug, type Product } from "@/lib/products";
  * `data-occasion` exposes the product's occasion slugs for the progressive
  * occasion filter on /catalogo (CatalogOccasionFilter toggles `hidden` on
  * these cards); content stays in the HTML without JS (cc-R1).
+ *
+ * Shared-element transition hooks: `data-product-slug` on the Link and
+ * `data-flip-source` on the 4/5 image frame let CatalogGridTransition capture
+ * a GSAP Flip state of the clicked card's image box before navigating, so the
+ * product hero image can morph back to this exact frame on /producto/[slug].
+ * The frame (not the img) is the source because the img carries a hover scale
+ * that must not leak into the captured transform.
  */
 
 export type ProductCardProps = {
@@ -33,10 +40,15 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <Link
         href={`/producto/${product.slug}`}
+        data-product-slug={product.slug}
         className="flex flex-1 flex-col"
         aria-label={`Ver ${product.name}`}
       >
-        <div className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light">
+        <div
+          data-flip-source
+          data-flip-id={`product-${product.slug}`}
+          className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light"
+        >
           <Image
             src={image.src}
             alt={image.alt}
