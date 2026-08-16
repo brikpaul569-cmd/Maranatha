@@ -1,17 +1,32 @@
+"use client";
+
+import { useRef } from "react";
 import { waMeUrl } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/ui/icons";
+import useMagnetic from "@/lib/use-magnetic";
 
 /**
- * Floating WhatsApp widget (ds-R5). Server component; href derives from the
- * shared `waMeUrl()` with the default message (cc-R8). Mobile: compact round
- * icon button `right-4 bottom-4` (56px, thumb-friendly — user direction: icon
- * only, not a wide bar). Desktop: same round button `bottom-6 right-6`. Hover
- * feedback is CSS transform-only and disabled under prefers-reduced-motion
- * (ds-R10).
+ * Floating WhatsApp widget (ds-R5). Client component so the magnetic
+ * cursor-pull (ds-R10) can attach to the fixed circle button on desktop.
+ *
+ * The hook applies GSAP x/y directly to the anchor instead of wrapping it in
+ * a Magnetic wrapper: wrapping a `position: fixed` element in a transformed
+ * (or will-change) wrapper would re-root its containing block and break the
+ * corner anchoring. A transform on the fixed element itself is purely
+ * visual — the layout box stays viewport-anchored (Lenis uses native scroll,
+ * so no body transform offsets it).
+ *
+ * Server-rendered markup is unchanged: the anchor, href and aria-label all
+ * ship in the SSR HTML (cc-R8, SEO intact); the magnetic effect is a
+ * client-only, desktop-only, reduced-motion-aware polish layer.
  */
 export default function FloatingWhatsApp() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  useMagnetic(ref);
+
   return (
     <a
+      ref={ref}
       href={waMeUrl()}
       target="_blank"
       rel="noopener noreferrer"

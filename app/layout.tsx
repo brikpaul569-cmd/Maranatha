@@ -10,6 +10,7 @@ import ScrollProgress from "@/components/scroll-progress";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
+import CustomCursor from "@/components/custom-cursor";
 import "./globals.css";
 
 const display = Fraunces({
@@ -114,6 +115,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SmoothScroll id="main-content">{children}</SmoothScroll>
           <SiteFooter />
           <FloatingWhatsApp />
+          <CustomCursor />
         </ThemeProvider>
       </body>
     </html>
