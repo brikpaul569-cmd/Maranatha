@@ -49,6 +49,13 @@ const FALLBACK_RETRACT_MS = 2000;
 /** Fixed-header offset so hash sections clear it when scrolling on /taller (px). */
 const HEADER_OFFSET_PX = 80;
 
+/** Normalizes a pathname for route comparisons (usePathname may append a
+ *  trailing slash, e.g. "/taller/" vs "/taller" — D5 hash routing relies on
+ *  exact matches to decide whether to scroll in place or navigate home). */
+function normalizePath(path: string): string {
+  return path === "/" ? "/" : path.replace(/\/+$/, "");
+}
+
 /**
  * Module-level curtain state, mirrored from the component's busyRef so
  * unrelated click handlers can react to an in-flight curtain without
@@ -105,7 +112,7 @@ export default function NavTransition() {
   const busyRef = useRef(false);
   const retractingRef = useRef(false);
   const pendingRef = useRef<{ href: string } | null>(null);
-  const pathRef = useRef(pathname);
+  const pathRef = useRef(normalizePath(pathname));
   const liftTimerRef = useRef(0);
   const fallbackTimerRef = useRef(0);
   const tlRef = useRef<ReturnType<typeof gsap.timeline> | null>(null);
@@ -267,7 +274,7 @@ export default function NavTransition() {
   // also snap to the top after landing on the home page.
   useEffect(() => {
     const previous = pathRef.current;
-    pathRef.current = pathname;
+    pathRef.current = normalizePath(pathname);
     const pending = pendingRef.current;
     if (!pending || pathname === previous) return;
     if (pending.href === "#inicio" && pathname === "/") scrollToTop();
