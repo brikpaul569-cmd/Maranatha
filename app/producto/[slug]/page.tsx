@@ -84,6 +84,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <Section
         mood={mood}
         className="relative overflow-hidden bg-[var(--section-mood)]"
+        sheet={false}
       >
         <nav
           aria-label="Ruta de página"
