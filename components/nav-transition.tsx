@@ -49,6 +49,23 @@ const FALLBACK_RETRACT_MS = 2000;
 /** Fixed-header offset so hash sections clear it when scrolling on /taller (px). */
 const HEADER_OFFSET_PX = 80;
 
+/**
+ * Module-level curtain state, mirrored from the component's busyRef so
+ * unrelated click handlers can react to an in-flight curtain without
+ * subscribing to React state (e.g. CatalogGridTransition skips its Flip
+ * capture while the curtain covers the screen). The overlay is mounted once
+ * per app lifetime, so a module flag is a faithful mirror of busyRef.
+ */
+let curtainBusy = false;
+
+/**
+ * True while the curtain is covering or retracting. Consumers use this to
+ * fall back to standard navigation instead of capturing layout mid-flight.
+ */
+export function isNavTransitionBusy(): boolean {
+  return curtainBusy;
+}
+
 type NavigateDetail = {
   /** Viewport x of the click (ripple origin); 0/undefined = centered. */
   x: number;
@@ -109,6 +126,7 @@ export default function NavTransition() {
       transformOrigin: "50% 50%",
       onComplete: () => {
         busyRef.current = false;
+        curtainBusy = false;
         retractingRef.current = false;
         overlay.style.pointerEvents = "none";
         overlay.style.willChange = "";
@@ -174,11 +192,13 @@ export default function NavTransition() {
       const moodVar = detail.moodVar ?? resolveNavMood(detail.href);
 
       busyRef.current = true;
+      curtainBusy = true;
 
       // Reduced motion: no curtain — navigate immediately (D5).
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         navigate(detail.href);
         busyRef.current = false;
+        curtainBusy = false;
         return;
       }
 

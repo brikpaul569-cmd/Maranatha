@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
+import ProductFlipTransition from "@/components/product-flip-transition";
 import Button from "@/components/ui/button";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
@@ -104,7 +105,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <div className="mt-8 grid gap-10 md:grid-cols-2 md:gap-14">
           <Reveal delay={0} y={16}>
-          <div className="relative aspect-[4/5] w-full overflow-hidden glass-card">
+          <div
+            data-flip-hero
+            data-flip-id={`product-${product.slug}`}
+            className="relative aspect-[4/5] w-full overflow-hidden glass-card"
+          >
             <Image
               src={mainImage.src}
               alt={mainImage.alt}
@@ -117,7 +122,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </Reveal>
 
           <Reveal delay={0.15} y={16}>
-          <div className="flex flex-col items-start gap-6">
+          <div data-flip-copy className="flex flex-col items-start gap-6">
             <Eyebrow>{category?.label ?? "Catálogo"}</Eyebrow>
             <h1 className="font-display text-4xl leading-tight tracking-tight text-mar-brown md:text-5xl">
               {product.name}
@@ -162,6 +167,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
           </Reveal>
         </div>
+
+        {/* Shared-element destination: consumes the flip captured on the
+            catalog grid and morphs the hero image back to the card frame.
+            Mounted after the hero/copy Reveals so its effect runs last. */}
+        <ProductFlipTransition slug={product.slug} />
 
         {related.length > 0 && (
           <Reveal className="mt-20">
