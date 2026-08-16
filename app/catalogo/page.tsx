@@ -26,11 +26,11 @@ export default function CatalogoPage() {
         sheet={false}
       >
         <Watermark
-          src="/placeholders/gift.svg"
+          doodle="leaf"
           className="left-8 top-6 w-16 md:w-20"
         />
         <Watermark
-          src="/placeholders/flower.svg"
+          doodle="flower"
           className="bottom-8 right-8 w-20 md:w-24"
           opacity={0.12}
         />

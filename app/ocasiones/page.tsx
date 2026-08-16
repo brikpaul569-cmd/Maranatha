@@ -24,11 +24,11 @@ export default function OcasionesPage() {
     <main>
       <Section mood="catalogo-gold" className="relative bg-[var(--section-mood)]">
         <Watermark
-          src="/placeholders/ribbon.svg"
+          doodle="flower"
           className="right-8 top-6 w-20 md:w-24"
         />
         <Watermark
-          src="/placeholders/flower.svg"
+          doodle="gift"
           className="bottom-8 left-6 w-16 md:w-20"
           opacity={0.12}
         />

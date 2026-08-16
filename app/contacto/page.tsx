@@ -27,11 +27,11 @@ export default function ContactoPage() {
     <main>
       <Section mood="contacto" className="relative bg-[var(--section-mood)]">
         <Watermark
-          src="/placeholders/gift.svg"
+          doodle="letter"
           className="right-8 top-6 w-20 md:w-24"
         />
         <Watermark
-          src="/placeholders/ribbon.svg"
+          doodle="flower"
           className="bottom-8 left-6 w-16 md:w-20"
           opacity={0.12}
         />

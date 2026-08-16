@@ -105,7 +105,7 @@ export default function TallerPage() {
           className="pointer-events-none absolute right-8 top-8 w-16 md:w-20"
         >
           <Watermark
-            src="/placeholders/gift.svg"
+            doodle="book"
             className="h-auto w-full"
             opacity={0.12}
             float={false}
@@ -161,7 +161,7 @@ export default function TallerPage() {
           className="pointer-events-none absolute bottom-8 right-8 w-16 md:w-20"
         >
           <Watermark
-            src="/placeholders/flower.svg"
+            doodle="flower"
             className="h-auto w-full"
             opacity={0.12}
             float={false}

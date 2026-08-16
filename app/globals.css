@@ -582,42 +582,6 @@ html.theme-transition .theme-card {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Custom cursor (desktop precision pointers only): the `has-custom-cursor`
-   class is toggled on <html> by components/custom-cursor.tsx while the
-   custom dot/ring are active and removed on cleanup — so touch devices and
-   reduced-motion users keep the native cursor untouched. `cursor: none` on
-   every element hides the native arrow/pointer over links and buttons too. */
-html.has-custom-cursor,
-html.has-custom-cursor * {
-  cursor: none !important;
-}
-
-/* Cursor layers: absolutely positioned at the viewport origin inside a
-   `fixed inset-0` pointer-events-none host and moved via GSAP x/y (transform
-   only). Centering on the pointer is done with GSAP xPercent/yPercent so no
-   layout-affecting negative margins are needed. */
-.custom-cursor-dot,
-.custom-cursor-ring {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 9999px;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.custom-cursor-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-mar-gold);
-}
-
-.custom-cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--color-mar-gold);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
