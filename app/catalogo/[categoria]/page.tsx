@@ -44,6 +44,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <Section
         mood={category.mood}
         className="relative overflow-hidden bg-[var(--section-mood)]"
+        sheet={false}
       >
         <Link
           href="/catalogo"

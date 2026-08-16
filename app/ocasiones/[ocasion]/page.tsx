@@ -45,6 +45,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
     <Section
       mood="catalogo-sage"
       className="relative overflow-hidden bg-[var(--section-mood)]"
+      sheet={false}
     >
       <Link
         href="/catalogo"

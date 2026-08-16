@@ -44,7 +44,11 @@ const HOW_WE_WORK = [
 export default function NosotrosPage() {
   return (
     <main>
-      <Section mood="nosotros" className="relative bg-[var(--section-mood)]">
+      <Section
+        mood="nosotros"
+        className="relative bg-[var(--section-mood)]"
+        sheet={false}
+      >
         <Watermark
           doodle="flower"
           className="right-8 top-6 w-20 md:w-24"

@@ -22,7 +22,11 @@ export const metadata: Metadata = {
 export default function OcasionesPage() {
   return (
     <main>
-      <Section mood="catalogo-gold" className="relative bg-[var(--section-mood)]">
+      <Section
+        mood="catalogo-gold"
+        className="relative bg-[var(--section-mood)]"
+        sheet={false}
+      >
         <Watermark
           doodle="flower"
           className="right-8 top-6 w-20 md:w-24"
