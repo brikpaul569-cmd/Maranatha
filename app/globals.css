@@ -401,6 +401,14 @@ html.theme-transition .theme-card {
   outline-offset: 3px;
 }
 
+/* DetailClip (decorative, clickable icon): the span is not a role=button so the
+   browser won't paint its native grey focus ring on click, but if it ever gets
+   tabbed, surface the gold ring from ds-R10 above. */
+.detail-clip:focus-visible {
+  outline: 2px solid var(--color-mar-gold);
+  outline-offset: 3px;
+}
+
 /* Parchment sheet (user direction): every non-hero section reads as a
    separate frosted-paper leaf stacked on the pastel background (COSECHAS
    reference). Semi-transparent on purpose — the section mood glows through

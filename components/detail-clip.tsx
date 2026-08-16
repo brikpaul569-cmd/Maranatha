@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import gsap from "gsap";
 import DetailDoodle, {
   type DetailDoodleVariant,
@@ -23,14 +24,13 @@ export type DetailClipProps = {
   variant?: DetailDoodleVariant;
   /** Classes for the icon. */
   className?: string;
-  /** aria-label for the clickable icon. */
-  "aria-label"?: string;
+  children?: ReactNode;
 };
 
 export default function DetailClip({
   variant = "bear",
   className = "size-5 shrink-0 text-mar-brown/40",
-  "aria-label": ariaLabel = "Revelar detalle",
+  children,
 }: DetailClipProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [drawn, setDrawn] = useState(false);
@@ -82,23 +82,15 @@ export default function DetailClip({
   return (
     <span
       onClick={reveal}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          reveal();
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-label={ariaLabel}
       data-drawn={drawn ? "true" : "false"}
-      className={`inline-flex cursor-pointer items-center justify-center rounded-full p-0.5 transition-opacity ${
+      className={`detail-clip inline-flex cursor-pointer items-center justify-center p-0.5 transition-opacity ${
         drawn
           ? "text-mar-brown/90"
           : "text-mar-brown/40 hover:text-mar-brown/70"
       } ${className}`}
     >
       <DetailDoodle ref={svgRef} variant={variant} className="size-full" />
+      {children}
     </span>
   );
 }
