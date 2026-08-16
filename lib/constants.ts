@@ -189,7 +189,7 @@ export const TALLER_WORKSHOPS: TallerWorkshop[] = [
     id: "envoltura-floral-y-tarjetas",
     title: "Taller de envoltura floral y tarjetas",
     description:
-      "Dale el cierre perfecto a un detalle: envoltura con papel y listones, y tarjetas escritas a mano con mensajes que dicen lo que las palabras no alcanzan.",
+      "Dale el cierre perfecto a un detalle: envoltura con papel y listones, y tarjetas escritas a mano para decir lo importante con tu letra.",
     duration: "1.5 h",
     level: "Intermedio",
   },

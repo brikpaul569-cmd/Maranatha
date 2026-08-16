@@ -110,9 +110,10 @@ export default function NosotrosPage() {
           <div className="md:order-2">
             <Reveal>
               <p className="font-sans text-base text-mar-brown/80 md:text-lg">
-                Creemos que un detalle dice lo que las palabras no alcanzan.
-                Por eso cada pedido es una oportunidad de consentir a alguien:
-                nos cuentas a quién va dirigido y lo armamos a tu gusto.
+                Creemos que quien recibe un detalle hecho a mano siente que
+                alguien pensó en él. Por eso cada pedido es una oportunidad de
+                consentir a alguien: nos cuentas a quién va dirigido y lo
+                armamos a tu gusto.
               </p>
             </Reveal>
             <Reveal delay={0.05} className="mt-8">

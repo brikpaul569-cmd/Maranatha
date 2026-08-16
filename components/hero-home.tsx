@@ -54,10 +54,10 @@ export default function HeroHome() {
             className="font-stout text-[clamp(2.2rem,8vw,6rem)] uppercase leading-[0.9] tracking-normal text-mar-brown"
           >
             <span className="hero-line block">Detalles</span>
-            <span className="hero-line block">que dicen lo que</span>
+            <span className="hero-line block">hechos a mano</span>
             <span className="hero-line block text-mar-gold">
-              las palabras{" "}
-              <span className="whitespace-nowrap">no alcanzan</span>
+              con todo el{" "}
+              <span className="whitespace-nowrap">corazón</span>
             </span>
           </SplitReveal>
 
