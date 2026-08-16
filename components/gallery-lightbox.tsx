@@ -303,7 +303,7 @@ export default function GalleryLightbox({ items }: GalleryLightboxProps) {
             >
               <div
                 data-lightbox-media
-                className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light"
+                className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light drop-shadow-[0_12px_24px_rgba(93,64,55,0.14)]"
               >
                 <Image
                   src={item.src}

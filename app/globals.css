@@ -36,6 +36,14 @@
     0 2px 0 rgba(58, 42, 36, 0.05),
     0 30px 70px -30px rgba(58, 42, 36, 0.3);
 
+  /* Soft card surface (2026-08-15): product/testimonial cards are the site's
+     only true box surfaces — softly rounded and floating, re-themed per
+     ecosystem like the parchment sheet. */
+  --card-radius: 1.5rem;
+  --card-shadow:
+    0 2px 0 rgba(58, 42, 36, 0.04),
+    0 18px 40px -24px rgba(58, 42, 36, 0.28);
+
   /* Taller ecosystem (workshop world, eco-E2/E5): moods and surface tokens
      used by the /taller page and by the curtain transition destination tints.
      Defaults live here so they resolve before [data-ecosystem="taller"]
@@ -170,6 +178,11 @@ body {
     0 2px 0 rgba(67, 54, 77, 0.04),
     0 30px 70px -30px rgba(93, 72, 128, 0.35);
 
+  --card-radius: 1.5rem;
+  --card-shadow:
+    0 2px 0 rgba(67, 54, 77, 0.04),
+    0 18px 40px -24px rgba(93, 72, 128, 0.32);
+
   --preloader-gradient: linear-gradient(
     135deg,
     rgba(230, 220, 242, 0.65),
@@ -229,6 +242,11 @@ body {
   --sheet-shadow:
     0 2px 0 rgba(0, 0, 0, 0.35),
     0 30px 70px -30px rgba(0, 0, 0, 0.6);
+
+  --card-radius: 1.5rem;
+  --card-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 18px 40px -24px rgba(0, 0, 0, 0.55);
 
   --preloader-gradient: linear-gradient(
     135deg,
@@ -292,6 +310,11 @@ body {
   --sheet-shadow:
     0 2px 0 rgba(0, 0, 0, 0.35),
     0 30px 70px -30px rgba(0, 0, 0, 0.6);
+
+  --card-radius: 1.5rem;
+  --card-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 18px 40px -24px rgba(0, 0, 0, 0.55);
 
   --preloader-gradient: linear-gradient(
     135deg,

@@ -36,7 +36,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <article
       data-occasion={product.occasion.join(" ")}
-      className="group relative flex h-full flex-col overflow-hidden glass-card"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--card-radius)] shadow-[var(--card-shadow)] glass-card"
     >
       <Link
         href={`/producto/${product.slug}`}
