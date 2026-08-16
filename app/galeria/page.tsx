@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import ParallaxFloat from "@/components/parallax-float";
 import CascadeReveal from "@/components/cascade-reveal";
+import GalleryLightbox from "@/components/gallery-lightbox";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -90,32 +89,10 @@ export default function GaleriaPage() {
         </div>
 
         {/* Grid de galería: items sin bordes, sin fondo de caja, sin sombra.
-            Revelación en cascada al hacer scroll, caption directo al fondo. */}
+            Revelación en cascada al hacer scroll, caption directo al fondo.
+            Cada item abre el lightbox con transición compartida (GSAP Flip). */}
         <CascadeReveal>
-          <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-            {GALLERY_ITEMS.map((item) => (
-              <div key={item.caption} data-cascade>
-                <Link
-                  href={item.href}
-                  className="group block overflow-hidden transition-transform duration-300 motion-safe:hover:-translate-y-1"
-                >
-                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-mar-pink-light">
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      fill
-                      sizes="(min-width: 768px) 33vw, 50vw"
-                      className="object-cover transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <p className="p-4 font-sans text-sm font-semibold uppercase tracking-widest text-mar-brown">
-                    {item.caption}
-                  </p>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <GalleryLightbox items={GALLERY_ITEMS} />
         </CascadeReveal>
 
         <ParallaxFloat className="mt-14" speed={0.2} float>
