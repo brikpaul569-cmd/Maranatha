@@ -59,7 +59,7 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-mar-brown/10 bg-[var(--theme-bg)]">
+    <footer className="bg-[var(--theme-bg)]">
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 md:grid-cols-3">
           {/* Brand + business hours (ft-R2) */}
@@ -160,7 +160,7 @@ export default function SiteFooter() {
         {/* Legal line (ft-R5) + conditional coverage link (ft-R3/D7).
             Centered and stacked on every breakpoint so the footer always
             finishes with an organized, centered block. */}
-        <div className="mt-12 flex flex-col items-center gap-3 border-t border-mar-brown/10 pt-6">
+        <div className="mt-12 flex flex-col items-center gap-3 pt-6">
           <p className="text-center font-sans text-xs text-mar-brown/60">
             © {year} Detalles Maranatha · Todos los derechos reservados
           </p>
