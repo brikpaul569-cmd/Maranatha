@@ -34,7 +34,11 @@ export default function DomiciliosBogotaPage() {
 
   return (
     <main>
-      <Section mood="catalogo-sage" className="bg-[var(--section-mood)]">
+      <Section
+        mood="catalogo-sage"
+        className="relative bg-[var(--section-mood)]"
+        sheet={false}
+      >
         <div className="max-w-2xl">
           <Reveal>
             <Eyebrow>Entrega el mismo día</Eyebrow>

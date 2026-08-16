@@ -60,6 +60,7 @@ export default async function ZonePage({ params }: ZonePageProps) {
       <Section
         mood="catalogo-sage"
         className="relative overflow-hidden bg-[var(--section-mood)]"
+        sheet={false}
       >
         <Link
           href="/domicilios/bogota"
