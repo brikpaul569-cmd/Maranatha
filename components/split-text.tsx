@@ -46,7 +46,13 @@ export default function SplitText({
 
     const ctx = gsap.context(() => {
       split = new SplitType(el, { types: [by] });
-      const elements = el.querySelectorAll<HTMLElement>(`.${by}`);
+
+      // split-type generates SINGULAR classes (`.char`, `.word`, `.line`)
+      // even though its `types` option is configured with the plural
+      // (`"chars" | "words" | "lines"`). Map the prop to the real class.
+      const elementClass =
+        by === "chars" ? "char" : by === "lines" ? "line" : "word";
+      const elements = el.querySelectorAll<HTMLElement>(`.${elementClass}`);
 
       // Initial state: hidden + below + blurred
       gsap.set(elements, { y: 20, opacity: 0, filter: "blur(4px)" });
