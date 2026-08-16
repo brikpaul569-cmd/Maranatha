@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { signalEntranceReady } from "@/lib/entrance";
+import BearDoodle from "@/components/ui/bear-doodle";
 
 /**
  * Ready gate (user direction — replaces the logo-stroke preloader).
@@ -16,6 +17,10 @@ import { signalEntranceReady } from "@/lib/entrance";
  * all server-rendered content stays visible beneath (pre-R6). The backdrop is
  * translucent + blurred, never opaque, so the hero still paints underneath
  * (pre-R9: the gate must not block the LCP paint).
+ *
+ * On exit the mirror orb gives way to a teddy-bear doodle whose strokes draw
+ * themselves in the final second before the gate opens (stroke-dash
+ * choreography, purely decorative and aria-hidden).
  *
  * Session-gated (pre-R1): shows at most once per session via
  * `mar-preloader-done`; reduced-motion users skip it entirely (pre-R7). On
@@ -50,6 +55,7 @@ export default function Preloader() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const orbRef = useRef<HTMLButtonElement>(null);
+  const doodleWrapRef = useRef<HTMLDivElement>(null);
   const doneRef = useRef(false);
 
   // Session gate + reduced-motion check. Client-only by definition (effects),
@@ -115,12 +121,69 @@ export default function Preloader() {
       } catch {
         // Privacy mode — best effort only.
       }
-      gsap.to(overlay, {
-        autoAlpha: 0,
-        duration: EXIT_MS / 1000,
-        ease: "power2.inOut",
-        onComplete: () => setMounted(false),
-      });
+
+      // Fallback: the original plain overlay fade (graceful degradation if
+      // the doodle choreography cannot run).
+      const plainFade = () =>
+        gsap.to(overlay, {
+          autoAlpha: 0,
+          duration: EXIT_MS / 1000,
+          ease: "power2.inOut",
+          onComplete: () => setMounted(false),
+        });
+
+      const doodle = doodleWrapRef.current;
+      if (!doodle) {
+        plainFade();
+        return;
+      }
+
+      // Final-second choreography, all inside the 500ms exit budget
+      // (transform/opacity only, CLS-safe): the headline/orb yield to the
+      // teddy-bear doodle, whose strokes draw themselves while the whole
+      // overlay fades out. Content + entrance signal are handled above.
+      try {
+        gsap.to(content, {
+          autoAlpha: 0,
+          duration: 0.15,
+          ease: "power2.in",
+        });
+        gsap.fromTo(
+          doodle,
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.15, ease: "power2.out", delay: 0.05 }
+        );
+
+        // Stroke-draw: dash each shape to its own length, then chase the
+        // offsets back to 0. All doodle shapes are stroke-only, so the
+        // dash trick works. Reads (getTotalLength) happen before writes.
+        const shapes = doodle.querySelectorAll<SVGGeometryElement>(
+          "circle, path"
+        );
+        shapes.forEach((el) => {
+          const len = el.getTotalLength();
+          gsap.set(el, { strokeDasharray: len, strokeDashoffset: len });
+        });
+        // Durations trimmed (0.25s / stagger 0.03) so the last shape lands
+        // exactly at the 500ms mark instead of past the unmount.
+        gsap.to(shapes, {
+          strokeDashoffset: 0,
+          duration: 0.25,
+          ease: "power2.inOut",
+          stagger: 0.03,
+          delay: 0.1,
+        });
+
+        gsap.to(overlay, {
+          autoAlpha: 0,
+          duration: EXIT_MS / 1000 - 0.2,
+          ease: "power2.inOut",
+          delay: 0.2,
+          onComplete: () => setMounted(false),
+        });
+      } catch {
+        plainFade();
+      }
     };
 
     const onKey = (e: KeyboardEvent) => {
@@ -201,6 +264,17 @@ export default function Preloader() {
         <p className="font-sans text-xs text-mar-brown/60">
           Tocá el espejo para entrar
         </p>
+      </div>
+
+      {/* Teddy-bear stroke-draw: hidden until the exit choreography reveals
+          it. Purely decorative (aria-hidden) — the orb stays the accessible
+          entry, and the doodle needs no focus management. */}
+      <div
+        ref={doodleWrapRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 text-mar-brown/80"
+      >
+        <BearDoodle className="pointer-events-none size-28 md:size-36" />
       </div>
     </div>
   );

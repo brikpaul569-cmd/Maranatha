@@ -9,6 +9,7 @@ import Reveal from "@/components/reveal";
 import Eyebrow from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
+import DetailClip from "@/components/detail-clip";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -39,9 +40,9 @@ export default function ContactoPage() {
             <Eyebrow>Hablemos</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
-              Contacto
-            </h1>
+             <h1 className="mt-4 inline-flex flex-wrap items-center gap-2 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
+               Contacto <DetailClip variant="letter" />
+             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 font-sans text-base text-mar-brown/80 md:text-lg">

@@ -5,6 +5,7 @@ import Section from "@/components/ui/section";
 import SplitReveal from "@/components/split-reveal";
 import Button from "@/components/ui/button";
 import Reveal from "@/components/reveal";
+import Watermark from "@/components/watermark";
 
 /**
  * Home hero (hero-R1–R9; design D3; user art-direction update).
@@ -90,7 +91,14 @@ export default function HeroHome() {
             </span>
           </span>
         </div>
-      </div>
-    </Section>
+          {/* Faint bear watermark de fondo (static, non-animated; decorative). */}
+          <Watermark
+            doodle="bear"
+            opacity={0.05}
+            float={false}
+            className="pointer-events-none bottom-8 left-1/2 -ml-20 h-44 w-44 -translate-x-1/2 text-mar-brown/25 md:left-8 md:m-0"
+          />
+        </div>
+      </Section>
   );
 }

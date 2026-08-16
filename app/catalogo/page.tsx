@@ -3,6 +3,7 @@ import { OCCASIONS, PRODUCTS } from "@/lib/products";
 import ProductCard from "@/components/product-card";
 import CategoryFilter from "@/components/category-filter";
 import CatalogOccasionFilter from "@/components/catalog-occasion-filter";
+import DetailClip from "@/components/detail-clip";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
 import Eyebrow from "@/components/ui/eyebrow";
@@ -38,8 +39,8 @@ export default function CatalogoPage() {
         <div className="max-w-2xl">
           <Eyebrow>Detalles para cada ocasión</Eyebrow>
 
-          <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
-            Catálogo
+          <h1 className="mt-4 inline-flex flex-wrap items-center gap-2 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-mar-brown">
+            Catálogo <DetailClip variant="leaf" />
           </h1>
 
           <p className="mt-6 max-w-xl font-sans text-base text-mar-brown/80 md:text-lg">

@@ -395,8 +395,19 @@ html.theme-transition .theme-card {
   opacity: 1;
 }
 
-/* Visible keyboard focus (ds-R10) */
+/* Visible keyboard focus (ds-R10). */
+:focus {
+  outline: none;
+}
 :focus-visible {
+  outline: 2px solid var(--color-mar-gold);
+  outline-offset: 3px;
+}
+
+/* DetailClip (decorative, clickable icon): the span is not a role=button so the
+   browser won't paint its native grey focus ring on click, but if it ever gets
+   tabbed, surface the gold ring from ds-R10 above. */
+.detail-clip:focus-visible {
   outline: 2px solid var(--color-mar-gold);
   outline-offset: 3px;
 }
