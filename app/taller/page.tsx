@@ -4,6 +4,7 @@ import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Button from "@/components/ui/button";
 import Watermark from "@/components/watermark";
+import PawPrints from "@/components/paw-prints";
 import ParallaxFloat from "@/components/parallax-float";
 import BearInfographic from "@/components/bear-infographic";
 import { TALLER_WORKSHOPS } from "@/lib/constants";
@@ -168,16 +169,18 @@ export default function TallerPage() {
           />
         </ParallaxFloat>
 
+        <PawPrints className="bottom-10 right-8" />
+
         <div className="max-w-2xl">
           <Eyebrow>Aprende el oficio</Eyebrow>
           <h2 className="mt-4 font-display text-2xl text-mar-brown md:text-3xl">
             El detalle se aprende haciendo
           </h2>
           <p className="mt-4 font-sans text-base text-mar-brown/80">
-            En Maranatha creemos que un detalle dice lo que las palabras no
-            alcanzan, y ese oficio se aprende con las manos. Te acompañamos en
-            cada paso: desde el primer pétalo hasta el listón final, en un
-            ambiente pequeño, pastel y sin prisa.
+            En Maranatha el oficio se transmite de mano en mano: cada pétalo,
+            cada doblez y cada listón se aprende practicando con calma. Te
+            acompañamos en cada paso: desde el primer pétalo hasta el listón
+            final, en un ambiente pequeño, pastel y sin prisa.
           </p>
           <p className="mt-3 font-sans text-base text-mar-brown/80">
             Escribinos por WhatsApp y te contamos fechas, horarios y cómo

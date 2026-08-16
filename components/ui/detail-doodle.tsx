@@ -20,7 +20,8 @@ export type DetailDoodleVariant =
   | "gift"
   | "letter"
   | "leaf"
-  | "book";
+  | "book"
+  | "paw";
 
 export type DetailDoodleProps = SVGProps<SVGSVGElement> & {
   /** Which detalle icon to draw. Default: "bear" (brand default). */
@@ -87,6 +88,18 @@ export function detailDoodlePaths(
         { d: "M18 6 L18 18", closed: false },
         { d: "M6 10 L18 10", closed: false },
         { d: "M6 14 L18 14", closed: false },
+      ];
+    case "paw":
+      // Paw print: one rounded pad + four toes (full-circle arc trick).
+      return [
+        {
+          d: "M12 14.5 C 15.4 14.5 17.6 16.8 17.6 19.3 C 17.6 21.6 15.8 22.8 12 22.8 C 8.2 22.8 6.4 21.6 6.4 19.3 C 6.4 16.8 8.6 14.5 12 14.5",
+          closed: true,
+        },
+        { d: "M5.2 9.6 a2.1 2.1 0 1 0 0 1e-10 a2.1 2.1 0 1 0 0 1e-10" },
+        { d: "M9.6 6.8 a2.1 2.1 0 1 0 0 1e-10 a2.1 2.1 0 1 0 0 1e-10" },
+        { d: "M14.4 6.8 a2.1 2.1 0 1 0 0 1e-10 a2.1 2.1 0 1 0 0 1e-10" },
+        { d: "M18.8 9.6 a2.1 2.1 0 1 0 0 1e-10 a2.1 2.1 0 1 0 0 1e-10" },
       ];
     case "bear":
     default:

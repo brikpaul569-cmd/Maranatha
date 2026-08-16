@@ -6,6 +6,7 @@ import CatalogOccasionFilter from "@/components/catalog-occasion-filter";
 import DetailClip from "@/components/detail-clip";
 import Section from "@/components/ui/section";
 import Watermark from "@/components/watermark";
+import PawPrints from "@/components/paw-prints";
 import Eyebrow from "@/components/ui/eyebrow";
 import ParallaxFloat from "@/components/parallax-float";
 import CascadeReveal from "@/components/cascade-reveal";
@@ -71,6 +72,8 @@ export default function CatalogoPage() {
             </CascadeReveal>
           </CatalogOccasionFilter>
         </div>
+
+        <PawPrints className="bottom-10 right-8" />
       </Section>
     </main>
   );

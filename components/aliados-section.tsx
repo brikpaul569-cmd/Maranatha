@@ -1,6 +1,7 @@
 import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Watermark from "@/components/watermark";
+import PawPrints from "@/components/paw-prints";
 import GlassSurface from "@/components/glass-surface";
 import ParallaxFloat from "@/components/parallax-float";
 import SplitText from "@/components/split-text";
@@ -115,6 +116,8 @@ export default function AliadosSection() {
           );
         })}
       </div>
+
+      <PawPrints className="bottom-10 left-6 md:bottom-12 md:left-10" />
     </Section>
   );
 }

@@ -1,6 +1,7 @@
 import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import Watermark from "@/components/watermark";
+import PawPrints from "@/components/paw-prints";
 import Link from "next/link";
 
 /**
@@ -70,6 +71,8 @@ export default function ExploraSection() {
           ))}
         </div>
       </div>
+
+      <PawPrints className="bottom-10 left-6 md:bottom-12 md:left-10" />
     </Section>
   );
 }

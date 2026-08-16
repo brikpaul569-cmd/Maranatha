@@ -4,6 +4,7 @@ import Section from "@/components/ui/section";
 import Eyebrow from "@/components/ui/eyebrow";
 import SplitText from "@/components/split-text";
 import Reveal from "@/components/reveal";
+import PawPrints from "@/components/paw-prints";
 
 // TODO: replace placeholder testimonials with real customer reviews (PROJECT-BRIEF §roadmap item 6).
 
@@ -73,6 +74,8 @@ export default function TestimonialsSection() {
           </Reveal>
         ))}
       </div>
+
+      <PawPrints className="bottom-10 left-6 md:bottom-12 md:left-10" />
     </Section>
   );
 }
